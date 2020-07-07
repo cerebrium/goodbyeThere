@@ -13,6 +13,7 @@ SECRET_KEY = 'asdnn7234njsf1!@#bsdkjhb1!@#$basdjbp123$ZNSdf10384bf'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    'backendpajamas.herokuapp.com',
     'pythonicbackend.herokuapp.com',
     'localhost',
     '127.0.0.1'

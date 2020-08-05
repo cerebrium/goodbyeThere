@@ -2,13 +2,8 @@ from .models import Driver, ScheduledDate, DriverManager, ScheduledDatesManager,
 from rest_framework.response import Response
 from rest_framework.views import APIView, View
 from rest_framework import viewsets
-from Crypto.Cipher import AES
 import json
 import base64
-import Crypto
-from Crypto.Cipher import AES
-from Crypto.Hash import HMAC, SHA256
-from Crypto.Util.Padding import unpad
 from rest_framework.permissions import IsAuthenticated
 from .serializers import managersSerializer, DriverSerializer, ScheduledDatesSerializer, ImagesSerializer, VehiclesSerializer, InvoiceSerializer, VehicleDamagesSerializer, SupportTypeSerializer, DeductionTypeSerializer, VehicleScheduledDateSerializer
 from .functions import timeDifference, returnOrderdData, statistics, invoice, returnVanOrderedData, tokenizer

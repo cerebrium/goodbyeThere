@@ -1,12 +1,22 @@
-from .models import Driver, ScheduledDate, DriverManager, ScheduledDatesManager, Images, Vehicles, Invoice, managers, VehicleDamages, SupportType, DeductionType
+from .models import Driver, ScheduledDate, DriverManager, ScheduledDatesManager, Images, Vehicles, Invoice, managers, VehicleDamages, SupportType, DeductionType, VehicleScheduledDate
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.views import APIView, View
 from rest_framework import viewsets
+from Crypto.Cipher import AES
+import json
+import base64
+import Crypto
+from Crypto.Cipher import AES
+from Crypto.Hash import HMAC, SHA256
+from Crypto.Util.Padding import unpad
 from rest_framework.permissions import IsAuthenticated
-from .serializers import managersSerializer, DriverSerializer, ScheduledDatesSerializer, ImagesSerializer, VehiclesSerializer, InvoiceSerializer, VehicleDamagesSerializer, SupportTypeSerializer, DeductionTypeSerializer
-from .functions import timeDifference, returnOrderdData, statistics, invoice
+from .serializers import managersSerializer, DriverSerializer, ScheduledDatesSerializer, ImagesSerializer, VehiclesSerializer, InvoiceSerializer, VehicleDamagesSerializer, SupportTypeSerializer, DeductionTypeSerializer, VehicleScheduledDateSerializer
+from .functions import timeDifference, returnOrderdData, statistics, invoice, returnVanOrderedData, tokenizer
 from .test_data import importData
 import csv, io 
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
 
 
 class managersViewSet(viewsets.ModelViewSet):
@@ -89,22 +99,6 @@ class DataViewSet(APIView):
         }
         return Response(content)
 
-class InvoiceViewSet(APIView):
-        # function for all data
-    def get(self, request):
-        # defining overall data objects
-        invoices = Invoice.objects.all()
-        drivers = Driver.objects.all()
-        schedule = ScheduledDate.objects.all()
-        vehicles = Vehicles.objects.all()
-        deductions = DeductionType.objects.all()
-        support = SupportType.objects.all()
-
-        content = {
-            'data': invoice(drivers, schedule, vehicles, deductions, support)
-        }
-        return Response(content)
-
 class StatisticsViewSet(APIView):
     permission_classes = (IsAuthenticated,)
    
@@ -149,3 +143,80 @@ class DeductionViewSet(viewsets.ModelViewSet):
 
     queryset = DeductionType.objects.all()
     serializer_class = DeductionTypeSerializer
+
+class VehicleScheduledDateViewSet(viewsets.ModelViewSet):
+    # Authentication
+    permission_classes = (IsAuthenticated,)
+
+    queryset = VehicleScheduledDate.objects.all()
+    serializer_class = VehicleScheduledDateSerializer
+
+class VehicleMapViewSet(APIView):
+
+    # Authentication
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request): 
+        drivers = Driver.objects.all()
+        vehicles = Vehicles.objects.all()
+        vehiclesDates = VehicleScheduledDate.objects.all()
+        images = Images.objects.all()
+        theDate = request.body
+
+        content = {
+            'data': returnVanOrderedData(vehicles, vehiclesDates, images, drivers, theDate)
+        }
+        return Response(content)   
+
+        # function for all data
+    def get(self, request):
+        drivers = Driver.objects.all()
+        vehicles = Vehicles.objects.all()
+        vehiclesDates = VehicleScheduledDate.objects.all()
+        images = Images.objects.all()
+        content = {
+            'data': returnVanOrderedData(vehicles, vehiclesDates, images, drivers) # the function is actually called in this file... so it has this files scope.... why we put things in 
+            # functions... makes them modular and then we can control their scope 
+        }
+
+        return Response(content)
+
+class InvoiceViewSet(APIView):
+    # function for all data
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request): 
+        invoices = Invoice.objects.all()
+        drivers = Driver.objects.all()
+        schedule = ScheduledDate.objects.all()
+        vehicles = Vehicles.objects.all()
+        deductions = DeductionType.objects.all()
+        support = SupportType.objects.all()
+        theDate = request.body
+
+        content = {
+            'data': invoice(drivers, schedule, vehicles, deductions, support, theDate)
+        }
+        return Response(content)   
+
+    def get(self, request):
+        # defining overall data objects
+        invoices = Invoice.objects.all()
+        drivers = Driver.objects.all()
+        schedule = ScheduledDate.objects.all()
+        vehicles = Vehicles.objects.all()
+        deductions = DeductionType.objects.all()
+        support = SupportType.objects.all()
+
+        content = {
+            'data': invoice(drivers, schedule, vehicles, deductions, support)
+        }
+        return Response(content)
+
+class securityViewSet(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        managerList = managers.objects.all()
+
+        return Response({
+            'token': tokenizer(managerList, request.body)
+        })

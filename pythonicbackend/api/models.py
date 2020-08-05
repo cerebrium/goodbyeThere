@@ -20,17 +20,16 @@ class managers(models.Model):
     station = models.CharField(max_length = 20, null = True)
     creationDate = models.CharField(max_length = 50, default = datetime.date.today())
 
-# Create your models here.
 class DriverManager(models.Manager):
     def create_driver(self, name):
         driver = self.create(name=name)
 
         return driver
         
-#----rename it to Driver(models.model)
 class Driver(models.Model):
     driver_id = models.AutoField(primary_key=True, unique=True) #need to connect to DA Compliance Check
     vehicle_name = models.CharField(max_length=50, null = True)
+    deleteButton = models.CharField(max_length = 100, null=True)
 
     #the following fields will be displayed when a manager clicks on "Add Driver"
     name = models.CharField(max_length = 100, null = True)
@@ -45,6 +44,7 @@ class Driver(models.Model):
     Signed = models.BooleanField(default=False)
     approvedBy = models.CharField(max_length = 30, null=True)
     approvedDateAndTime = models.CharField(max_length = 100, null=True)
+    vanOwner = models.BooleanField(default=False)
 
     objects = DriverManager() # allows us to call method above
     #week = models.DateField("week", default = datetime.date.today.isocalendar()[1])
@@ -52,7 +52,6 @@ class Driver(models.Model):
     def __str__(self):
         return self.name 
 
-# Create your models here.
 class InvoiceManager(models.Manager):
     def create_Invoice(self, driver_id, day, routeType, LWP, LVP, SUP, deductions, fuel):
         invoice = self.create(
@@ -85,7 +84,6 @@ class Invoice(models.Model):
         return self.name
 
 class Vehicles(models.Model):
-    driver_id = models.ForeignKey(Driver, blank=True, null=True, on_delete=models.CASCADE)
     vehicle_id = models.AutoField(primary_key=True)
     registration = models.CharField(max_length=20, null=True)
     make = models.CharField(max_length=30, null=True)
@@ -101,15 +99,15 @@ class Vehicles(models.Model):
 
 class VehicleDamages(models.Model):
     VehicleDamages_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length = 100, null = True)
     driver_id = models.ForeignKey(Driver, blank=True, null=True, on_delete=models.CASCADE)
     vehicle_id = models.ForeignKey(Vehicles, on_delete=models.CASCADE)
-    statmentOfDamage = models.CharField(max_length = 500)
+    statmentOfDamage = models.CharField(max_length = 2000)
     dateOfIncident = models.CharField(max_length = 100)
-    picturesOfIncident = ArrayField(models.CharField(max_length=100), default=list, blank=True)
+    picturesOfIncident = models.CharField(max_length = 200)
     quotePrice = MoneyField("INCIDENT QUOTE", default=0, max_digits=19, decimal_places=2, default_currency='GBP', null = True)
     invoice = MoneyField("INCIDENT INVOICE", default=0, max_digits=19, decimal_places=2, default_currency='GBP', null = True)
 
-# DA compliance check
 class Images(models.Model):
     driver_id = models.ForeignKey(Driver, blank=True, null=True, on_delete=models.CASCADE)
     vehicle_id = models.ForeignKey(Vehicles, blank=True, null=True, on_delete=models.CASCADE)
@@ -156,7 +154,6 @@ class ScheduledDatesManager(models.Manager):
 
         return date
   
-
 class ScheduledDate(models.Model):
     # have to add this
     objects = ScheduledDatesManager()
@@ -194,6 +191,16 @@ class ScheduledDate(models.Model):
 
     def __str__(self):
         return str(self.date_id)
+
+class VehicleScheduledDate(models.Model):
+    vehicleDate_id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
+    vehicle_id = models.ForeignKey(Vehicles, null=True, on_delete=models.CASCADE)
+    driver_id = models.ForeignKey(Driver, null=True, on_delete=models.CASCADE)
+    date = models.CharField(max_length = 50, null = True, default = datetime.date.today())
 
 class DeductionType(models.Model):
     deduction_id = models.AutoField(primary_key=True, unique=True)

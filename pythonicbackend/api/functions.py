@@ -10,6 +10,7 @@ from collections import Counter
 import math
 import csv
 import collections, functools, operator
+import re
 
 ## declare a function - this one is going to return an array containing the difference between log in and log out times
 def timeDifference(logIn, logOut):
@@ -200,7 +201,6 @@ def returnOrderdData(driversList, datesList, imagesList, vehicles, deductions, s
 
     for ele in vehicles:
         myTransientVehicle = {}
-        myTransientVehicle['driver_id'] = str(ele.driver_id)
         myTransientVehicle['vehicle_id'] = ele.vehicle_id
         myTransientVehicle['registration'] = ele.registration
         myTransientVehicle['make'] = ele.make
@@ -279,6 +279,8 @@ def returnOrderdData(driversList, datesList, imagesList, vehicles, deductions, s
         myTransientObjectDriver = {}
         datesArray = []
         myTransientObjectDriver['driver_id'] = ele.driver_id
+        myTransientObjectDriver['deleteButton'] = ele.deleteButton
+        myTransientObjectDriver['vanOwner'] = ele.vanOwner
         myTransientObjectDriver['vehicle_name'] = ele.driver_id
         myTransientObjectDriver['name'] = ele.name
         myTransientObjectDriver['location'] = ele.location
@@ -325,13 +327,13 @@ def returnOrderdData(driversList, datesList, imagesList, vehicles, deductions, s
 
         myTransientObjectDriver['imgArray'] = imagesArray  
 
-        # vehicles version
-        vehiclesArray = []
-        for vehicleObject in myVehiclesArray:
-            if vehicleObject['driver_id'] == ele.name:
-                vehiclesArray.append(vehicleObject)
+        # # vehicles version
+        # vehiclesArray = []
+        # for vehicleObject in myVehiclesArray:
+        #     if vehicleObject['driver_id'] == ele.name:
+        #         vehiclesArray.append(vehicleObject)
 
-        myTransientObjectDriver['vehicleArray'] = vehiclesArray  
+        # myTransientObjectDriver['vehicleArray'] = vehiclesArray  
 
         ## append object to array
         myDriverArray.append(myTransientObjectDriver)   
@@ -346,7 +348,131 @@ def returnOrderdData(driversList, datesList, imagesList, vehicles, deductions, s
 
     return myFinalObject
 
-def invoice(driversList, datesList, vehiclesList, deductions, support):
+def returnVanOrderedData(vanList, scheduledDatesVan, imagesList, driversList, selectedDate=None):
+    myVehiclesArray = []
+    myImagesArray = []
+    myVanDateArray = []
+    myDriverArray = []     
+    myWeekArray = []
+
+    for ele in imagesList:
+        myTransientImage = {}
+        myTransientImage['driver_id'] = str(ele.driver_id)
+        myTransientImage['vehicle_id'] = str(ele.vehicle_id)
+        myTransientImage['image_id'] = ele.image_id
+        myTransientImage['name'] = ele.name
+        myTransientImage['countryOfIssue'] = ele.countryOfIssue
+        myTransientImage['expiryDate'] = ele.expiryDate
+        myTransientImage['dueDate'] = ele.dueDate
+        myTransientImage['datePassed'] = ele.datePassed
+        myTransientImage['photo'] = ele.photo
+        myTransientImage['managerApprovedName'] = ele.managerApprovedName
+        myTransientImage['managerApprovedDate'] = ele.managerApprovedDate
+        myTransientImage['imagesLink'] = ele.imagesLink
+        myTransientImage['verified'] = ele.verified
+        myTransientImage['driverSigned'] = ele.driverSigned
+        myTransientImage['points'] = ele.points
+        myTransientImage['nextDVLAScreenshot'] = ele.nextDVLAScreenshot
+        
+        myImagesArray.append(myTransientImage)
+
+    for ele in scheduledDatesVan:
+        myTransientVehicleDate = {}
+        myTransientVehicleDate['vehicleDate_id'] = str(ele.vehicleDate_id)
+        myTransientVehicleDate['vehicle_id'] = str(ele.vehicle_id)
+        myTransientVehicleDate['driver_id'] = str(ele.driver_id)
+        myTransientVehicleDate['date'] = ele.date
+
+        myVanDateArray.append(myTransientVehicleDate)
+
+    for ele in vanList:
+        myTransientVehicle = {}
+        myTransientVehicle['vehicle_id'] = ele.vehicle_id
+        myTransientVehicle['registration'] = ele.registration
+        myTransientVehicle['make'] = ele.make
+        myTransientVehicle['model'] = ele.model
+        myTransientVehicle['year'] = ele.year
+        myTransientVehicle['companyOwned'] = ele.companyOwned
+        myTransientVehicle['vtype'] = ele.vtype
+        myTransientVehicle['quotePrice'] = str(ele.quotePrice)
+        myTransientVehicle['invoice'] = str(ele.invoice)
+
+
+        # images version
+        imagesArray = []
+        for imgObject in myImagesArray:
+            if imgObject['vehicle_id'] == ele.registration:
+                imagesArray.append(imgObject)
+
+        myTransientVehicle['imgArray'] = imagesArray  
+
+        # dates version
+        datesArray = []
+        for dateObject in myVanDateArray:
+            if dateObject['vehicle_id'] == ele.registration:
+                datesArray.append(dateObject) 
+
+        myTransientVehicle['datesArray'] = datesArray
+
+        myVehiclesArray.append(myTransientVehicle)
+
+       ## recreate the driver dataset
+    for ele in driversList:
+        myTransientObjectDriver = {}
+        myTransientObjectDriver['driver_id'] = ele.driver_id
+        myTransientObjectDriver['vehicle_name'] = ele.vehicle_name
+        myTransientObjectDriver['name'] = ele.name
+        myTransientObjectDriver['location'] = ele.location
+        myTransientObjectDriver['email'] = ele.email
+        myTransientObjectDriver['phone'] = ele.phone
+        myTransientObjectDriver['address'] = ele.address
+        myTransientObjectDriver['status'] = ele.status
+        myTransientObjectDriver['DriverUniqueId'] = ele.DriverUniqueId
+        myTransientObjectDriver['SigningUrlNumber'] = ele.SigningUrlNumber
+        myTransientObjectDriver['Signed'] = ele.Signed
+        myTransientObjectDriver['approvedBy'] = ele.approvedBy
+        myTransientObjectDriver['approvedDateAndTime'] = ele.approvedDateAndTime 
+
+         # dates version
+        datesArray = []
+        for dateObject in myVanDateArray:
+            if dateObject['driver_id'] == ele.name:
+                datesArray.append(dateObject) 
+
+        myTransientObjectDriver['vanDatesArray'] = datesArray
+
+        ## append object to array
+        myDriverArray.append(myTransientObjectDriver)   
+
+
+        # find out today
+    
+    if selectedDate == None:
+        print('hurray')
+    else:
+        # from the postman requests
+        # myString = str(selectedDate).replace('%20', ' ').replace('date=', '').replace("b'", "").replace("'", "")
+
+        # from the backend
+        myString = str(selectedDate).replace("'b'", '').replace('{"date":"', '').replace('"', '').replace("b'", '').replace("}'", '')
+        weekBeforeSunday = datetime.datetime.strptime(myString, '%a %b %d %Y').date()
+        mostRecentSunday = weekBeforeSunday + datetime.timedelta(days=7)   
+
+        for ele in myVanDateArray:
+            if weekBeforeSunday <= datetime.datetime.strptime(ele['date'], '%a %b %d %Y').date() < mostRecentSunday:
+                myWeekArray.append(ele)  
+
+
+    myFinalObject = {
+        'vehicles': myVehiclesArray,
+        'drivers' : myDriverArray,
+        'modifiedvehicles' : myWeekArray
+    }   
+
+    return myFinalObject
+
+def invoice(driversList, datesList, vehiclesList, deductions, support, selectedDate=None):
+
 
     #### add an array of registrations for the vehicles that are owned by the company
     #### add array containing the status of the drivers
@@ -378,7 +504,6 @@ def invoice(driversList, datesList, vehiclesList, deductions, support):
 
     for ele in vehiclesList:
         myTransientVehicle = {}
-        myTransientVehicle['driver_id'] = str(ele.driver_id)
         myTransientVehicle['vehicle_id'] = ele.vehicle_id
         myTransientVehicle['registration'] = ele.registration
         myTransientVehicle['make'] = ele.make
@@ -505,38 +630,45 @@ def invoice(driversList, datesList, vehiclesList, deductions, support):
 
         myTransientObjectDriver['imgArray'] = imagesArray  
 
-        # vehicles version
-        vehiclesArray = []
-        for vehicleObject in myVehiclesArray:
-            if vehicleObject['driver_id'] == ele.name:
-                vehiclesArray.append(vehicleObject)
+        # # vehicles version
+        # vehiclesArray = []
+        # for vehicleObject in myVehiclesArray:
+        #     if vehicleObject['driver_id'] == ele.name:
+        #         vehiclesArray.append(vehicleObject)
 
-        myTransientObjectDriver['vehicleArray'] = vehiclesArray  
+        # myTransientObjectDriver['vehicleArray'] = vehiclesArray  
 
         ## append object to array
         myDriverArray.append(myTransientObjectDriver)   
 
 
     # find out today
-    currentDate = datetime.date.today()
-    dateWeekDay = currentDate.weekday()
-    mostRecentSunday = 0
-    weekBeforeSunday = 0
-    twoWeeksBeforeSunday = 0
-    fourWeeksBeforeSunday = 0
-    dateWeekDay+=1
-    if currentDate.weekday() > 0:
-        if currentDate.weekday() == 6:  
+    if selectedDate == None:
+        currentDate = datetime.date.today()
+        dateWeekDay = currentDate.weekday()
+        mostRecentSunday = 0
+        weekBeforeSunday = 0
+        twoWeeksBeforeSunday = 0
+        fourWeeksBeforeSunday = 0
+        dateWeekDay+=1
+        if currentDate.weekday() == 6:
             mostRecentSunday = currentDate 
-            weekBeforeSunday = currentDate - datetime.timedelta(days=7)
+            weekBeforeSunday = currentDate - datetime.timedelta(days=7) 
         else:
             mostRecentSunday = currentDate - datetime.timedelta(days=dateWeekDay)
             weekBeforeSunday = mostRecentSunday - datetime.timedelta(days=7)
             twoWeeksBeforeSunday = mostRecentSunday - datetime.timedelta(days=14)
-            fourWeeksBeforeSunday = mostRecentSunday - datetime.timedelta(days=28)
+            fourWeeksBeforeSunday = mostRecentSunday - datetime.timedelta(days=28)  
     else:
-        mostRecentSunday = currentDate 
-        weekBeforeSunday = currentDate - datetime.timedelta(days=7)     
+        # from the postman requests
+        # myString = str(selectedDate).replace('%20', ' ').replace('date=', '').replace("b'", "").replace("'", "")
+
+        # from the backend
+        myString = str(selectedDate).replace("'b'", '').replace('{"date":"', '').replace('"', '').replace("b'", '').replace("}'", '')
+        weekBeforeSunday = datetime.datetime.strptime(myString, '%a %b %d %Y').date()
+        mostRecentSunday = weekBeforeSunday + datetime.timedelta(days=7)   
+
+    print(weekBeforeSunday, mostRecentSunday)    
         
     # # create array to go onto the driver that will contain all the drivers dates
     payrollArray = []
@@ -544,17 +676,18 @@ def invoice(driversList, datesList, vehiclesList, deductions, support):
     # # inside of the driver array loop write some logic that links each date to the driver and push the date into the driver date array
     myWeekArray = []
     for ele in myDriverArray:
-        for date in ele["datesArray"]:
-            isValidDate = 0
+        if ele['status'] != 'OffboardedForever':
+            for date in ele["datesArray"]:
+                isValidDate = 0
 
-            try:
-                datetime.datetime.strptime(date['date'], '%a %b %d %Y')
-            except ValueError:
-                isValidDate = 1
+                try:
+                    datetime.datetime.strptime(date['date'], '%a %b %d %Y')
+                except ValueError:
+                    isValidDate = 1
 
-            if isValidDate == 0:
-                if weekBeforeSunday <= datetime.datetime.strptime(date['date'], '%a %b %d %Y').date() < mostRecentSunday:
-                    myWeekArray.append(date)      
+                if isValidDate == 0:
+                    if weekBeforeSunday <= datetime.datetime.strptime(date['date'], '%a %b %d %Y').date() < mostRecentSunday:
+                        myWeekArray.append(date)      
 
         ##################################   FINAL INVOICE CREATION SECTION ############################################################################                    
     df = pd.DataFrame(myWeekArray)     # this is a dataframe with all the dates in the week we want      
@@ -579,10 +712,12 @@ def invoice(driversList, datesList, vehiclesList, deductions, support):
         'Missort Route': 121.8,
         'Classroom Training': 75,
         'Ride Along': 75,
-        'Sweeper': 121.8
+        'Sweeper': 121.8,
+        'None': 0.0
     }
     
     for dateItem in allDatesArray:
+        print(dateItem[9])
         if dateItem[9] in myInvoiceObj:
          #   print(myInvoiceObj[dateItem[9]]['route'])
 
@@ -620,3 +755,15 @@ def invoice(driversList, datesList, vehiclesList, deductions, support):
     }   
 
     return myFinalObject          
+
+
+def tokenizer(managerList, requestBody):
+    isAuthenticated = False
+    print(requestBody)
+    submittedemail = ''
+    myString = str(requestBody).replace("b'", "").replace("'", "")
+
+    # from the backend
+    # myString = str(selectedDate).replace("'b'", '').replace('{"date":"', '').replace('"', '').replace("b'", '').replace("}'", '')
+
+    return isAuthenticated

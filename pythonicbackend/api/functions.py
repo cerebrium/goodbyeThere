@@ -862,8 +862,8 @@ def complianceCheck(vanList, scheduledDatesVan, imagesList, driversList, selecte
                 datesArray.append(dateObject) 
 
         myTransientObjectDriver['vanDatesArray'] = datesArray
-                # images version
 
+        # images version
         imagesArray = []
         for imgObject in myImagesArray:
             if imgObject['driver_id'] == ele.name:

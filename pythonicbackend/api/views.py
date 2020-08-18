@@ -215,3 +215,33 @@ class securityViewSet(ObtainAuthToken):
         return Response({
             'token': tokenizer(managerList, request.body)
         })
+
+class ComplianceMapViewSet(APIView):
+    
+    # Authentication
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request): 
+        drivers = Driver.objects.all()
+        vehicles = Vehicles.objects.all()
+        vehiclesDates = VehicleScheduledDate.objects.all()
+        images = Images.objects.all()
+        theDate = request.body
+
+        content = {
+            'data': returnVanOrderedData(vehicles, vehiclesDates, images, drivers, theDate)
+        }
+        return Response(content)   
+
+        # function for all data
+    def get(self, request):
+        drivers = Driver.objects.all()
+        vehicles = Vehicles.objects.all()
+        vehiclesDates = VehicleScheduledDate.objects.all()
+        images = Images.objects.all()
+        content = {
+            'data': returnVanOrderedData(vehicles, vehiclesDates, images, drivers) # the function is actually called in this file... so it has this files scope.... why we put things in 
+            # functions... makes them modular and then we can control their scope 
+        }
+
+        return Response(content)

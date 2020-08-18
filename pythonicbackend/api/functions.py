@@ -767,3 +767,144 @@ def tokenizer(managerList, requestBody):
     # myString = str(selectedDate).replace("'b'", '').replace('{"date":"', '').replace('"', '').replace("b'", '').replace("}'", '')
 
     return isAuthenticated
+
+
+def complianceCheck(vanList, scheduledDatesVan, imagesList, driversList, selectedDate=None):
+    myVehiclesArray = []
+    myImagesArray = []
+    myVanDateArray = []
+    myDriverArray = []     
+    myWeekArray = []
+    driverImagesArray = []
+
+    for ele in imagesList:
+        myTransientImage = {}
+        myTransientImage['driver_id'] = str(ele.driver_id)
+        myTransientImage['vehicle_id'] = str(ele.vehicle_id)
+        myTransientImage['image_id'] = ele.image_id
+        myTransientImage['name'] = ele.name
+        myTransientImage['countryOfIssue'] = ele.countryOfIssue
+        myTransientImage['expiryDate'] = ele.expiryDate
+        myTransientImage['dueDate'] = ele.dueDate
+        myTransientImage['datePassed'] = ele.datePassed
+        myTransientImage['photo'] = ele.photo
+        myTransientImage['managerApprovedName'] = ele.managerApprovedName
+        myTransientImage['managerApprovedDate'] = ele.managerApprovedDate
+        myTransientImage['imagesLink'] = ele.imagesLink
+        myTransientImage['verified'] = ele.verified
+        myTransientImage['driverSigned'] = ele.driverSigned
+        myTransientImage['points'] = ele.points
+        myTransientImage['nextDVLAScreenshot'] = ele.nextDVLAScreenshot
+        
+        myImagesArray.append(myTransientImage)
+
+    for ele in scheduledDatesVan:
+        myTransientVehicleDate = {}
+        myTransientVehicleDate['vehicleDate_id'] = str(ele.vehicleDate_id)
+        myTransientVehicleDate['vehicle_id'] = str(ele.vehicle_id)
+        myTransientVehicleDate['driver_id'] = str(ele.driver_id)
+        myTransientVehicleDate['date'] = ele.date
+
+        myVanDateArray.append(myTransientVehicleDate)
+
+    for ele in vanList:
+        myTransientVehicle = {}
+        myTransientVehicle['vehicle_id'] = ele.vehicle_id
+        myTransientVehicle['registration'] = ele.registration
+        myTransientVehicle['make'] = ele.make
+        myTransientVehicle['model'] = ele.model
+        myTransientVehicle['year'] = ele.year
+        myTransientVehicle['companyOwned'] = ele.companyOwned
+        myTransientVehicle['vtype'] = ele.vtype
+        myTransientVehicle['quotePrice'] = str(ele.quotePrice)
+        myTransientVehicle['invoice'] = str(ele.invoice)
+
+
+        # images version
+        imagesArray = []
+        for imgObject in myImagesArray:
+            if imgObject['vehicle_id'] == ele.registration:
+                imagesArray.append(imgObject)
+
+        myTransientVehicle['imgArray'] = imagesArray  
+
+        # dates version
+        datesArray = []
+        for dateObject in myVanDateArray:
+            if dateObject['vehicle_id'] == ele.registration:
+                datesArray.append(dateObject) 
+
+        myTransientVehicle['datesArray'] = datesArray
+
+        myVehiclesArray.append(myTransientVehicle)
+
+       ## recreate the driver dataset
+    for ele in driversList:
+        myTransientObjectDriver = {}
+        myTransientObjectDriver['driver_id'] = ele.driver_id
+        myTransientObjectDriver['vehicle_name'] = ele.vehicle_name
+        myTransientObjectDriver['name'] = ele.name
+        myTransientObjectDriver['location'] = ele.location
+        myTransientObjectDriver['email'] = ele.email
+        myTransientObjectDriver['phone'] = ele.phone
+        myTransientObjectDriver['address'] = ele.address
+        myTransientObjectDriver['status'] = ele.status
+        myTransientObjectDriver['DriverUniqueId'] = ele.DriverUniqueId
+        myTransientObjectDriver['SigningUrlNumber'] = ele.SigningUrlNumber
+        myTransientObjectDriver['Signed'] = ele.Signed
+        myTransientObjectDriver['approvedBy'] = ele.approvedBy
+        myTransientObjectDriver['approvedDateAndTime'] = ele.approvedDateAndTime 
+
+         # dates version
+        datesArray = []
+        for dateObject in myVanDateArray:
+            if dateObject['driver_id'] == ele.name:
+                datesArray.append(dateObject) 
+
+        myTransientObjectDriver['vanDatesArray'] = datesArray
+                # images version
+
+        imagesArray = []
+        for imgObject in myImagesArray:
+            if imgObject['driver_id'] == ele.name:
+                imagesArray.append(imgObject)
+
+        myTransientObjectDriver['imgArray'] = imagesArray  
+
+        ## append object to array
+        myDriverArray.append(myTransientObjectDriver)   
+
+
+        # find out today
+    
+    if selectedDate == None:
+        print('hurray')
+    else:
+        # from the postman requests
+        # myString = str(selectedDate).replace('%20', ' ').replace('date=', '').replace("b'", "").replace("'", "")
+
+        # from the backend
+        myString = str(selectedDate).replace("'b'", '').replace('{"date":"', '').replace('"', '').replace("b'", '').replace("}'", '')
+        weekBeforeSunday = datetime.datetime.strptime(myString, '%a %b %d %Y').date()
+        mostRecentSunday = weekBeforeSunday + datetime.timedelta(days=7)   
+
+        for ele in myVanDateArray:
+            if weekBeforeSunday <= datetime.datetime.strptime(ele['date'], '%a %b %d %Y').date() < mostRecentSunday:
+                myWeekArray.append(ele)  
+        # images version
+
+        imagesArray = []
+        for imgObject in myImagesArray:
+            if imgObject['driver_id'] == ele.name:
+                imagesArray.append(imgObject)
+
+        myTransientObjectDriver['imgArray'] = imagesArray  
+
+    myFinalObject = {
+        'vehicles': myVehiclesArray,
+        'drivers' : myDriverArray,
+        'modifiedvehicles' : myWeekArray
+
+    }   
+
+    return myFinalObject

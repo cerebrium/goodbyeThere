@@ -20,7 +20,6 @@ class managers(models.Model):
     DBS2 = models.BooleanField(default=False)
     DSN1 = models.BooleanField(default=False)
     DEX2 = models.BooleanField(default=False)
-    DBS2 = models.BooleanField(default=False)
     DXP1 = models.BooleanField(default=False)
     creationDate = models.CharField(max_length = 50, default = datetime.date.today())
 

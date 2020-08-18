@@ -23,7 +23,7 @@ urlpatterns = [
     path('statistics/', views.StatisticsViewSet.as_view(), name='stats'),
     path('csv/', views.MapViewSet.as_view(), name='csv'),
     path('vandata/', views.VehicleMapViewSet.as_view(), name='vehicles data'),
-    path('compliancedata/', views.ComplianceMapViewSet.as_view(), name='vehicles data'),
+    path('compliancedata/', views.ComplianceMapViewSet.as_view(), name='driver data'),
     path('security/', views.securityViewSet.as_view(), name='data_encrypted'),
     path('invoices/', views.InvoiceViewSet.as_view(), name='invoices'),
 ]

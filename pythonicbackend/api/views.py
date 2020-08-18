@@ -6,7 +6,7 @@ import json
 import base64
 from rest_framework.permissions import IsAuthenticated
 from .serializers import managersSerializer, DriverSerializer, ScheduledDatesSerializer, ImagesSerializer, VehiclesSerializer, InvoiceSerializer, VehicleDamagesSerializer, SupportTypeSerializer, DeductionTypeSerializer, VehicleScheduledDateSerializer
-from .functions import timeDifference, returnOrderdData, statistics, invoice, returnVanOrderedData, tokenizer
+from .functions import timeDifference, returnOrderdData, statistics, invoice, returnVanOrderedData, tokenizer, complianceCheck
 from .test_data import importData
 import csv, io 
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -229,7 +229,7 @@ class ComplianceMapViewSet(APIView):
         theDate = request.body
 
         content = {
-            'data': returnVanOrderedData(vehicles, vehiclesDates, images, drivers, theDate)
+            'data': complianceCheck(vehicles, vehiclesDates, images, drivers, theDate)
         }
         return Response(content)   
 
@@ -240,7 +240,7 @@ class ComplianceMapViewSet(APIView):
         vehiclesDates = VehicleScheduledDate.objects.all()
         images = Images.objects.all()
         content = {
-            'data': returnVanOrderedData(vehicles, vehiclesDates, images, drivers) # the function is actually called in this file... so it has this files scope.... why we put things in 
+            'data': complianceCheck(vehicles, vehiclesDates, images, drivers) # the function is actually called in this file... so it has this files scope.... why we put things in 
             # functions... makes them modular and then we can control their scope 
         }
 

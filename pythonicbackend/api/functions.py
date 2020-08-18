@@ -775,7 +775,6 @@ def complianceCheck(vanList, scheduledDatesVan, imagesList, driversList, selecte
     myVanDateArray = []
     myDriverArray = []     
     myWeekArray = []
-    driverImagesArray = []
 
     for ele in imagesList:
         myTransientImage = {}
@@ -855,6 +854,15 @@ def complianceCheck(vanList, scheduledDatesVan, imagesList, driversList, selecte
         myTransientObjectDriver['approvedBy'] = ele.approvedBy
         myTransientObjectDriver['approvedDateAndTime'] = ele.approvedDateAndTime 
 
+                # images version
+        print('hello')
+        imagesArray = []
+        for imgObject in myImagesArray:
+            if imgObject['driver_id'] == ele.name:
+                imagesArray.append(imgObject)
+
+        myTransientObjectDriver['imgArray'] = imagesArray  
+
          # dates version
         datesArray = []
         for dateObject in myVanDateArray:
@@ -862,14 +870,6 @@ def complianceCheck(vanList, scheduledDatesVan, imagesList, driversList, selecte
                 datesArray.append(dateObject) 
 
         myTransientObjectDriver['vanDatesArray'] = datesArray
-
-        # images version
-        imagesArray = []
-        for imgObject in myImagesArray:
-            if imgObject['driver_id'] == ele.name:
-                imagesArray.append(imgObject)
-
-        myTransientObjectDriver['imgArray'] = imagesArray  
 
         ## append object to array
         myDriverArray.append(myTransientObjectDriver)   

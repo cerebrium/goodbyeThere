@@ -839,6 +839,7 @@ def complianceCheck(vanList, scheduledDatesVan, imagesList, driversList, selecte
         myTransientObjectDriver['vanOwner'] = ele.vanOwner
         myTransientObjectDriver['registration'] = ele.registration
         myTransientObjectDriver['vtype'] = ele.vtype
+        myTransientObjectDriver['complianceCheck'] = ele.complianceCheck
 
                 # images version
         print('hello')

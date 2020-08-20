@@ -48,6 +48,8 @@ class Driver(models.Model):
     approvedBy = models.CharField(max_length = 30, null=True)
     approvedDateAndTime = models.CharField(max_length = 100, null=True)
     vanOwner = models.BooleanField(default=False)
+    registration = models.CharField(max_length = 30, null=True)
+    vtype = models.CharField(max_length = 30, null=True)
 
     objects = DriverManager() # allows us to call method above
     #week = models.DateField("week", default = datetime.date.today.isocalendar()[1])

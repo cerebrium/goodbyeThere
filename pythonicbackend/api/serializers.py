@@ -36,7 +36,9 @@ class DriverSerializer(serializers.HyperlinkedModelSerializer):
             'Signed',
             'vehicle_name',
             'approvedBy',
-            'approvedDateAndTime'
+            'approvedDateAndTime',
+            'registration',
+            'vtype'
         ]
         
 class InvoiceSerializer(serializers.HyperlinkedModelSerializer):

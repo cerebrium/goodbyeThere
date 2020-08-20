@@ -250,7 +250,7 @@ class AutoSchedulingMapViewSet(APIView):
     
     # Authentication
     permission_classes = (IsAuthenticated,)
-    driversList, datesList, selectedDate=None
+
     def post(self, request): 
         drivers = Driver.objects.all()
         schedule = ScheduledDate.objects.all()

@@ -908,10 +908,13 @@ def addDatedDriver(driversList, datesList, selectedDate=None):
             weekBeforeSunday = currentDate - datetime.timedelta(days=7) 
         else:
             mostRecentSunday = currentDate - datetime.timedelta(days=dateWeekDay)
-            nextSunday = mostRecentSunday + datetime.timedelta(days=7)
+            weekBeforeSunday = mostRecentSunday - datetime.timedelta(days=7)
+            twoWeeksBeforeSunday = mostRecentSunday - datetime.timedelta(days=14)
+            fourWeeksBeforeSunday = mostRecentSunday - datetime.timedelta(days=28) 
+            nextSunday = mostRecentSunday + datetime.timedelta(days=7) 
         
         for ele in datesList:
-            if weekBeforeSunday <= datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() < nextSunday:
+            if mostRecentSunday <= datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() < nextSunday:
                 myTransientObjectDates = {}
 
                 myTransientObjectDates['date_id'] = ele.date_id

@@ -914,6 +914,7 @@ def addDatedDriver(driversList, datesList, selectedDate=None):
             nextSunday = mostRecentSunday + datetime.timedelta(days=7) 
         
         for ele in datesList:
+            print(mostRecentSunday, nextSunday, datetime.datetime.strptime(ele.date, '%a %b %d %Y').date())
             if mostRecentSunday <= datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() < nextSunday:
                 myTransientObjectDates = {}
 
@@ -991,13 +992,12 @@ def addDatedDriver(driversList, datesList, selectedDate=None):
         myTransientObjectDriver['vtype'] = ele.vtype
         myTransientObjectDriver['complianceCheck'] = ele.complianceCheck
 
-                ## iterate through each date in datesList
-        if len(ele.datesList) > 0:
-            for item in ele.datesList:
+        ## iterate through each date in datesList
+        datesArray = []
+        for item in myDatesArray:
+            if item['driver_id'] == ele.name:
                 datesArray.append(item)
-            myTransientObjectDriver['datesList'] = datesArray
-        else:
-            myTransientObjectDriver['datesList'] = [] 
+        myTransientObjectDriver['datesList'] = datesArray
 
         myDriverArray.append(myTransientObjectDriver) 
 

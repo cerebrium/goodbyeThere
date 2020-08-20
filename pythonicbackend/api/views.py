@@ -6,7 +6,7 @@ import json
 import base64
 from rest_framework.permissions import IsAuthenticated
 from .serializers import managersSerializer, DriverSerializer, ScheduledDatesSerializer, ImagesSerializer, VehiclesSerializer, InvoiceSerializer, VehicleDamagesSerializer, SupportTypeSerializer, DeductionTypeSerializer, VehicleScheduledDateSerializer
-from .functions import timeDifference, returnOrderdData, statistics, invoice, returnVanOrderedData, tokenizer, complianceCheck
+from .functions import timeDifference, returnOrderdData, statistics, invoice, returnVanOrderedData, tokenizer, complianceCheck, addDatedDriver
 from .test_data import importData
 import csv, io 
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -241,6 +241,32 @@ class ComplianceMapViewSet(APIView):
         images = Images.objects.all()
         content = {
             'data': complianceCheck(vehicles, vehiclesDates, images, drivers) # the function is actually called in this file... so it has this files scope.... why we put things in 
+            # functions... makes them modular and then we can control their scope 
+        }
+
+        return Response(content)
+
+class AutoSchedulingMapViewSet(APIView):
+    
+    # Authentication
+    permission_classes = (IsAuthenticated,)
+    driversList, datesList, selectedDate=None
+    def post(self, request): 
+        drivers = Driver.objects.all()
+        schedule = ScheduledDate.objects.all()
+        theDate = request.body
+
+        content = {
+            'data': addDatedDriver(drivers, schedule, theDate)
+        }
+        return Response(content)   
+
+        # function for all data
+    def get(self, request):
+        drivers = Driver.objects.all()
+        schedule = ScheduledDate.objects.all()
+        content = {
+            'data': addDatedDriver(drivers, schedule) # the function is actually called in this file... so it has this files scope.... why we put things in 
             # functions... makes them modular and then we can control their scope 
         }
 

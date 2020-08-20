@@ -293,6 +293,9 @@ def returnOrderdData(driversList, datesList, imagesList, vehicles, deductions, s
         myTransientObjectDriver['Signed'] = ele.Signed
         myTransientObjectDriver['approvedBy'] = ele.approvedBy
         myTransientObjectDriver['approvedDateAndTime'] = ele.approvedDateAndTime
+        myTransientObjectDriver['registration'] = ele.registration
+        myTransientObjectDriver['vtype'] = ele.vtype
+        myTransientObjectDriver['complianceCheck'] = ele.complianceCheck
             
         ## iterate through numbers
         if ele.SigningUrlNumber:

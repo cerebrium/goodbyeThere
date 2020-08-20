@@ -1001,7 +1001,7 @@ def addDatedDriver(driversList, datesList, selectedDate=None):
         myDriverArray.append(myTransientObjectDriver) 
 
     myFinalObject = {
-        'drivers': myDatesArray,
+        'drivers': myDriverArray,
     } 
 
     return myFinalObject

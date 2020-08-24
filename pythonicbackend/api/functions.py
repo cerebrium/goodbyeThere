@@ -720,7 +720,7 @@ def invoice(driversList, datesList, vehiclesList, deductions, support, selectedD
     }
     
     for dateItem in allDatesArray:
-        print(dateItem[9])
+        print(dateItem[7])
         if dateItem[9] in myInvoiceObj:
          #   print(myInvoiceObj[dateItem[9]]['route'])
 
@@ -749,7 +749,8 @@ def invoice(driversList, datesList, vehiclesList, deductions, support, selectedD
                     'parcels': dateItem[14],
                     'mileage': dateItem[12]*0.17,
                     'deduction': dateItem[17],
-                    'support': dateItem[19] 
+                    'support': dateItem[19],
+                    'location': dateItem[7] 
                 }
 
     myFinalObject = {

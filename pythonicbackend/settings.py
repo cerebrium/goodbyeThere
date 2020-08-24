@@ -57,7 +57,6 @@ CORS_ORIGIN_WHITELIST = [
     "http://localhose:8000",
     "https://loving-wozniak-848d73.netlify.app",
     "https://crmsignitures.netlify.app",
-    "https://portfoliocrm.netlify.app/",
     "https://portfoliocrm.netlify.app",
     "https://crmfrontend.netlify.app",
 ]

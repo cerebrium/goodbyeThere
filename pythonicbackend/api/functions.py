@@ -1002,8 +1002,14 @@ def addDatedDriver(driversList, datesList, selectedDate=None):
 
         myDriverArray.append(myTransientObjectDriver) 
 
+    dateArrayLocal = []
+    for item in myDatesArray:
+        if item['name'] == 'bottomRoutes':
+            dateArrayLocal.push(item)
+
     myFinalObject = {
         'drivers': myDriverArray,
+        'bottomArray': dateArrayLocal
     } 
 
     return myFinalObject

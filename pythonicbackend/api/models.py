@@ -163,7 +163,7 @@ class ScheduledDatesManager(models.Manager):
 class ScheduledDate(models.Model):
     # have to add this
     objects = ScheduledDatesManager()
-    driver_id = models.ForeignKey(Driver, on_delete=models.CASCADE)
+    driver_id = models.ForeignKey(Driver, on_delete=models.CASCADE, null = True)
 
 
     # all fields needed for the daily feeling sheet report 

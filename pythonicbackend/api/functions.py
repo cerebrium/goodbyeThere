@@ -912,7 +912,7 @@ def addDatedDriver(driversList, datesList, selectedDate=None):
             weekBeforeSunday = mostRecentSunday - datetime.timedelta(days=7)
             twoWeeksBeforeSunday = mostRecentSunday - datetime.timedelta(days=14)
             fourWeeksBeforeSunday = mostRecentSunday - datetime.timedelta(days=28) 
-            nextSunday = mostRecentSunday + datetime.timedelta(days=7) 
+            nextSunday = mostRecentSunday + datetime.timedelta(days=14) 
         
         for ele in datesList:
             print(mostRecentSunday, nextSunday, datetime.datetime.strptime(ele.date, '%a %b %d %Y').date())
@@ -945,7 +945,7 @@ def addDatedDriver(driversList, datesList, selectedDate=None):
         # from the backend
         myString = str(selectedDate).replace("'b'", '').replace('{"date":"', '').replace('"', '').replace("b'", '').replace("}'", '')
         weekBeforeSunday = datetime.datetime.strptime(myString, '%a %b %d %Y').date()
-        mostRecentSunday = weekBeforeSunday + datetime.timedelta(days=7)   
+        mostRecentSunday = weekBeforeSunday + datetime.timedelta(days=14)   
 
         for ele in datesList:
             if weekBeforeSunday <= datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() < mostRecentSunday:

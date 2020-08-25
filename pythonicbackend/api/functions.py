@@ -915,7 +915,6 @@ def addDatedDriver(driversList, datesList, selectedDate=None):
             nextSunday = mostRecentSunday + datetime.timedelta(days=14) 
         
         for ele in datesList:
-            print(mostRecentSunday, nextSunday, datetime.datetime.strptime(ele.date, '%a %b %d %Y').date())
             if mostRecentSunday <= datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() < nextSunday:
                 myTransientObjectDates = {}
 
@@ -936,6 +935,7 @@ def addDatedDriver(driversList, datesList, selectedDate=None):
                 myTransientObjectDates['parcel'] = ele.parcel
                 myTransientObjectDates['parcelNotDelivered'] = ele.parcelNotDelivered
                 myTransientObjectDates['TORH'] = ele.TORH
+                myTransientObjectDates['totalRouteForDay'] = ele.totalRouteForDay
 
                 myDatesArray.append(myTransientObjectDates)
     else:

@@ -188,6 +188,7 @@ class ScheduledDate(models.Model):
     finish_mileage = models.IntegerField("MILEAGE", default=0, editable=True, null = True)
     parcel = models.IntegerField("PARCEL", default=0, editable=True, null = True)
     parcelNotDelivered = models.IntegerField("PARCEL NOT DELIVERED", default=0, editable=True, null = True)
+    totalRouteForDay = models.CharField(max_length = 10, default='0', null=True)
 
     #the following fields are Extra's report fields 
     TORH = models.TimeField("TORH", null = True)

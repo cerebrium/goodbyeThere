@@ -27,4 +27,5 @@ urlpatterns = [
     path('autoschedule/', views.AutoSchedulingMapViewSet.as_view(), name='scheduling'),
     path('security/', views.securityViewSet.as_view(), name='data_encrypted'),
     path('invoices/', views.InvoiceViewSet.as_view(), name='invoices'),
+    path('docdrivers/', views.docDrivers.as_view(), name='docdrivers'),
 ]

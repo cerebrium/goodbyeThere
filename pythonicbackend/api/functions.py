@@ -1013,3 +1013,61 @@ def addDatedDriver(driversList, datesList, selectedDate=None):
     } 
 
     return myFinalObject
+
+def documentsDriversOnly(driversList, imagesList): 
+    myImagesArray = []
+    myDriverArray = []     
+
+    for ele in imagesList:
+        myTransientImage = {}
+        myTransientImage['driver_id'] = str(ele.driver_id)
+        myTransientImage['vehicle_id'] = str(ele.vehicle_id)
+        myTransientImage['image_id'] = ele.image_id
+        myTransientImage['name'] = ele.name
+        myTransientImage['countryOfIssue'] = ele.countryOfIssue
+        myTransientImage['expiryDate'] = ele.expiryDate
+        myTransientImage['dueDate'] = ele.dueDate
+        myTransientImage['datePassed'] = ele.datePassed
+        myTransientImage['photo'] = ele.photo
+        myTransientImage['managerApprovedName'] = ele.managerApprovedName
+        myTransientImage['managerApprovedDate'] = ele.managerApprovedDate
+        myTransientImage['imagesLink'] = ele.imagesLink
+        myTransientImage['verified'] = ele.verified
+        myTransientImage['driverSigned'] = ele.driverSigned
+        myTransientImage['points'] = ele.points
+        myTransientImage['nextDVLAScreenshot'] = ele.nextDVLAScreenshot
+        
+        myImagesArray.append(myTransientImage)
+
+       ## recreate the driver dataset
+    for ele in driversList:
+        myTransientObjectDriver = {}
+        myTransientObjectDriver['driver_id'] = ele.driver_id
+        myTransientObjectDriver['vehicle_name'] = ele.vehicle_name
+        myTransientObjectDriver['name'] = ele.name
+        myTransientObjectDriver['location'] = ele.location
+        myTransientObjectDriver['email'] = ele.email
+        myTransientObjectDriver['phone'] = ele.phone
+        myTransientObjectDriver['address'] = ele.address
+        myTransientObjectDriver['status'] = ele.status
+        myTransientObjectDriver['DriverUniqueId'] = ele.DriverUniqueId
+        myTransientObjectDriver['SigningUrlNumber'] = ele.SigningUrlNumber
+        myTransientObjectDriver['Signed'] = ele.Signed
+        myTransientObjectDriver['approvedBy'] = ele.approvedBy
+        myTransientObjectDriver['approvedDateAndTime'] = ele.approvedDateAndTime 
+
+        imgArray = []
+        for item in myImagesArray:
+            if item['driver_id'] == ele.name:
+                imgArray.append(item)
+        myTransientObjectDriver['imgArray'] = imgArray
+
+        ## append object to array
+        myDriverArray.append(myTransientObjectDriver)   
+
+
+    myFinalObject = {
+        'drivers' : myDriverArray
+    }   
+
+    return myFinalObject

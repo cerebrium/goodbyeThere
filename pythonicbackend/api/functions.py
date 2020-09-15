@@ -1045,6 +1045,7 @@ def documentsDriversOnly(driversList, imagesList):
         myTransientObjectDriver['driver_id'] = ele.driver_id
         myTransientObjectDriver['vehicle_name'] = ele.vehicle_name
         myTransientObjectDriver['name'] = ele.name
+        myTransientObjectDriver['deleteButton'] = ele.deleteButton
         myTransientObjectDriver['location'] = ele.location
         myTransientObjectDriver['email'] = ele.email
         myTransientObjectDriver['phone'] = ele.phone
@@ -1055,6 +1056,10 @@ def documentsDriversOnly(driversList, imagesList):
         myTransientObjectDriver['Signed'] = ele.Signed
         myTransientObjectDriver['approvedBy'] = ele.approvedBy
         myTransientObjectDriver['approvedDateAndTime'] = ele.approvedDateAndTime 
+        myTransientObjectDriver['vanOwner'] = ele.vanOwner 
+        myTransientObjectDriver['registration'] = ele.registration 
+        myTransientObjectDriver['vtype'] = ele.vtype 
+        myTransientObjectDriver['complainceCheck'] = ele.complainceCheck 
 
         imgArray = []
         for item in myImagesArray:

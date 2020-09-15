@@ -28,4 +28,5 @@ urlpatterns = [
     path('security/', views.securityViewSet.as_view(), name='data_encrypted'),
     path('invoices/', views.InvoiceViewSet.as_view(), name='invoices'),
     path('docdrivers/', views.docDrivers.as_view(), name='docdrivers'),
+    path('dailservice/', views.DailyServiceViewSet.as_view(), name='docdrivers'),
 ]

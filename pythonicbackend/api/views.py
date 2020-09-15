@@ -6,7 +6,7 @@ import json
 import base64
 from rest_framework.permissions import IsAuthenticated
 from .serializers import managersSerializer, DriverSerializer, ScheduledDatesSerializer, ImagesSerializer, VehiclesSerializer, InvoiceSerializer, VehicleDamagesSerializer, SupportTypeSerializer, DeductionTypeSerializer, VehicleScheduledDateSerializer
-from .functions import timeDifference, returnOrderdData, statistics, invoice, returnVanOrderedData, tokenizer, complianceCheck, addDatedDriver, documentsDriversOnly
+from .functions import timeDifference, returnOrderdData, statistics, invoice, returnVanOrderedData, tokenizer, complianceCheck, addDatedDriver, documentsDriversOnly, dailyService
 from .test_data import importData
 import csv, io 
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -205,6 +205,34 @@ class InvoiceViewSet(APIView):
 
         content = {
             'data': invoice(drivers, schedule, vehicles, deductions, support)
+        }
+        return Response(content)
+
+class DailyServiceViewSet(APIView):
+    # function for all data
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request): 
+        drivers = Driver.objects.all()
+        schedule = ScheduledDate.objects.all()
+        deductions = DeductionType.objects.all()
+        support = SupportType.objects.all()
+        theDate = request.body
+
+        content = {
+            'data': invoice(drivers, schedule, deductions, support, theDate)
+        }
+        return Response(content)   
+
+    def get(self, request):
+        # defining overall data objects
+        drivers = Driver.objects.all()
+        schedule = ScheduledDate.objects.all()
+        deductions = DeductionType.objects.all()
+        support = SupportType.objects.all()
+
+        content = {
+            'data': invoice(drivers, schedule, deductions, support)
         }
         return Response(content)
 

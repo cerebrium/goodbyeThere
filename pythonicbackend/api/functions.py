@@ -993,7 +993,7 @@ def addDatedDriver(driversList, datesList, selectedDate=None):
         myTransientObjectDriver['vtype'] = ele.vtype
         myTransientObjectDriver['complianceCheck'] = ele.complianceCheck
 
-        ## iterate through each date in datesList
+        ## iterate through each date in datesList fuck me
         datesArray = []
         for item in myDatesArray:
             if item['driver_id'] == ele.name:

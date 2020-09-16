@@ -1090,32 +1090,33 @@ def dailyService(driversList, datesList, deductions, support, selectedDate=None)
 
         for ele in deductions:
             if not ele.date:
-                print('cool')
+                print('')
             else:    
-                if datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() == currentDate.date():
+                if datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() == currentDate:
                     myTransientDeduction = {}
                     myTransientDeduction['deduction_id'] = ele.deduction_id
                     myTransientDeduction['date_id'] = str(ele.date_id)
                     myTransientDeduction['name'] = ele.name
+                    myTransientDeduction['date'] = ele.date
                     myTransientDeduction['amount'] = str(ele.amount)
 
                     myDeductionArray.append(myTransientDeduction)
 
         for ele in support:
             if not ele.date:
-                print('cool')
+                print('')
             else:    
-                if datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() == currentDate.date():
+                if datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() == currentDate:
                     myTransientSupport = {}
                     myTransientSupport['support_id'] = ele.support_id
                     myTransientSupport['date_id'] = str(ele.date_id)
-                    myTransientSupport['name'] = ele.name
+                    myTransientSupport['date'] = ele.date
                     myTransientSupport['amount'] = str(ele.amount)
 
                     mySupportArray.append(myTransientSupport)    
         
         for ele in datesList:
-            if datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() == currentDate.date():
+            if datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() == currentDate:
                 myTransientObjectDates = {}
 
                 myTransientObjectDates['date_id'] = ele.date_id
@@ -1167,38 +1168,42 @@ def dailyService(driversList, datesList, deductions, support, selectedDate=None)
     else:
         # from the postman requests
         # myString = str(selectedDate).replace('%20', ' ').replace('date=', '').replace("b'", "").replace("'", "")
+        # print('*********************** my string: ', myString)
 
         # from the backend
         myString = str(selectedDate).replace("'b'", '').replace('{"date":"', '').replace('"', '').replace("b'", '').replace("}'", '') 
+        selectedDate = datetime.datetime.strptime(myString, '%a %b %d %Y').date()
 
         for ele in deductions:
             if not ele.date:
-                print('cool')
+                print('')
             else:    
-                if datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() == myString.date():
+                if datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() == selectedDate:
                     myTransientDeduction = {}
                     myTransientDeduction['deduction_id'] = ele.deduction_id
                     myTransientDeduction['date_id'] = str(ele.date_id)
                     myTransientDeduction['name'] = ele.name
                     myTransientDeduction['amount'] = str(ele.amount)
+                    myTransientDeduction['date'] = ele.date
 
                     myDeductionArray.append(myTransientDeduction)
 
         for ele in support:
             if not ele.date:
-                print('cool')
+                print('')
             else: 
-                if datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() == myString.date():
+                if datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() == selectedDate:
                     myTransientSupport = {}
                     myTransientSupport['support_id'] = ele.support_id
                     myTransientSupport['date_id'] = str(ele.date_id)
                     myTransientSupport['name'] = ele.name
+                    myTransientSupport['date'] = ele.date
                     myTransientSupport['amount'] = str(ele.amount)
 
                     mySupportArray.append(myTransientSupport)  
 
         for ele in datesList:
-            if datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() == myString.date():
+            if datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() == selectedDate:
                 myTransientObjectDates = {}
 
                 myTransientObjectDates['date_id'] = ele.date_id

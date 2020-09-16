@@ -142,7 +142,8 @@ class DeductionTypeSerializer(serializers.HyperlinkedModelSerializer):
             'date_id',
             'name',
             'amount',
-            'comment'
+            'comment',
+            'date',
         ]
 
 class SupportTypeSerializer(serializers.HyperlinkedModelSerializer):
@@ -153,7 +154,8 @@ class SupportTypeSerializer(serializers.HyperlinkedModelSerializer):
             'date_id',
             'name',
             'amount',
-            'comment'
+            'comment',
+            'date',
         ]
 
 class VehicleScheduledDateSerializer(serializers.HyperlinkedModelSerializer):

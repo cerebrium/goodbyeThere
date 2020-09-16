@@ -1104,7 +1104,8 @@ def dailyService(driversList, datesList, deductions, support, selectedDate=None)
             nextSunday = mostRecentSunday + datetime.timedelta(days=14) 
 
         for ele in deductions:
-            if mostRecentSunday <= datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() < nextSunday:
+            print('*****************************************', str(ele.date))
+            if not ele.date:
                 myTransientDeduction = {}
                 myTransientDeduction['deduction_id'] = ele.deduction_id
                 myTransientDeduction['date_id'] = str(ele.date_id)
@@ -1112,16 +1113,34 @@ def dailyService(driversList, datesList, deductions, support, selectedDate=None)
                 myTransientDeduction['amount'] = str(ele.amount)
 
                 myDeductionArray.append(myTransientDeduction)
+            else:    
+                if mostRecentSunday <= datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() < nextSunday:
+                    myTransientDeduction = {}
+                    myTransientDeduction['deduction_id'] = ele.deduction_id
+                    myTransientDeduction['date_id'] = str(ele.date_id)
+                    myTransientDeduction['name'] = ele.name
+                    myTransientDeduction['amount'] = str(ele.amount)
+
+                    myDeductionArray.append(myTransientDeduction)
 
         for ele in support:
-            if mostRecentSunday <= datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() < nextSunday:
+            if not ele.date:
                 myTransientSupport = {}
                 myTransientSupport['support_id'] = ele.support_id
                 myTransientSupport['date_id'] = str(ele.date_id)
                 myTransientSupport['name'] = ele.name
                 myTransientSupport['amount'] = str(ele.amount)
 
-                mySupportArray.append(myTransientSupport)    
+                mySupportArray.append(myTransientSupport) 
+            else:    
+                if mostRecentSunday <= datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() < nextSunday:
+                    myTransientSupport = {}
+                    myTransientSupport['support_id'] = ele.support_id
+                    myTransientSupport['date_id'] = str(ele.date_id)
+                    myTransientSupport['name'] = ele.name
+                    myTransientSupport['amount'] = str(ele.amount)
+
+                    mySupportArray.append(myTransientSupport)    
         
         for ele in datesList:
             if mostRecentSunday <= datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() < nextSunday:

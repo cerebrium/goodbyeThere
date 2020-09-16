@@ -1083,6 +1083,8 @@ def dailyService(driversList, datesList, deductions, support, selectedDate=None)
     myDeductionArray = []
     mySupportArray = []
 
+    print(driversList)
+
     if selectedDate == None:
         currentDate = datetime.date.today()
         dateWeekDay = currentDate.weekday()

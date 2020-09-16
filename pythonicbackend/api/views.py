@@ -220,7 +220,7 @@ class DailyServiceViewSet(APIView):
         theDate = request.body
 
         content = {
-            'data': invoice(drivers, schedule, deductions, support, theDate)
+            'data': dailyService(drivers, schedule, deductions, support, theDate)
         }
         return Response(content)   
 
@@ -232,7 +232,7 @@ class DailyServiceViewSet(APIView):
         support = SupportType.objects.all()
 
         content = {
-            'data': invoice(drivers, schedule, deductions, support)
+            'data': dailyService(drivers, schedule, deductions, support)
         }
         return Response(content)
 

@@ -1087,33 +1087,12 @@ def dailyService(driversList, datesList, deductions, support, selectedDate=None)
 
     if selectedDate == None:
         currentDate = datetime.date.today()
-        dateWeekDay = currentDate.weekday()
-        mostRecentSunday = 0
-        weekBeforeSunday = 0
-        twoWeeksBeforeSunday = 0
-        fourWeeksBeforeSunday = 0
-        dateWeekDay+=1
-        if currentDate.weekday() == 6:
-            mostRecentSunday = currentDate 
-            weekBeforeSunday = currentDate - datetime.timedelta(days=7) 
-        else:
-            mostRecentSunday = currentDate - datetime.timedelta(days=dateWeekDay)
-            weekBeforeSunday = mostRecentSunday - datetime.timedelta(days=7)
-            twoWeeksBeforeSunday = mostRecentSunday - datetime.timedelta(days=14)
-            fourWeeksBeforeSunday = mostRecentSunday - datetime.timedelta(days=28) 
-            nextSunday = mostRecentSunday + datetime.timedelta(days=14) 
 
         for ele in deductions:
             if not ele.date:
-                myTransientDeduction = {}
-                myTransientDeduction['deduction_id'] = ele.deduction_id
-                myTransientDeduction['date_id'] = str(ele.date_id)
-                myTransientDeduction['name'] = ele.name
-                myTransientDeduction['amount'] = str(ele.amount)
-
-                myDeductionArray.append(myTransientDeduction)
+                print('cool')
             else:    
-                if mostRecentSunday <= datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() < nextSunday:
+                if datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() == currentDate.date():
                     myTransientDeduction = {}
                     myTransientDeduction['deduction_id'] = ele.deduction_id
                     myTransientDeduction['date_id'] = str(ele.date_id)
@@ -1124,15 +1103,9 @@ def dailyService(driversList, datesList, deductions, support, selectedDate=None)
 
         for ele in support:
             if not ele.date:
-                myTransientSupport = {}
-                myTransientSupport['support_id'] = ele.support_id
-                myTransientSupport['date_id'] = str(ele.date_id)
-                myTransientSupport['name'] = ele.name
-                myTransientSupport['amount'] = str(ele.amount)
-
-                mySupportArray.append(myTransientSupport) 
+                print('cool')
             else:    
-                if mostRecentSunday <= datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() < nextSunday:
+                if datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() == currentDate.date():
                     myTransientSupport = {}
                     myTransientSupport['support_id'] = ele.support_id
                     myTransientSupport['date_id'] = str(ele.date_id)
@@ -1142,7 +1115,7 @@ def dailyService(driversList, datesList, deductions, support, selectedDate=None)
                     mySupportArray.append(myTransientSupport)    
         
         for ele in datesList:
-            if mostRecentSunday <= datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() < nextSunday:
+            if datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() == currentDate.date():
                 myTransientObjectDates = {}
 
                 myTransientObjectDates['date_id'] = ele.date_id
@@ -1196,32 +1169,36 @@ def dailyService(driversList, datesList, deductions, support, selectedDate=None)
         # myString = str(selectedDate).replace('%20', ' ').replace('date=', '').replace("b'", "").replace("'", "")
 
         # from the backend
-        myString = str(selectedDate).replace("'b'", '').replace('{"date":"', '').replace('"', '').replace("b'", '').replace("}'", '')
-        weekBeforeSunday = datetime.datetime.strptime(myString, '%a %b %d %Y').date()
-        mostRecentSunday = weekBeforeSunday + datetime.timedelta(days=14)   
+        myString = str(selectedDate).replace("'b'", '').replace('{"date":"', '').replace('"', '').replace("b'", '').replace("}'", '') 
 
         for ele in deductions:
-            if weekBeforeSunday <= datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() < mostRecentSunday:
-                myTransientDeduction = {}
-                myTransientDeduction['deduction_id'] = ele.deduction_id
-                myTransientDeduction['date_id'] = str(ele.date_id)
-                myTransientDeduction['name'] = ele.name
-                myTransientDeduction['amount'] = str(ele.amount)
+            if not ele.date:
+                print('cool')
+            else:    
+                if datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() == myString.date():
+                    myTransientDeduction = {}
+                    myTransientDeduction['deduction_id'] = ele.deduction_id
+                    myTransientDeduction['date_id'] = str(ele.date_id)
+                    myTransientDeduction['name'] = ele.name
+                    myTransientDeduction['amount'] = str(ele.amount)
 
-                myDeductionArray.append(myTransientDeduction)
+                    myDeductionArray.append(myTransientDeduction)
 
         for ele in support:
-            if weekBeforeSunday <= datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() < mostRecentSunday:
-                myTransientSupport = {}
-                myTransientSupport['support_id'] = ele.support_id
-                myTransientSupport['date_id'] = str(ele.date_id)
-                myTransientSupport['name'] = ele.name
-                myTransientSupport['amount'] = str(ele.amount)
+            if not ele.date:
+                print('cool')
+            else: 
+                if datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() == myString.date():
+                    myTransientSupport = {}
+                    myTransientSupport['support_id'] = ele.support_id
+                    myTransientSupport['date_id'] = str(ele.date_id)
+                    myTransientSupport['name'] = ele.name
+                    myTransientSupport['amount'] = str(ele.amount)
 
-                mySupportArray.append(myTransientSupport)  
+                    mySupportArray.append(myTransientSupport)  
 
         for ele in datesList:
-            if weekBeforeSunday <= datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() < mostRecentSunday:
+            if datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() == myString.date():
                 myTransientObjectDates = {}
 
                 myTransientObjectDates['date_id'] = ele.date_id

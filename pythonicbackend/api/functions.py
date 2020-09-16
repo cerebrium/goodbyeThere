@@ -1104,7 +1104,6 @@ def dailyService(driversList, datesList, deductions, support, selectedDate=None)
             nextSunday = mostRecentSunday + datetime.timedelta(days=14) 
 
         for ele in deductions:
-            print('*****************************************', str(ele.date))
             if not ele.date:
                 myTransientDeduction = {}
                 myTransientDeduction['deduction_id'] = ele.deduction_id

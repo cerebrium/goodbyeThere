@@ -1015,8 +1015,49 @@ def addDatedDriver(driversList, datesList, selectedDate=None):
     return myFinalObject
 
 def documentsDriversOnly(driversList, imagesList): 
-    myImagesArray = []
-    myDriverArray = []     
+    myDriverArray = []  
+    imageObj = {}   
+
+    for item in imagesList:
+        if str(item.driver_id) in imageObj:
+            myTransientImage = {}
+            myTransientImage['driver_id'] = str(item.driver_id)
+            myTransientImage['vehicle_id'] = str(item.vehicle_id)
+            myTransientImage['image_id'] = item.image_id
+            myTransientImage['name'] = item.name
+            myTransientImage['countryOfIssue'] = item.countryOfIssue
+            myTransientImage['expiryDate'] = item.expiryDate
+            myTransientImage['dueDate'] = item.dueDate
+            myTransientImage['datePassed'] = item.datePassed
+            myTransientImage['photo'] = item.photo
+            myTransientImage['managerApprovedName'] = item.managerApprovedName
+            myTransientImage['managerApprovedDate'] = item.managerApprovedDate
+            myTransientImage['imagesLink'] = item.imagesLink
+            myTransientImage['verified'] = item.verified
+            myTransientImage['driverSigned'] = item.driverSigned
+            myTransientImage['points'] = item.points
+            myTransientImage['nextDVLAScreenshot'] = item.nextDVLAScreenshot
+            imageObj[str(item.driver_id)].append(myTransientImage)
+        else:
+            imageObj[str(item.driver_id)] = []
+            myTransientImage = {}
+            myTransientImage['driver_id'] = str(item.driver_id)
+            myTransientImage['vehicle_id'] = str(item.vehicle_id)
+            myTransientImage['image_id'] = item.image_id
+            myTransientImage['name'] = item.name
+            myTransientImage['countryOfIssue'] = item.countryOfIssue
+            myTransientImage['expiryDate'] = item.expiryDate
+            myTransientImage['dueDate'] = item.dueDate
+            myTransientImage['datePassed'] = item.datePassed
+            myTransientImage['photo'] = item.photo
+            myTransientImage['managerApprovedName'] = item.managerApprovedName
+            myTransientImage['managerApprovedDate'] = item.managerApprovedDate
+            myTransientImage['imagesLink'] = item.imagesLink
+            myTransientImage['verified'] = item.verified
+            myTransientImage['driverSigned'] = item.driverSigned
+            myTransientImage['points'] = item.points
+            myTransientImage['nextDVLAScreenshot'] = item.nextDVLAScreenshot
+            imageObj[str(item.driver_id)].append(myTransientImage)
 
        ## recreate the driver dataset
     for ele in driversList:
@@ -1040,31 +1081,9 @@ def documentsDriversOnly(driversList, imagesList):
         myTransientObjectDriver['vtype'] = ele.vtype 
         myTransientObjectDriver['complianceCheck'] = ele.complianceCheck 
 
-        imgArray = []
-        for item in imagesList:
-            print('****************item: ', str(item.driver_id))
-            if str(item.driver_id) == ele.name:
-                myTransientImage = {}
-                myTransientImage['driver_id'] = str(item.driver_id)
-                myTransientImage['vehicle_id'] = str(item.vehicle_id)
-                myTransientImage['image_id'] = item.image_id
-                myTransientImage['name'] = item.name
-                myTransientImage['countryOfIssue'] = item.countryOfIssue
-                myTransientImage['expiryDate'] = item.expiryDate
-                myTransientImage['dueDate'] = item.dueDate
-                myTransientImage['datePassed'] = item.datePassed
-                myTransientImage['photo'] = item.photo
-                myTransientImage['managerApprovedName'] = item.managerApprovedName
-                myTransientImage['managerApprovedDate'] = item.managerApprovedDate
-                myTransientImage['imagesLink'] = item.imagesLink
-                myTransientImage['verified'] = item.verified
-                myTransientImage['driverSigned'] = item.driverSigned
-                myTransientImage['points'] = item.points
-                myTransientImage['nextDVLAScreenshot'] = item.nextDVLAScreenshot
-        
-                imgArray.append(myTransientImage)
-                
-        myTransientObjectDriver['imgArray'] = imgArray
+        for item in imageObj:
+            if item == str(ele.driver_id):
+                myTransientObjectDriver['imgArray'] = imageObj[item]
 
         ## append object to array
         myDriverArray.append(myTransientObjectDriver)   

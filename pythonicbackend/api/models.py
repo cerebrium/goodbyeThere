@@ -56,7 +56,7 @@ class Driver(models.Model):
     #week = models.DateField("week", default = datetime.date.today.isocalendar()[1])
     
     def __str__(self):
-        return self.name 
+        return str(self.driver_id) 
 
 class InvoiceManager(models.Manager):
     def create_Invoice(self, driver_id, day, routeType, LWP, LVP, SUP, deductions, fuel):

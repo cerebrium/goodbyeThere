@@ -1084,6 +1084,8 @@ def documentsDriversOnly(driversList, imagesList):
         for item in imageObj:
             if item == str(ele.driver_id):
                 myTransientObjectDriver['imgArray'] = imageObj[item]
+            else:
+                myTransientObjectDriver['imgArray'] = []
 
         ## append object to array
         myDriverArray.append(myTransientObjectDriver)   
@@ -1274,7 +1276,7 @@ def dailyService(driversList, datesList, deductions, support, selectedDate=None)
 
     for ele in driversList:
         myTransientObjectDriver = {}
-        myTransientObjectDriver['driver_id'] = ele.driver_id
+        myTransientObjectDriver['driver_id'] = str(ele.driver_id)
         myTransientObjectDriver['vehicle_name'] = ele.vehicle_name
         myTransientObjectDriver['name'] = ele.name
         myTransientObjectDriver['location'] = ele.location

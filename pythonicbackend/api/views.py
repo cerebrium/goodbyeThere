@@ -307,8 +307,8 @@ class docDrivers(APIView):
 
         # function for all data
     def get(self, request):
-        drivers = Driver.objects.all()
-        images = Images.objects.all()
+        drivers = Driver.objects.all().order_by('name')
+        images = Images.objects.all().order_by('driver_id')
         content = {
             'data': documentsDriversOnly(drivers, images) # the function is actually called in this file... so it has this files scope.... why we put things in 
             # functions... makes them modular and then we can control their scope 

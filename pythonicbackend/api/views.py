@@ -6,7 +6,7 @@ import json
 import base64
 from rest_framework.permissions import IsAuthenticated
 from .serializers import managersSerializer, DriverSerializer, ScheduledDatesSerializer, ImagesSerializer, VehiclesSerializer, InvoiceSerializer, VehicleDamagesSerializer, SupportTypeSerializer, DeductionTypeSerializer, VehicleScheduledDateSerializer
-from .functions import timeDifference, returnOrderdData, statistics, invoice, returnVanOrderedData, tokenizer, complianceCheck, addDatedDriver, documentsDriversOnly, dailyService
+from .functions import timeDifference, returnOrderdData, statistics, invoice, returnVanOrderedData, tokenizer, complianceCheck, addDatedDriver, documentsDriversOnly, dailyService, imagesAndDrivers
 from .test_data import importData
 import csv, io 
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -327,6 +327,21 @@ class docDrivers(APIView):
         content = {
             'data': documentsDriversOnly(drivers, images) # the function is actually called in this file... so it has this files scope.... why we put things in 
             # functions... makes them modular and then we can control their scope 
+        }
+
+        return Response(content)
+
+class ImagesAndDrivers(APIView):
+    
+    # Authentication
+    permission_classes = (IsAuthenticated,) 
+
+        # function for all data
+    def get(self, request):
+        drivers = Driver.objects.all().order_by('driver_id')
+        images = Images.objects.all().order_by('driver_id')
+        content = {
+            'data': imagesAndDrivers(drivers, images)
         }
 
         return Response(content)

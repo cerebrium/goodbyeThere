@@ -1264,3 +1264,9 @@ def dailyService(driversList, datesList, deductions, support, selectedDate=None)
     } 
 
     return myFinalObject
+
+def imagesAndDrivers(driverList, imagesList):
+    return({
+        'drivers': driverList,
+        'images': imagesList
+    })

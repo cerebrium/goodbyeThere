@@ -680,7 +680,7 @@ def invoice(driversList, datesList, vehiclesList, deductions, support, selectedD
         if dateItem[9] in myInvoiceObj:
          #   print(myInvoiceObj[dateItem[9]]['route'])
             # add the name
-            myInvoiceObj[dateItem[9]]['name'] = driverObj[dateItem[0]]
+            myInvoiceObj[dateItem[9]]['name'] = driverObj[dateItem[9]]
 
             # sums the routes
             myInvoiceObj[dateItem[9]]['route'] = myInvoiceObj[dateItem[9]]['route'] + float([myObj[dateItem[3]]][0])

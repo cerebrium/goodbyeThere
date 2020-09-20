@@ -305,9 +305,24 @@ class docDrivers(APIView):
     # Authentication
     permission_classes = (IsAuthenticated,) 
 
+    def post(self, request): 
+        drivers = Driver.objects.all().order_by('driver_id')
+        images = Images.objects.all().order_by('driver_id')
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        station = body['station']
+
+        content = {
+            'data': documentsDriversOnly(drivers, images, station) # the function is actually called in this file... so it has this files scope.... why we put things in 
+            # functions... makes them modular and then we can control their scope 
+        }
+
+        return Response(content)
+
+
         # function for all data
     def get(self, request):
-        drivers = Driver.objects.all().order_by('name')
+        drivers = Driver.objects.all().order_by('driver_id')
         images = Images.objects.all().order_by('driver_id')
         content = {
             'data': documentsDriversOnly(drivers, images) # the function is actually called in this file... so it has this files scope.... why we put things in 

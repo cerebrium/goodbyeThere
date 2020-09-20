@@ -479,13 +479,11 @@ def invoice(driversList, datesList, vehiclesList, deductions, support, selectedD
 
     #### add an array of registrations for the vehicles that are owned by the company
     #### add array containing the status of the drivers
-
-    myImagesArray = []
     myDriverArray = []
     myDatesArray = []
-    myVehiclesArray = []
     myDeductionArray = []
     mySupportArray = []
+    driverObj = {}
 
     for ele in deductions:
         myTransientDeduction = {}
@@ -504,29 +502,6 @@ def invoice(driversList, datesList, vehiclesList, deductions, support, selectedD
         myTransientSupport['amount'] = str(ele.amount)
 
         mySupportArray.append(myTransientSupport)
-
-    for ele in vehiclesList:
-        myTransientVehicle = {}
-        myTransientVehicle['vehicle_id'] = ele.vehicle_id
-        myTransientVehicle['registration'] = ele.registration
-        myTransientVehicle['make'] = ele.make
-        myTransientVehicle['model'] = ele.model
-        myTransientVehicle['year'] = ele.year
-        myTransientVehicle['companyOwned'] = ele.companyOwned
-        myTransientVehicle['vtype'] = ele.vtype
-        myTransientVehicle['quotePrice'] = str(ele.quotePrice)
-        myTransientVehicle['invoice'] = str(ele.invoice)
-
-        myVehiclesArray.append(myTransientVehicle)
-
-        # images version
-        imagesArray = []
-        for imgObject in myImagesArray:
-            if imgObject['vehicle_id'] == ele.registration:
-                print(imgObject)
-                imagesArray.append(imgObject)
-
-        myTransientVehicle['imgArray'] = imagesArray  
 
     for ele in datesList:
         myTransientObjectDates = {}
@@ -584,6 +559,7 @@ def invoice(driversList, datesList, vehiclesList, deductions, support, selectedD
 
     ## recreate the driver dataset
     for ele in driversList:
+        driverObj[str(ele.driver_id)] = ele.name
         myTransientObjectDriver = {}
         datesArray = []
         myTransientObjectDriver['driver_id'] = str(ele.driver_id)
@@ -625,23 +601,6 @@ def invoice(driversList, datesList, vehiclesList, deductions, support, selectedD
 
         myTransientObjectDriver['datesArray'] = datesObjectArray    
 
-        # images version
-        imagesArray = []
-        for imgObject in myImagesArray:
-            if imgObject['driver_id'] == str(ele.driver_id):
-                imagesArray.append(imgObject)
-
-        myTransientObjectDriver['imgArray'] = imagesArray  
-
-        # # vehicles version
-        # vehiclesArray = []
-        # for vehicleObject in myVehiclesArray:
-        #     if vehicleObject['driver_id'] == ele.name:
-        #         vehiclesArray.append(vehicleObject)
-
-        # myTransientObjectDriver['vehicleArray'] = vehiclesArray  
-
-        ## append object to array
         myDriverArray.append(myTransientObjectDriver)   
 
 
@@ -670,8 +629,6 @@ def invoice(driversList, datesList, vehiclesList, deductions, support, selectedD
         myString = str(selectedDate).replace("'b'", '').replace('{"date":"', '').replace('"', '').replace("b'", '').replace("}'", '')
         weekBeforeSunday = datetime.datetime.strptime(myString, '%a %b %d %Y').date()
         mostRecentSunday = weekBeforeSunday + datetime.timedelta(days=7)   
-
-    print(weekBeforeSunday, mostRecentSunday)    
         
     # # create array to go onto the driver that will contain all the drivers dates
     payrollArray = []
@@ -720,9 +677,10 @@ def invoice(driversList, datesList, vehiclesList, deductions, support, selectedD
     }
     
     for dateItem in allDatesArray:
-        print(dateItem[7])
         if dateItem[9] in myInvoiceObj:
          #   print(myInvoiceObj[dateItem[9]]['route'])
+            # add the name
+            myInvoiceObj[dateItem[9]]['name'] = driverObj[dateItem[0]]
 
             # sums the routes
             myInvoiceObj[dateItem[9]]['route'] = myInvoiceObj[dateItem[9]]['route'] + float([myObj[dateItem[3]]][0])
@@ -731,7 +689,6 @@ def invoice(driversList, datesList, vehiclesList, deductions, support, selectedD
             myInvoiceObj[dateItem[9]]['parcels'] = myInvoiceObj[dateItem[9]]['parcels'] + float(dateItem[14])
 
             # sums the routes
-            print(float(dateItem[10])*0.17)
             myInvoiceObj[dateItem[9]]['mileage'] = myInvoiceObj[dateItem[9]]['mileage'] + float(dateItem[10])*0.17
 
             # sums the deduction
@@ -1014,7 +971,8 @@ def addDatedDriver(driversList, datesList, selectedDate=None):
 
     return myFinalObject
 
-def documentsDriversOnly(driversList, imagesList): 
+def documentsDriversOnly(driversList, imagesList, station=None):  
+
     myDriverArray = []  
     imageObj = {}   
 
@@ -1061,33 +1019,34 @@ def documentsDriversOnly(driversList, imagesList):
 
        ## recreate the driver dataset
     for ele in driversList:
-        myTransientObjectDriver = {}
-        myTransientObjectDriver['driver_id'] = ele.driver_id
-        myTransientObjectDriver['vehicle_name'] = ele.vehicle_name
-        myTransientObjectDriver['deleteButton'] = ele.deleteButton
-        myTransientObjectDriver['name'] = ele.name
-        myTransientObjectDriver['location'] = ele.location
-        myTransientObjectDriver['email'] = ele.email
-        myTransientObjectDriver['phone'] = ele.phone
-        myTransientObjectDriver['address'] = ele.address
-        myTransientObjectDriver['status'] = ele.status
-        myTransientObjectDriver['DriverUniqueId'] = ele.DriverUniqueId
-        myTransientObjectDriver['SigningUrlNumber'] = ele.SigningUrlNumber
-        myTransientObjectDriver['Signed'] = ele.Signed
-        myTransientObjectDriver['approvedBy'] = ele.approvedBy
-        myTransientObjectDriver['approvedDateAndTime'] = ele.approvedDateAndTime 
-        myTransientObjectDriver['vanOwner'] = ele.vanOwner 
-        myTransientObjectDriver['registration'] = ele.registration 
-        myTransientObjectDriver['vtype'] = ele.vtype 
-        myTransientObjectDriver['complianceCheck'] = ele.complianceCheck 
-        myTransientObjectDriver['imgArray'] = []
+        if ele.location == station:
+            myTransientObjectDriver = {}
+            myTransientObjectDriver['driver_id'] = ele.driver_id
+            myTransientObjectDriver['vehicle_name'] = ele.vehicle_name
+            myTransientObjectDriver['deleteButton'] = ele.deleteButton
+            myTransientObjectDriver['name'] = ele.name
+            myTransientObjectDriver['location'] = ele.location
+            myTransientObjectDriver['email'] = ele.email
+            myTransientObjectDriver['phone'] = ele.phone
+            myTransientObjectDriver['address'] = ele.address
+            myTransientObjectDriver['status'] = ele.status
+            myTransientObjectDriver['DriverUniqueId'] = ele.DriverUniqueId
+            myTransientObjectDriver['SigningUrlNumber'] = ele.SigningUrlNumber
+            myTransientObjectDriver['Signed'] = ele.Signed
+            myTransientObjectDriver['approvedBy'] = ele.approvedBy
+            myTransientObjectDriver['approvedDateAndTime'] = ele.approvedDateAndTime 
+            myTransientObjectDriver['vanOwner'] = ele.vanOwner 
+            myTransientObjectDriver['registration'] = ele.registration 
+            myTransientObjectDriver['vtype'] = ele.vtype 
+            myTransientObjectDriver['complianceCheck'] = ele.complianceCheck 
+            myTransientObjectDriver['imgArray'] = []
 
-        for item in imageObj:
-            if item == str(ele.driver_id):
-                myTransientObjectDriver['imgArray'] = imageObj[item]
+            for item in imageObj:
+                if item == str(ele.driver_id):
+                    myTransientObjectDriver['imgArray'] = imageObj[item]
 
-        ## append object to array
-        myDriverArray.append(myTransientObjectDriver)   
+            ## append object to array
+            myDriverArray.append(myTransientObjectDriver)   
 
 
     myFinalObject = {
@@ -1101,8 +1060,6 @@ def dailyService(driversList, datesList, deductions, support, selectedDate=None)
     myDatesArray = []
     myDeductionArray = []
     mySupportArray = []
-
-    print(driversList)
 
     if selectedDate == None:
         currentDate = datetime.date.today()

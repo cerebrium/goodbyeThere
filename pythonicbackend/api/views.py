@@ -1,12 +1,12 @@
-from .models import Driver, ScheduledDate, DriverManager, ScheduledDatesManager, Images, Vehicles, Invoice, managers, VehicleDamages, SupportType, DeductionType, VehicleScheduledDate
+from .models import Driver, ScheduledDate, DriverManager, ScheduledDatesManager, Images, Vehicles, Invoice, managers, VehicleDamages, SupportType, DeductionType, VehicleScheduledDate, Messages
 from rest_framework.response import Response
 from rest_framework.views import APIView, View
 from rest_framework import viewsets
 import json
 import base64
 from rest_framework.permissions import IsAuthenticated
-from .serializers import managersSerializer, DriverSerializer, ScheduledDatesSerializer, ImagesSerializer, VehiclesSerializer, InvoiceSerializer, VehicleDamagesSerializer, SupportTypeSerializer, DeductionTypeSerializer, VehicleScheduledDateSerializer
-from .functions import timeDifference, returnOrderdData, statistics, invoice, returnVanOrderedData, tokenizer, complianceCheck, addDatedDriver, documentsDriversOnly, dailyService, imagesAndDrivers
+from .serializers import managersSerializer, DriverSerializer, ScheduledDatesSerializer, ImagesSerializer, VehiclesSerializer, InvoiceSerializer, VehicleDamagesSerializer, SupportTypeSerializer, DeductionTypeSerializer, VehicleScheduledDateSerializer, MessageSerializer
+from .functions import timeDifference, returnOrderdData, statistics, invoice, returnVanOrderedData, tokenizer, complianceCheck, addDatedDriver, documentsDriversOnly, dailyService
 from .test_data import importData
 import csv, io 
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -30,6 +30,15 @@ class DriverViewSet(viewsets.ModelViewSet):
     # drivers
     queryset = Driver.objects.all().order_by('name')
     serializer_class = DriverSerializer
+
+class MessageViewSet(viewsets.ModelViewSet):
+    # Authentication
+    permission_classes = (IsAuthenticated,)
+
+
+    # drivers
+    queryset = Messages.objects.all()
+    serializer_class = MessageSerializer
 
 class InvoicesViewSet(viewsets.ModelViewSet):
     # Authentication
@@ -327,21 +336,6 @@ class docDrivers(APIView):
         content = {
             'data': documentsDriversOnly(drivers, images) # the function is actually called in this file... so it has this files scope.... why we put things in 
             # functions... makes them modular and then we can control their scope 
-        }
-
-        return Response(content)
-
-class ImagesAndDrivers(APIView):
-    
-    # Authentication
-    permission_classes = (IsAuthenticated,) 
-
-        # function for all data
-    def get(self, request):
-        drivers = Driver.objects.all().order_by('driver_id')
-        images = Images.objects.all().order_by('driver_id')
-        content = {
-            'data': imagesAndDrivers(drivers, images)
         }
 
         return Response(content)

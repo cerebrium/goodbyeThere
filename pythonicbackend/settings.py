@@ -22,6 +22,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -36,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.postgres.fields',
     'corsheaders',
     'import_export',
-    'django_extensions'
+    'django_extensions',
 ]
 
 
@@ -86,8 +87,20 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'pythonicbackend.wsgi.application'
+# WSGI_APPLICATION = 'pythonicbackend.wsgi.application'
+ASGI_APPLICATION = 'pythonicbackend.routing.application'
 
+#################################################### Channels
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("redis-server-name", 6379)],
+        },
+    },
+}
+
+####################################################
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases

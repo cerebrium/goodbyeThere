@@ -13,6 +13,7 @@ router.register(r'vehicledamages', views.VehicleDamagesViewSet)
 router.register(r'support', views.SupportViewSet)
 router.register(r'deductions', views.DeductionViewSet)
 router.register(r'vanDates', views.VehicleScheduledDateViewSet)
+router.register(r'messages', views.MessageViewSet)
 
 # Setup automatic URL routing
 # Additionally, we include login URLs for the browsable API.
@@ -29,5 +30,4 @@ urlpatterns = [
     path('invoices/', views.InvoiceViewSet.as_view(), name='invoices'),
     path('docdrivers/', views.docDrivers.as_view(), name='docdrivers'),
     path('dailservice/', views.DailyServiceViewSet.as_view(), name='docdrivers'),
-    path('imagesdrivers/', views.ImagesAndDrivers.as_view(), name='images and drivers'),
 ]

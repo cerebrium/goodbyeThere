@@ -1,1 +1,1 @@
-web: daphne pythonicbackend.asgi:channel_layer --port $PORT --bind 0.0.0.0 -v2
+web: daphne pythonicbackend.asgi:application --port $PORT --bind 0.0.0.0 -v2

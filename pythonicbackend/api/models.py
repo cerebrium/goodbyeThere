@@ -27,6 +27,7 @@ class Messages(models.Model):
         #     # This is the wrapper that lets you call an async
         #     # function from inside a synchronous context:
         #     async_to_sync(update_foo)(self)
+        # another comment
         return ret
 
 class managers(models.Model):

@@ -3,11 +3,13 @@ from channels.generic.websocket import AsyncJsonWebsocketConsumer
 
 class NotificationConsumer(AsyncJsonWebsocketConsumer):
     async def connect(self):
+        print('hitting connect route')
         # We're always going to accept the connection, though we may
         # close it later based on other factors.
         await self.accept()
 
     async def notify(self, event):
+        print('hitting notify route')
         """
         This handles calls elsewhere in this codebase that look
         like:
@@ -24,6 +26,7 @@ class NotificationConsumer(AsyncJsonWebsocketConsumer):
 
 
     async def receive_json(self, content, **kwargs):
+        print('hitting recieve route')
         """
         This handles data sent over the wire from the client.
 

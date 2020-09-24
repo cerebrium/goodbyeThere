@@ -17,5 +17,5 @@ websockets = URLRouter([
 
 application = ProtocolTypeRouter({
     # (http->django views is added by default)
-    # "websocket": AuthMiddlewareStack(websockets),
+    "websocket": websockets,
 })

@@ -15,18 +15,12 @@ class Messages(models.Model):
     # date variable
     now = datetime.datetime.now()
 
-    tracker = FieldTracker(fields=("message",))
     date = models.CharField(max_length = 50, default = datetime.date.today())
     time = models.CharField(max_length = 50, default = str(now.hour) + ":" + str(now.minute) + ":" +  str(now.second) )
     message = models.CharField(max_length=500)
 
     def save(self, *args, **kwargs):
         ret = super().save(*args, **kwargs)
-        has_changed = self.tracker.has_changed("message")
-        if has_changed:
-            # This is the wrapper that lets you call an async
-            # function from inside a synchronous context:
-            async_to_sync(self)
         # another comment
         return ret
 

@@ -8,8 +8,6 @@ import datetime
 from django import forms
 from django.utils import timezone
 import pytz
-from model_utils import FieldTracker
-from asgiref.sync import async_to_sync
 
 class Messages(models.Model):
     # date variable

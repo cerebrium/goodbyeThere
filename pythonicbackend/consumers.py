@@ -1,5 +1,6 @@
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 
+
 class NotificationConsumer(AsyncJsonWebsocketConsumer):
     async def connect(self):
         # We're always going to accept the connection, though we may

@@ -175,7 +175,6 @@ class ScheduledDatesManager(models.Manager):
   
 class ScheduledDate(models.Model):
     # adding live update
-    tracker = FieldTracker(fields=("date_id",))
 
     # have to add this
     objects = ScheduledDatesManager()

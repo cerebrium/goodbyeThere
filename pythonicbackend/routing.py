@@ -1,21 +1,19 @@
 from django.urls import path
 
-# from channels.auth import AuthMiddlewareStack
+from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 
-from .consumers import NotificationConsumer
+from .consumers import MessagesConsumer
 
-
-websockets = URLRouter([
-    path(
-        "ws/notifications/",
-        NotificationConsumer,
-        name="ws_notifications",
-    ),
-])
-
+websocket_urlpatterns = [
+    path(r'ws/messages/', MessagesConsumer),
+]
 
 application = ProtocolTypeRouter({
     # (http->django views is added by default)
-    "websocket": websockets,
+        'websocket': AuthMiddlewareStack(
+        URLRouter(
+            websocket_urlpatterns
+        )
+    ),
 })

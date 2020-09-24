@@ -10,7 +10,6 @@ from django.utils import timezone
 import pytz
 from model_utils import FieldTracker
 from asgiref.sync import async_to_sync
-from .notifications import update_message
 
 class Messages(models.Model):
     # date variable
@@ -27,7 +26,7 @@ class Messages(models.Model):
         if has_changed:
             # This is the wrapper that lets you call an async
             # function from inside a synchronous context:
-            async_to_sync(update_message)(self)
+            async_to_sync(self)
         # another comment
         return ret
 

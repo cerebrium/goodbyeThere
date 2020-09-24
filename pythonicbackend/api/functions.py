@@ -1075,6 +1075,7 @@ def dailyService(driversList, datesList, deductions, support, selectedDate=None)
                     myTransientDeduction['name'] = ele.name
                     myTransientDeduction['date'] = ele.date
                     myTransientDeduction['amount'] = str(ele.amount)
+                    myTransientDeduction['comment'] = ele.comment
 
                     myDeductionArray.append(myTransientDeduction)
 
@@ -1088,6 +1089,7 @@ def dailyService(driversList, datesList, deductions, support, selectedDate=None)
                     myTransientSupport['date_id'] = str(ele.date_id)
                     myTransientSupport['date'] = ele.date
                     myTransientSupport['amount'] = str(ele.amount)
+                    myTransientSupport['comment'] = ele.comment
 
                     mySupportArray.append(myTransientSupport)    
         

@@ -22,7 +22,6 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
-    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -87,25 +86,26 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'pythonicbackend.wsgi.application'
-ASGI_APPLICATION = 'pythonicbackend.routing.application'
+WSGI_APPLICATION = 'pythonicbackend.wsgi.application'
+# ASGI_APPLICATION = 'pythonicbackend.routing.application'
 
 #################################################### Channels
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
-        },
-    },
-}
+# redis_host = os.environ.get('REDIS_HOST', '127.0.0.1')
+
+# CHANNEL_LAYERS = {
+#     "default": {
+#         # This example app uses the Redis channel layer implementation channels_redis
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [(redis_host, 6379)],
+#         },
+#     },
+# }
 
 ####################################################
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-
 
 # Ginishka local database Configuration
 # DATABASES = {
@@ -120,24 +120,24 @@ CHANNEL_LAYERS = {
 # }
 
 # Nikitch Local Database Configuration
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'crmbackend',
-        'USER': 'postgres',
-        'PASSWORD': 'Ginishka04121995',
-        'HOST': 'localhost',
-        'PORT': '5432'
-    }
-}
-
-# Deployment Database Configuration
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'crmbackend',
+#         'USER': 'postgres',
+#         'PASSWORD': 'Ginishka04121995',
+#         'HOST': 'localhost',
+#         'PORT': '5432'
 #     }
 # }
+
+# Deployment Database Configuration
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 REST_FRAMEWORK = {
         'DEFAULT_AUTHENTICATION_CLASSES': [

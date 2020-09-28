@@ -679,9 +679,6 @@ def invoice(driversList, datesList, vehiclesList, deductions, support, selectedD
     for dateItem in allDatesArray:
         if dateItem[9] in myInvoiceObj:
          #   print(myInvoiceObj[dateItem[9]]['route'])
-            # add the name
-            myInvoiceObj[dateItem[9]]['name'] = driverObj[dateItem[9]]
-
             # sums the routes
             myInvoiceObj[dateItem[9]]['route'] = myInvoiceObj[dateItem[9]]['route'] + float([myObj[dateItem[3]]][0])
 
@@ -702,6 +699,7 @@ def invoice(driversList, datesList, vehiclesList, deductions, support, selectedD
             
         else:
             myInvoiceObj[dateItem[9]] = {
+                    'name': driverObj[dateItem[9]],
                     'route': myObj[dateItem[3]],
                     'parcels': dateItem[14],
                     'mileage': dateItem[12]*0.17,
@@ -852,6 +850,7 @@ def complianceCheck(vanList, scheduledDatesVan, imagesList, driversList, selecte
 def addDatedDriver(driversList, datesList, selectedDate=None):
     myDriverArray = []
     myDatesArray = []
+    print('**************************************, selected date: ', selectedDate)
 
     if selectedDate == None:
         currentDate = datetime.date.today()
@@ -872,61 +871,71 @@ def addDatedDriver(driversList, datesList, selectedDate=None):
             nextSunday = mostRecentSunday + datetime.timedelta(days=14) 
         
         for ele in datesList:
-            if mostRecentSunday <= datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() < nextSunday:
-                myTransientObjectDates = {}
+            try:
+                datetime.datetime.strptime(ele.date, '%a %b %d %Y')
+                if mostRecentSunday <= datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() < nextSunday:
+                    myTransientObjectDates = {}
 
-                myTransientObjectDates['date_id'] = ele.date_id
-                myTransientObjectDates['name'] = ele.name
-                myTransientObjectDates['inOff'] = ele.inOff
-                myTransientObjectDates['route'] = ele.route
-                myTransientObjectDates['routeNumber'] = ele.routeNumber
-                myTransientObjectDates['logOut_time'] = ele.logOut_time
-                myTransientObjectDates['logIn_time'] = ele.logIn_time
-                myTransientObjectDates['location'] = ele.location
-                myTransientObjectDates['date'] = ele.date
-                myTransientObjectDates['driver_id'] = str(ele.driver_id)
-                myTransientObjectDates['mileage'] = ele.mileage
-                myTransientObjectDates['start_mileage'] = ele.start_mileage
-                myTransientObjectDates['finish_mileage'] = ele.finish_mileage
-                myTransientObjectDates['timeDifference'] = timeDifference(ele.logIn_time, ele.logOut_time)
-                myTransientObjectDates['parcel'] = ele.parcel
-                myTransientObjectDates['parcelNotDelivered'] = ele.parcelNotDelivered
-                myTransientObjectDates['TORH'] = ele.TORH
-                myTransientObjectDates['totalRouteForDay'] = ele.totalRouteForDay
+                    myTransientObjectDates['date_id'] = ele.date_id
+                    myTransientObjectDates['name'] = ele.name
+                    myTransientObjectDates['inOff'] = ele.inOff
+                    myTransientObjectDates['route'] = ele.route
+                    myTransientObjectDates['routeNumber'] = ele.routeNumber
+                    myTransientObjectDates['logOut_time'] = ele.logOut_time
+                    myTransientObjectDates['logIn_time'] = ele.logIn_time
+                    myTransientObjectDates['location'] = ele.location
+                    myTransientObjectDates['date'] = ele.date
+                    myTransientObjectDates['driver_id'] = str(ele.driver_id)
+                    myTransientObjectDates['mileage'] = ele.mileage
+                    myTransientObjectDates['start_mileage'] = ele.start_mileage
+                    myTransientObjectDates['finish_mileage'] = ele.finish_mileage
+                    myTransientObjectDates['timeDifference'] = timeDifference(ele.logIn_time, ele.logOut_time)
+                    myTransientObjectDates['parcel'] = ele.parcel
+                    myTransientObjectDates['parcelNotDelivered'] = ele.parcelNotDelivered
+                    myTransientObjectDates['TORH'] = ele.TORH
+                    myTransientObjectDates['totalRouteForDay'] = ele.totalRouteForDay
 
-                myDatesArray.append(myTransientObjectDates)
+                    myDatesArray.append(myTransientObjectDates)
+            except:        
+                print('error')
     else:
         # from the postman requests
         # myString = str(selectedDate).replace('%20', ' ').replace('date=', '').replace("b'", "").replace("'", "")
 
         # from the backend
-        myString = str(selectedDate).replace("'b'", '').replace('{"date":"', '').replace('"', '').replace("b'", '').replace("}'", '')
-        weekBeforeSunday = datetime.datetime.strptime(myString, '%a %b %d %Y').date()
-        mostRecentSunday = weekBeforeSunday + datetime.timedelta(days=14)   
+        try:
+            weekBeforeSunday = datetime.datetime.strptime(selectedDate, '%a %b %d %Y').date()
+            mostRecentSunday = weekBeforeSunday + datetime.timedelta(days=14)   
+        except:
+            print('no date')    
 
         for ele in datesList:
-            if weekBeforeSunday <= datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() < mostRecentSunday:
-                myTransientObjectDates = {}
+            try: 
+                datetime.datetime.strptime(ele.date, '%a %b %d %Y')
+                if weekBeforeSunday <= datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() < mostRecentSunday:
+                    myTransientObjectDates = {}
 
-                myTransientObjectDates['date_id'] = ele.date_id
-                myTransientObjectDates['name'] = ele.name
-                myTransientObjectDates['inOff'] = ele.inOff
-                myTransientObjectDates['route'] = ele.route
-                myTransientObjectDates['routeNumber'] = ele.routeNumber
-                myTransientObjectDates['logOut_time'] = ele.logOut_time
-                myTransientObjectDates['logIn_time'] = ele.logIn_time
-                myTransientObjectDates['location'] = ele.location
-                myTransientObjectDates['date'] = ele.date
-                myTransientObjectDates['driver_id'] = str(ele.driver_id)
-                myTransientObjectDates['mileage'] = ele.mileage
-                myTransientObjectDates['start_mileage'] = ele.start_mileage
-                myTransientObjectDates['finish_mileage'] = ele.finish_mileage
-                myTransientObjectDates['timeDifference'] = timeDifference(ele.logIn_time, ele.logOut_time)
-                myTransientObjectDates['parcel'] = ele.parcel
-                myTransientObjectDates['parcelNotDelivered'] = ele.parcelNotDelivered
-                myTransientObjectDates['TORH'] = ele.TORH
+                    myTransientObjectDates['date_id'] = ele.date_id
+                    myTransientObjectDates['name'] = ele.name
+                    myTransientObjectDates['inOff'] = ele.inOff
+                    myTransientObjectDates['route'] = ele.route
+                    myTransientObjectDates['routeNumber'] = ele.routeNumber
+                    myTransientObjectDates['logOut_time'] = ele.logOut_time
+                    myTransientObjectDates['logIn_time'] = ele.logIn_time
+                    myTransientObjectDates['location'] = ele.location
+                    myTransientObjectDates['date'] = ele.date
+                    myTransientObjectDates['driver_id'] = str(ele.driver_id)
+                    myTransientObjectDates['mileage'] = ele.mileage
+                    myTransientObjectDates['start_mileage'] = ele.start_mileage
+                    myTransientObjectDates['finish_mileage'] = ele.finish_mileage
+                    myTransientObjectDates['timeDifference'] = timeDifference(ele.logIn_time, ele.logOut_time)
+                    myTransientObjectDates['parcel'] = ele.parcel
+                    myTransientObjectDates['parcelNotDelivered'] = ele.parcelNotDelivered
+                    myTransientObjectDates['TORH'] = ele.TORH
 
-                myDatesArray.append(myTransientObjectDates)
+                    myDatesArray.append(myTransientObjectDates)
+            except: 
+                print('error')        
 
 
 
@@ -1075,7 +1084,7 @@ def dailyService(driversList, datesList, deductions, support, selectedDate=None)
                     myTransientDeduction['name'] = ele.name
                     myTransientDeduction['date'] = ele.date
                     myTransientDeduction['amount'] = str(ele.amount)
-                    myTransientDeduction['comment'] = ele.comment
+                    myTransientDeduction['comment'] = str(ele.comment)
 
                     myDeductionArray.append(myTransientDeduction)
 
@@ -1089,7 +1098,7 @@ def dailyService(driversList, datesList, deductions, support, selectedDate=None)
                     myTransientSupport['date_id'] = str(ele.date_id)
                     myTransientSupport['date'] = ele.date
                     myTransientSupport['amount'] = str(ele.amount)
-                    myTransientSupport['comment'] = ele.comment
+                    myTransientSupport['comment'] = str(ele.comment)
 
                     mySupportArray.append(myTransientSupport)    
         
@@ -1178,7 +1187,7 @@ def dailyService(driversList, datesList, deductions, support, selectedDate=None)
                     myTransientSupport['name'] = ele.name
                     myTransientSupport['date'] = ele.date
                     myTransientSupport['amount'] = str(ele.amount)
-                    myTransientSupport['comment'] = ele.comment
+                    myTransientSupport['comment'] = str(ele.comment)
 
                     mySupportArray.append(myTransientSupport)  
 

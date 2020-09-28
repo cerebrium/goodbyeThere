@@ -290,8 +290,10 @@ class AutoSchedulingMapViewSet(APIView):
 
     def post(self, request): 
         drivers = Driver.objects.all()
-        schedule = ScheduledDate.objects.all()
-        theDate = request.body
+        schedule = ScheduledDate.objects.all().order_by('date')
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        theDate = body['date']
 
         content = {
             'data': addDatedDriver(drivers, schedule, theDate)
@@ -301,7 +303,7 @@ class AutoSchedulingMapViewSet(APIView):
         # function for all data
     def get(self, request):
         drivers = Driver.objects.all()
-        schedule = ScheduledDate.objects.all()
+        schedule = ScheduledDate.objects.all().order_by('date')
         content = {
             'data': addDatedDriver(drivers, schedule) # the function is actually called in this file... so it has this files scope.... why we put things in 
             # functions... makes them modular and then we can control their scope 

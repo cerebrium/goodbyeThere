@@ -191,7 +191,7 @@ class InvoiceViewSet(APIView):
 
     def post(self, request): 
         invoices = Invoice.objects.all()
-        drivers = Driver.objects.all()
+        drivers = Driver.objects.all().order_by('name')
         schedule = ScheduledDate.objects.all()
         vehicles = Vehicles.objects.all()
         deductions = DeductionType.objects.all()

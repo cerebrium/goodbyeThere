@@ -346,9 +346,9 @@ class VanWeeklyDatesView(APIView):
         # Authentication
     permission_classes = (IsAuthenticated,)
 
-    vehicleDates = VehicleScheduledDate.objects.all()
     serializer_class = VehicleScheduledDateSerializer
     def post(self, request):
+        vehicleDates = VehicleScheduledDate.objects.all()
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
         date = body['date']
@@ -356,4 +356,5 @@ class VanWeeklyDatesView(APIView):
         content = {
             'data': vanWeeklyDates(vehicleDates, date)
         }
+        return Response(content)
     

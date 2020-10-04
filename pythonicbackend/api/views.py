@@ -6,7 +6,7 @@ import json
 import base64
 from rest_framework.permissions import IsAuthenticated
 from .serializers import managersSerializer, DriverSerializer, ScheduledDatesSerializer, ImagesSerializer, VehiclesSerializer, InvoiceSerializer, VehicleDamagesSerializer, SupportTypeSerializer, DeductionTypeSerializer, VehicleScheduledDateSerializer, MessageSerializer
-from .functions import timeDifference, returnOrderdData, statistics, invoice, returnVanOrderedData, tokenizer, complianceCheck, addDatedDriver, documentsDriversOnly, dailyService
+from .functions import timeDifference, returnOrderdData, statistics, invoice, returnVanOrderedData, tokenizer, complianceCheck, addDatedDriver, documentsDriversOnly, dailyService, vanWeeklyDates
 from .test_data import importData
 import csv, io 
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -341,3 +341,19 @@ class docDrivers(APIView):
         }
 
         return Response(content)
+
+class VanWeeklyDatesView(APIView):
+        # Authentication
+    permission_classes = (IsAuthenticated,)
+
+    vehicleDates = VehicleScheduledDate.objects.all()
+    serializer_class = VehicleScheduledDateSerializer
+    def post(self, request):
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        date = body['date']
+
+        content = {
+            'data': vanWeeklyDates(vehicleDates, date)
+        }
+    

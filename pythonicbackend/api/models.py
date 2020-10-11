@@ -193,7 +193,10 @@ class ScheduledDate(models.Model):
     route = models.CharField("Route", max_length = 30, default = "0", null = True)
     routeNumber = models.CharField("Route", max_length = 30, default = "0", null = True)
     logOut_time = models.TimeField("LOG OUT", null = True)
-    logIn_time = models.TimeField("LOG IN", null = True)
+    logIn_time = models.IntegerField("WEEKNUMBER", default=1, editable=True, null = True)
+
+    # sorting field
+    week_number = models.CharField('weekNumber', null = True, max_length = 30)
 
      #here we don't need the manager to enter the station every time, but if he choose a driver from anotehr station
      # the location should be either auto filled, or manually

@@ -849,7 +849,6 @@ def complianceCheck(vanList, scheduledDatesVan, imagesList, driversList, selecte
 def addDatedDriver(driversList, datesList, selectedDate=None):
     myDriverArray = []
     myDatesArray = []
-    print('**************************************, selected date: ', selectedDate)
 
     if selectedDate == None:
         currentDate = datetime.date.today()
@@ -874,7 +873,6 @@ def addDatedDriver(driversList, datesList, selectedDate=None):
                 datetime.datetime.strptime(ele.date, '%a %b %d %Y')
                 if mostRecentSunday <= datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() < nextSunday:
                     myTransientObjectDates = {}
-
                     myTransientObjectDates['date_id'] = ele.date_id
                     myTransientObjectDates['name'] = ele.name
                     myTransientObjectDates['inOff'] = ele.inOff

@@ -907,6 +907,7 @@ def addDatedDriver(driversList, datesList, selectedDate=None):
             print('no date')    
 
         for ele in datesList:
+            print('ele: ', ele)
             try: 
                 datetime.datetime.strptime(ele.date, '%a %b %d %Y')
                 if weekBeforeSunday <= datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() < mostRecentSunday:
@@ -929,6 +930,7 @@ def addDatedDriver(driversList, datesList, selectedDate=None):
                     myTransientObjectDates['parcel'] = ele.parcel
                     myTransientObjectDates['parcelNotDelivered'] = ele.parcelNotDelivered
                     myTransientObjectDates['TORH'] = ele.TORH
+                    myTransientObjectDates['week_number'] = ele.week_number
 
                     myDatesArray.append(myTransientObjectDates)
             except: 

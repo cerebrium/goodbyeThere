@@ -12,6 +12,7 @@ import csv, io
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+from django.db.models import Q
 
 
 class managersViewSet(viewsets.ModelViewSet):
@@ -289,11 +290,15 @@ class AutoSchedulingMapViewSet(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request): 
-        drivers = Driver.objects.all()
-        schedule = ScheduledDate.objects.all().order_by('date')
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
         theDate = body['date']
+        theWeek = body['week']
+        theNextWeek = theWeek+1
+        drivers = Driver.objects.all()
+        
+        # schedule = ScheduledDate.objects.all()
+        schedule = ScheduledDate.objects.filter(Q(week_number = theWeek) | Q(week_number = theNextWeek))
 
         content = {
             'data': addDatedDriver(drivers, schedule, theDate)

@@ -191,13 +191,20 @@ class InvoiceViewSet(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request): 
-        invoices = Invoice.objects.all()
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        theDate = body['date']
+        theWeek = body['week']
+        drivers = Driver.objects.all()
+        
+        # filtered queries
+        schedule = ScheduledDate.objects.filter(Q(week_number = theWeek))
+        deductions = DeductionType.objects.all().filter(Q(week_number = theWeek))
+        support = SupportType.objects.all().filter(Q(week_number = theWeek))
+
         drivers = Driver.objects.all().order_by('name')
-        schedule = ScheduledDate.objects.all()
+
         vehicles = Vehicles.objects.all()
-        deductions = DeductionType.objects.all()
-        support = SupportType.objects.all()
-        theDate = request.body
 
         content = {
             'data': invoice(drivers, schedule, vehicles, deductions, support, theDate)
@@ -206,7 +213,6 @@ class InvoiceViewSet(APIView):
 
     def get(self, request):
         # defining overall data objects
-        invoices = Invoice.objects.all()
         drivers = Driver.objects.all()
         schedule = ScheduledDate.objects.all()
         vehicles = Vehicles.objects.all()

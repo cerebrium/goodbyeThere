@@ -235,6 +235,8 @@ class DeductionType(models.Model):
     date = models.CharField(null=True, max_length = 30)
     comment = models.CharField(max_length = 500)
     amount = MoneyField("Deduction", default=0, max_digits=19, decimal_places=2, default_currency='GBP', null = True)
+        # sorting field
+    week_number = models.IntegerField("WEEKNUMBER", default=1, editable=True, null = True)
    
     def __str__(self):
         return self.name
@@ -246,6 +248,8 @@ class SupportType(models.Model):
     name = models.CharField(max_length = 100)
     comment = models.CharField(max_length = 500)
     amount = MoneyField("Support", default=0, max_digits=19, decimal_places=2, default_currency='GBP', null = True)
+        # sorting field
+    week_number = models.IntegerField("WEEKNUMBER", default=1, editable=True, null = True)
 
     def __str__(self):
         return self.name

@@ -40,14 +40,6 @@ class MessageViewSet(viewsets.ModelViewSet):
     # drivers
     queryset = Messages.objects.all()
     serializer_class = MessageSerializer
-
-class InvoicesViewSet(viewsets.ModelViewSet):
-    # Authentication
-    permission_classes = (IsAuthenticated,)
-
-
-    queryset = Invoice.objects.all()
-    serializer_class = InvoiceSerializer
         
 class ImagesViewSet(viewsets.ModelViewSet):
     # Authentication

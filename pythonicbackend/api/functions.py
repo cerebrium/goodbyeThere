@@ -605,31 +605,31 @@ def invoice(driversList, datesList, vehiclesList, deductions, support, selectedD
         myDriverArray.append(myTransientObjectDriver)   
 
 
-    # find out today
-    if selectedDate == None:
-        currentDate = datetime.date.today()
-        dateWeekDay = currentDate.weekday()
-        mostRecentSunday = 0
-        weekBeforeSunday = 0
-        twoWeeksBeforeSunday = 0
-        fourWeeksBeforeSunday = 0
-        dateWeekDay+=1
-        if currentDate.weekday() == 6:
-            mostRecentSunday = currentDate 
-            weekBeforeSunday = currentDate - datetime.timedelta(days=7) 
-        else:
-            mostRecentSunday = currentDate - datetime.timedelta(days=dateWeekDay)
-            weekBeforeSunday = mostRecentSunday - datetime.timedelta(days=7)
-            twoWeeksBeforeSunday = mostRecentSunday - datetime.timedelta(days=14)
-            fourWeeksBeforeSunday = mostRecentSunday - datetime.timedelta(days=28)  
-    else:
-        # from the postman requests
-        # myString = str(selectedDate).replace('%20', ' ').replace('date=', '').replace("b'", "").replace("'", "")
+    # # find out today
+    # if selectedDate == None:
+    #     currentDate = datetime.date.today()
+    #     dateWeekDay = currentDate.weekday()
+    #     mostRecentSunday = 0
+    #     weekBeforeSunday = 0
+    #     twoWeeksBeforeSunday = 0
+    #     fourWeeksBeforeSunday = 0
+    #     dateWeekDay+=1
+    #     if currentDate.weekday() == 6:
+    #         mostRecentSunday = currentDate 
+    #         weekBeforeSunday = currentDate - datetime.timedelta(days=7) 
+    #     else:
+    #         mostRecentSunday = currentDate - datetime.timedelta(days=dateWeekDay)
+    #         weekBeforeSunday = mostRecentSunday - datetime.timedelta(days=7)
+    #         twoWeeksBeforeSunday = mostRecentSunday - datetime.timedelta(days=14)
+    #         fourWeeksBeforeSunday = mostRecentSunday - datetime.timedelta(days=28)  
+    # else:
+    #     # from the postman requests
+    #     # myString = str(selectedDate).replace('%20', ' ').replace('date=', '').replace("b'", "").replace("'", "")
 
-        # from the backend
-        myString = str(selectedDate).replace("'b'", '').replace('{"date":"', '').replace('"', '').replace("b'", '').replace("}'", '')
-        weekBeforeSunday = datetime.datetime.strptime(myString, '%a %b %d %Y').date()
-        mostRecentSunday = weekBeforeSunday + datetime.timedelta(days=7)   
+    #     # from the backend
+    #     myString = str(selectedDate).replace("'b'", '').replace('{"date":"', '').replace('"', '').replace("b'", '').replace("}'", '')
+    #     weekBeforeSunday = datetime.datetime.strptime(myString, '%a %b %d %Y').date()
+    #     mostRecentSunday = weekBeforeSunday + datetime.timedelta(days=7)   
         
     # # create array to go onto the driver that will contain all the drivers dates
     payrollArray = []
@@ -639,16 +639,16 @@ def invoice(driversList, datesList, vehiclesList, deductions, support, selectedD
     for ele in myDriverArray:
         if ele['status'] != 'OffboardedForever':
             for date in ele["datesArray"]:
-                isValidDate = 0
+            #     isValidDate = 0
 
-                try:
-                    datetime.datetime.strptime(date['date'], '%a %b %d %Y')
-                except ValueError:
-                    isValidDate = 1
+            #     try:
+            #         datetime.datetime.strptime(date['date'], '%a %b %d %Y')
+            #     except ValueError:
+            #         isValidDate = 1
 
-                if isValidDate == 0:
-                    if weekBeforeSunday <= datetime.datetime.strptime(date['date'], '%a %b %d %Y').date() < mostRecentSunday:
-                        myWeekArray.append(date)      
+            #     if isValidDate == 0:
+            #         if weekBeforeSunday <= datetime.datetime.strptime(date['date'], '%a %b %d %Y').date() < mostRecentSunday:
+                myWeekArray.append(date)      
 
         ##################################   FINAL INVOICE CREATION SECTION ############################################################################                    
     df = pd.DataFrame(myWeekArray)     # this is a dataframe with all the dates in the week we want      

@@ -191,8 +191,8 @@ class InvoiceViewSet(APIView):
         
         # filtered queries
         schedule = ScheduledDate.objects.filter(Q(week_number = theWeek))
-        deductions = DeductionType.objects.all().filter(Q(week_number = theWeek))
-        support = SupportType.objects.all().filter(Q(week_number = theWeek))
+        deductions = DeductionType.objects.filter(Q(week_number = theWeek))
+        support = SupportType.objects.filter(Q(week_number = theWeek))
 
         drivers = Driver.objects.all().order_by('name')
 
@@ -351,10 +351,11 @@ class VanWeeklyDatesView(APIView):
 
     serializer_class = VehicleScheduledDateSerializer
     def post(self, request):
-        vehicleDates = VehicleScheduledDate.objects.all()
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
         date = body['date']
+        theWeek = body['week']
+        vehicleDates = VehicleScheduledDate.objects.filter(Q(week_number = theWeek))
 
         content = {
             'data': vanWeeklyDates(vehicleDates, date)

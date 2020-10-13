@@ -227,6 +227,7 @@ class VehicleScheduledDate(models.Model):
     vehicle_id = models.ForeignKey(Vehicles, null=True, on_delete=models.CASCADE)
     driver_id = models.ForeignKey(Driver, null=True, on_delete=models.CASCADE)
     date = models.CharField(max_length = 50, null = True, default = datetime.date.today())
+    week_number = models.IntegerField("WEEKNUMBER", default=1, editable=True, null = True)
 
 class DeductionType(models.Model):
     deduction_id = models.AutoField(primary_key=True, unique=True)

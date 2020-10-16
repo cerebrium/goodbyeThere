@@ -670,15 +670,24 @@ def invoice(driversList, datesList, vehiclesList, deductions, support, selectedD
         'Full Large Van Route': 141.8,
         'Transportation Route': 100,
         'MFN Route': 70,
+        'Manager': 0,
         'Missort Route': 121.8,
         'Classroom Training': 75,
         'Ride Along': 75,
         'Sweeper': 121.8,
         'None': 0.0
     }
+
+    myInvoiceObj = {
+        'DBS2': [],
+        'DSN1': [],
+        'DEX2': [],
+        'DRR1': [],
+        'DXP1': []
+    }
     
     for dateItem in allDatesArray:
-        if dateItem[9] in myInvoiceObj:
+        if dateItem[7][dateItem[9]] in myInvoiceObj:
          #   print(myInvoiceObj[dateItem[9]]['route'])
             # sums the routes
             myInvoiceObj[dateItem[9]]['route'] = myInvoiceObj[dateItem[9]]['route'] + float([myObj[dateItem[3]]][0])
@@ -699,15 +708,18 @@ def invoice(driversList, datesList, vehiclesList, deductions, support, selectedD
 
             
         else:
-            myInvoiceObj[dateItem[9]] = {
-                    'name': driverObj[dateItem[9]],
-                    'route': myObj[dateItem[3]],
-                    'parcels': dateItem[14],
-                    'mileage': dateItem[12]*0.17,
-                    'deduction': dateItem[17],
-                    'support': dateItem[19],
-                    'location': dateItem[7] 
-                }
+            dateItem[9] = {
+                'name': driverObj[dateItem[9]],
+                'route': myObj[dateItem[3]],
+                'parcels': dateItem[14],
+                'mileage': dateItem[12]*0.17,
+                'deduction': dateItem[17],
+                'support': dateItem[19],
+                'location': dateItem[7] 
+            }
+            myInvoiceObj[dateItem[7]].append(
+                dateItem[9]
+            )
 
     myFinalObject = {
         'myOneWeekArray': myInvoiceObj,

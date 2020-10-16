@@ -687,7 +687,7 @@ def invoice(driversList, datesList, vehiclesList, deductions, support, selectedD
     }
     
     for dateItem in allDatesArray:
-        if dateItem[7][dateItem[9]] in myInvoiceObj:
+        for item in myInvoiceObj[dateItem[7]]:
          #   print(myInvoiceObj[dateItem[9]]['route'])
             # sums the routes
             myInvoiceObj[dateItem[9]]['route'] = myInvoiceObj[dateItem[9]]['route'] + float([myObj[dateItem[3]]][0])

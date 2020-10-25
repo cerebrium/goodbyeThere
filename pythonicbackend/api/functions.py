@@ -600,7 +600,7 @@ def invoice(driversList, datesList, deductions, support, selectedDate=None):
                 location = ''
                 if str(ele.location):
                     if str(ele.location) == 'CT' or str(ele.location) == 'RT' or str(ele.location) == 'Holiday':
-                        location = element.location
+                        location = element['location']
                     else:
                         location = str(ele.location)
                     for driverElement in driverMapObj[location]:

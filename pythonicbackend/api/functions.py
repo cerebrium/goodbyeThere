@@ -597,14 +597,14 @@ def invoice(driversList, datesList, deductions, support, selectedDate=None):
         for element in myDriverArray:
             if str(ele.driver_id) == str(element['driver_id']):
                 localGate = False
-                for driverElement in driverMapObj[str(element['location'])]:
+                for driverElement in driverMapObj[str(ele.location)]:
                     if driverElement['name'] == element['name']:
                         localGate = True
                         element['datesList'].append(myTransientObjectDates)
                 if localGate == False:
                     localElement = element
                     localElement['datesList'].append(myTransientObjectDates)
-                    driverMapObj[str(element['location'])].append(localElement)        
+                    driverMapObj[str(ele.location)].append(localElement)        
 
                 # driverMapObj
 
@@ -1062,7 +1062,6 @@ def dailyService(driversList, datesList, deductions, support, selectedDate=None)
 
         # from the backend
         # myString = str(selectedDate).replace("'b'", '').replace('{"date":"', '').replace('"', '').replace("b'", '').replace("}'", '') 
-        print(selectedDate)
         selectedDate = datetime.datetime.strptime(selectedDate, '%a %b %d %Y').date()
 
         for ele in deductions:

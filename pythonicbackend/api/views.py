@@ -233,13 +233,6 @@ class DailyServiceViewSet(APIView):
         support = SupportType.objects.filter(Q(week_number = theWeek))
 
         drivers = Driver.objects.all().order_by('name')
-        # drivers = Driver.objects.all()
-        # schedule = ScheduledDate.objects.all()
-        # deductions = DeductionType.objects.all()
-        # support = SupportType.objects.all()
-        # body_unicode = request.body.decode('utf-8')
-        # body = json.loads(body_unicode)
-        # theDate = body['date']
 
         content = {
             'data': dailyService(drivers, schedule, deductions, support, theDate)

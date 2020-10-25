@@ -594,23 +594,22 @@ def invoice(driversList, datesList, deductions, support, selectedDate=None):
 
         station = 'Other'
 
+        localGate = False
         for element in myDriverArray:
             if str(ele.driver_id) == str(element['driver_id']):
-                localGate = False
                 location = ''
-                if str(ele.location):
-                    if str(ele.location) == 'CT' or str(ele.location) == 'RT' or str(ele.location) == 'Holiday':
-                        location = element['location']
-                    else:
-                        location = str(ele.location)
-                    for driverElement in driverMapObj[location]:
-                        if driverElement['name'] == element['name']:
-                            localGate = True
-                            element['datesList'].append(myTransientObjectDates)
-                    if localGate == False:
-                        localElement = element
-                        localElement['datesList'].append(myTransientObjectDates)
-                        driverMapObj[location].append(localElement)        
+                if str(ele.location) == 'CT' or str(ele.location) == 'RT' or str(ele.location) == 'Holiday':
+                    location = element['location']
+                else:
+                    location = str(ele.location)
+                for driverElement in driverMapObj[location]:
+                    if driverElement['name'] == element['name']:
+                        localGate = True
+                        element['datesList'].append(myTransientObjectDates)
+                if localGate == False:
+                    localElement = element
+                    localElement['datesList'].append(myTransientObjectDates)
+                    driverMapObj[location].append(localElement)        
 
                 # driverMapObj
 

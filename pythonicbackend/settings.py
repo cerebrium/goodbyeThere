@@ -131,7 +131,7 @@ WSGI_APPLICATION = 'pythonicbackend.wsgi.application'
 #     }
 # }
 
-# Deployment Database Configuration
+# # Deployment Database Configuration
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',

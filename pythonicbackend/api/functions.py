@@ -489,7 +489,8 @@ def invoice(driversList, datesList, deductions, support, selectedDate=None):
         'DSN1': [],
         'DEX2': [],
         'DRR1': [],
-        'DXP1': []
+        'DXP1': [],
+        'Other': []
     }
 
     ## array for checking urls
@@ -514,31 +515,6 @@ def invoice(driversList, datesList, deductions, support, selectedDate=None):
         myTransientObjectDriver['approvedDateAndTime'] = ele.approvedDateAndTime
         
         myDriverArray.append(myTransientObjectDriver)
-        ## iterate through numbers
-        # if ele.SigningUrlNumber:
-        #     if ele.Signed:
-        #         urlArray.append(ele.SigningUrlNumber)
-
-        # ## iterate through each date in datesList
-        # if len(ele.datesList) > 0:
-        #     for item in ele.datesList:
-        #         datesArray.append(item)
-        #     myTransientObjectDriver['datesList'] = datesArray
-        # else:
-        #     myTransientObjectDriver['datesList'] = [] 
-
-        ################################## important part to look at ..... here i am going to add a 'field' that is not being saved, but will be returned to the front end... very 
-        #### useful because this is going to put all the matching appointments into an array attached to the driver object they belong to ... something ive been doing on the front end
-
-        ### step one .... I have mapped all the date data into an array now... which I will be formatting from now on, dont want to touch the actual data class
-        # # if it can be avoided.
-        # datesObjectArray = []
-        # for dateObject in myDatesArray:
-        #     if dateObject['driver_id'] == str(ele.driver_id):
-        #         datesObjectArray.append(dateObject)
-
-        # myTransientObjectDriver['datesArray'] = datesObjectArray    
-            
 
     for ele in deductions:
         myTransientDeduction = {}
@@ -585,6 +561,7 @@ def invoice(driversList, datesList, deductions, support, selectedDate=None):
         deductionList = []
         supportList = []
 
+        # deductions
         for element in myDeductionArray: 
             if element['date_id'] == str(ele.date_id):
                 myDeductionSum += float(element['amount'][3::])
@@ -593,6 +570,7 @@ def invoice(driversList, datesList, deductions, support, selectedDate=None):
         myTransientObjectDates['deductionSum'] = 'GB£{}'.format(myDeductionSum) 
         myTransientObjectDates['deductionList'] = deductionList 
 
+        # support
         for element in mySupportArray: 
             if element['date_id'] == str(ele.date_id):
                 mySupportSum += float(element['amount'][3::])
@@ -605,12 +583,12 @@ def invoice(driversList, datesList, deductions, support, selectedDate=None):
 
         myTransientObjectDates['total'] = total
 
-        station = ''
+        station = 'other'
 
         for element in myDriverArray:
-             if str(ele.driver_id) == element['driver_id']:
-                myTransientObjectDates['driver'] = element
+            if str(ele.driver_id) == str(element['driver_id']):
                 station = str(element['location'])
+                myTransientObjectDates['driver'] = element
 
         dateObj[station].append(myTransientObjectDates)
 

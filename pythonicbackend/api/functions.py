@@ -598,8 +598,8 @@ def invoice(driversList, datesList, deductions, support, selectedDate=None):
             if str(ele.driver_id) == str(element['driver_id']):
                 localGate = False
                 location = ''
-                if ele.location:
-                    if str(ele.location) == 'CT' or str(ele.location) == 'RT' or str(ele.location) == 'HOLIDAY':
+                if str(ele.location):
+                    if str(ele.location) == 'CT' or str(ele.location) == 'RT' or str(ele.location) == 'Holiday':
                         location = element.location
                     else:
                         location = str(ele.location)

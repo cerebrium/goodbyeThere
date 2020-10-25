@@ -196,10 +196,10 @@ class InvoiceViewSet(APIView):
 
         drivers = Driver.objects.all().order_by('name')
 
-        vehicles = Vehicles.objects.all()
+        # vehicles = Vehicles.objects.all()
 
         content = {
-            'data': invoice(drivers, schedule, vehicles, deductions, support, theDate)
+            'data': invoice(drivers, schedule, deductions, support, theDate)
         }
         return Response(content)   
 
@@ -221,11 +221,25 @@ class DailyServiceViewSet(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request): 
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        theDate = body['date']
+        theWeek = body['week']
         drivers = Driver.objects.all()
-        schedule = ScheduledDate.objects.all()
-        deductions = DeductionType.objects.all()
-        support = SupportType.objects.all()
-        theDate = request.body
+        
+        # filtered queries
+        schedule = ScheduledDate.objects.filter(Q(week_number = theWeek))
+        deductions = DeductionType.objects.filter(Q(week_number = theWeek))
+        support = SupportType.objects.filter(Q(week_number = theWeek))
+
+        drivers = Driver.objects.all().order_by('name')
+        # drivers = Driver.objects.all()
+        # schedule = ScheduledDate.objects.all()
+        # deductions = DeductionType.objects.all()
+        # support = SupportType.objects.all()
+        # body_unicode = request.body.decode('utf-8')
+        # body = json.loads(body_unicode)
+        # theDate = body['date']
 
         content = {
             'data': dailyService(drivers, schedule, deductions, support, theDate)

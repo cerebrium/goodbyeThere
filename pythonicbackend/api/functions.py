@@ -484,14 +484,22 @@ def invoice(driversList, datesList, deductions, support, selectedDate=None):
     myDatesArray = []
     myDeductionArray = []
     mySupportArray = []
-    dateObj = {
+    driverMapObj = {
         'DBS2': [],
         'DSN1': [],
         'DEX2': [],
         'DRR1': [],
         'DXP1': [],
         'Other': []
-    }
+        }
+    # dateObj = {
+    #     'DBS2': [],
+    #     'DSN1': [],
+    #     'DEX2': [],
+    #     'DRR1': [],
+    #     'DXP1': [],
+    #     'Other': []
+    # }
 
     ## array for checking urls
     urlArray = []
@@ -513,6 +521,7 @@ def invoice(driversList, datesList, deductions, support, selectedDate=None):
         myTransientObjectDriver['Signed'] = ele.Signed
         myTransientObjectDriver['approvedBy'] = ele.approvedBy
         myTransientObjectDriver['approvedDateAndTime'] = ele.approvedDateAndTime
+        myTransientObjectDriver['datesList'] = []
         
         myDriverArray.append(myTransientObjectDriver)
 
@@ -587,13 +596,20 @@ def invoice(driversList, datesList, deductions, support, selectedDate=None):
 
         for element in myDriverArray:
             if str(ele.driver_id) == str(element['driver_id']):
-                station = str(element['location'])
-                myTransientObjectDates['driver'] = element
+                localGate = False
+                for driverElement in driverMapObj[str(element['location'])]:
+                    if driverElement['name'] == element['name']:
+                        localGate = True
+                        element['datesList'].append(myTransientObjectDates)
+                if localGate == False:
+                    localElement = element
+                    localElement['datesList'].append(myTransientObjectDates)
+                    driverMapObj[str(element['location'])].append(localElement)        
 
-        dateObj[station].append(myTransientObjectDates)
+                # driverMapObj
 
     myFinalObject = {
-        'dates': dateObj,
+        'dates': driverMapObj,
     }   
 
     return myFinalObject          

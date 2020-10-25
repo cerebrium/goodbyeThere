@@ -583,7 +583,7 @@ def invoice(driversList, datesList, deductions, support, selectedDate=None):
 
         myTransientObjectDates['total'] = total
 
-        station = 'other'
+        station = 'Other'
 
         for element in myDriverArray:
             if str(ele.driver_id) == str(element['driver_id']):

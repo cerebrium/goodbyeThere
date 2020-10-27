@@ -513,6 +513,7 @@ def invoice(driversList, datesList, deductions, support, selectedDate=None):
         myTransientObjectDriver['approvedBy'] = ele.approvedBy
         myTransientObjectDriver['approvedDateAndTime'] = ele.approvedDateAndTime
         myTransientObjectDriver['datesList'] = []
+        myTransientObjectDriver['vat'] = ele.vat
         
         myDriverArray.append(myTransientObjectDriver)
 

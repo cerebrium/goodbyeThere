@@ -65,6 +65,7 @@ class Driver(models.Model):
     registration = models.CharField(max_length = 30, null=True)
     vtype = models.CharField(max_length = 30, null=True)
     complianceCheck = models.CharField(max_length = 30, null=True)
+    vat = models.BooleanField(default=False)
 
     objects = DriverManager() # allows us to call method above
     #week = models.DateField("week", default = datetime.date.today.isocalendar()[1])

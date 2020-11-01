@@ -615,7 +615,7 @@ def invoice(driversList, datesList, deductions, support, selectedDate=None):
     for localObject in driverMapObj:
         for element in driverMapObj[localObject]:
             if element['driver_id'] not in checkerNameArray:
-                element['datesList'][0]['admin charge'] = 8.33
+                element['datesList'][0]['adminCharge'] = 8.33
                 checkerNameArray.append(element['driver_id'])
 
 

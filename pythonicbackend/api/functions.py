@@ -491,7 +491,7 @@ def invoice(driversList, datesList, deductions, support, selectedDate=None):
         'DRR1': [],
         'DXP1': [],
         'Other': []
-        }
+    }
 
     ## array for checking urls
     urlArray = []
@@ -611,6 +611,14 @@ def invoice(driversList, datesList, deductions, support, selectedDate=None):
                 
 
                 # driverMapObj
+    checkerNameArray = []            
+    for localObject in driverMapObj:
+        for element in driverMapObj[localObject]:
+            if element['driver_id'] not in checkerNameArray:
+                element['datesList'][0]['admin charge'] = 8.33
+                checkerNameArray.append(element['driver_id'])
+
+
 
     myFinalObject = {
         'dates': driverMapObj,

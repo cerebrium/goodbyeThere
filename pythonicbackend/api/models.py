@@ -256,4 +256,12 @@ class SupportType(models.Model):
     def __str__(self):
         return self.name
 
+class DailyMessage(models.Model):
+    message_id = models.AutoField(primary_key=True, unique=True)
+    date = models.CharField(null=True, max_length = 30)
+    message = models.CharField(null=True, max_length = 300)
+
+    def __str__(self):
+        return self.message
+
  

@@ -190,5 +190,6 @@ class DailyMessageSerializer(serializers.HyperlinkedModelSerializer):
         fields = [
             'message_id',
             'date',
-            'message'
+            'message',
+            'name'
         ]

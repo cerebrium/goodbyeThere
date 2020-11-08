@@ -1212,6 +1212,7 @@ def vanWeeklyDates(vanDatesList, selectedDate):
                 myTransientVehicleDate['vehicle_id'] = str(ele.vehicle_id)
                 myTransientVehicleDate['driver_id'] = str(ele.driver_id)
                 myTransientVehicleDate['date'] = ele.date
+                myTransientVehicleDate['location'] = ele.location
                 finalArray.append(myTransientVehicleDate)
 
     myFinalObject = {

@@ -1,4 +1,4 @@
-from .models import Driver, ScheduledDate, Images, Vehicles, Invoice, managers, VehicleDamages, DeductionType, SupportType, VehicleScheduledDate, Messages, DailyMessage
+from .models import Driver, ScheduledDate, Images, Vehicles, Invoice, managers, VehicleDamages, DeductionType, SupportType, VehicleScheduledDate, DailyMessage, DailyServiceLock
 from rest_framework import serializers
 
 
@@ -175,15 +175,6 @@ class VehicleScheduledDateSerializer(serializers.HyperlinkedModelSerializer):
             'location'
         ]
 
-class MessageSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Messages
-        fields = [
-            'message',
-            'date',
-            'time'
-        ]
-
 class DailyMessageSerializer(serializers.HyperlinkedModelSerializer):
     class  Meta:
         model = DailyMessage
@@ -192,4 +183,12 @@ class DailyMessageSerializer(serializers.HyperlinkedModelSerializer):
             'date',
             'message',
             'name'
+        ]
+
+class DailyServiceLockSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = DailyServiceLock
+        fields = [
+            'service_id',
+            'date'
         ]

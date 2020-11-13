@@ -9,19 +9,6 @@ from django import forms
 from django.utils import timezone
 import pytz
 
-class Messages(models.Model):
-    # date variable
-    now = datetime.datetime.now()
-
-    date = models.CharField(max_length = 50, default = datetime.date.today())
-    time = models.CharField(max_length = 50, default = str(now.hour) + ":" + str(now.minute) + ":" +  str(now.second) )
-    message = models.CharField(max_length=500)
-
-    def save(self, *args, **kwargs):
-        ret = super().save(*args, **kwargs)
-        # another comment
-        return ret
-
 class managers(models.Model):
     user_id = models.UUIDField(
         primary_key=True,
@@ -261,7 +248,14 @@ class DailyMessage(models.Model):
     message_id = models.AutoField(primary_key=True, unique=True)
     date = models.CharField(null=True, max_length = 30)
     message = models.CharField(null=True, max_length = 900)
-    name = message = models.CharField(null=True, max_length = 300)
+    name = models.CharField(null=True, max_length = 300)
+
+    def __str__(self):
+        return self.message
+
+class DailyServiceLock(models.Model):
+    service_id = models.AutoField(primary_key=True, unique=True)
+    date = models.CharField(null=True, max_length = 30)
 
     def __str__(self):
         return self.message

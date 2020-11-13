@@ -490,7 +490,8 @@ def invoice(driversList, datesList, deductions, support, selectedDate=None):
         'DEX2': [],
         'DRR1': [],
         'DXP1': [],
-        'Other': []
+        'Other': [],
+        'OFF': []
     }
 
     ## array for checking urls

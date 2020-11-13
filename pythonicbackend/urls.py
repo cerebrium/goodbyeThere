@@ -13,8 +13,8 @@ router.register(r'vehicledamages', views.VehicleDamagesViewSet)
 router.register(r'support', views.SupportViewSet)
 router.register(r'deductions', views.DeductionViewSet)
 router.register(r'vanDates', views.VehicleScheduledDateViewSet)
-router.register(r'messages', views.MessageViewSet)
 router.register(r'dailymessage', views.DailyMessageViewSet)
+router.register(r'dailyservicelock', views.DailyServiceLockViewSet)
 
 # Setup automatic URL routing
 # Additionally, we include login URLs for the browsable API.

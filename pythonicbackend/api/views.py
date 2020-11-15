@@ -373,3 +373,23 @@ class DailyServiceLockViewSet(viewsets.ModelViewSet):
 
     queryset = DailyServiceLock.objects.all()
     serializer_class = DailyServiceLockSerializer
+
+class ReturnScheduledSorts(viewsets.ModelViewSet):
+        # Authentication
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request): 
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        theDate = body['date']
+        theWeek = body['week']
+        theNextWeek = theWeek+1
+        drivers = Driver.objects.all()
+        
+        # schedule = ScheduledDate.objects.all()
+        schedule = ScheduledDate.objects.filter(Q(week_number = theWeek) | Q(week_number = theNextWeek))
+
+        content = {
+            'data': schedule
+        }
+        return Response(content)   

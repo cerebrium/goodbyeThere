@@ -376,7 +376,7 @@ class DailyServiceLockViewSet(viewsets.ModelViewSet):
 
 class ReturnScheduledSorts(APIView):
         # Authentication
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
 
     def post(self, request): 
         body_unicode = request.body.decode('utf-8')
@@ -384,9 +384,10 @@ class ReturnScheduledSorts(APIView):
         theDate = body['date']
         theWeek = body['week']
         theNextWeek = theWeek+1
-        drivers = Driver.objects.all()
         
         # schedule = ScheduledDate.objects.all()
-        schedule = ScheduledDate.objects.filter(Q(week_number = theWeek) | Q(week_number = theNextWeek))
+        queryset = ScheduledDate.objects.filter(Q(week_number = theWeek) | Q(week_number = theNextWeek))
+        serializer_class = ScheduledDatesSerializer
 
-        return Response(schedule)   
+        return Response(queryset)
+

@@ -13,6 +13,9 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from django.db.models import Q
+from django.core import serializers
+from django.core.serializers.json import DjangoJSONEncoder
+from django.core.serializers import serialize
 
 
 class managersViewSet(viewsets.ModelViewSet):
@@ -381,13 +384,11 @@ class ReturnScheduledSorts(APIView):
     def post(self, request): 
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
-        theDate = body['date']
         theWeek = body['week']
         theNextWeek = theWeek+1
         
-        # schedule = ScheduledDate.objects.all()
-        queryset = ScheduledDate.objects.filter(Q(week_number = theWeek) | Q(week_number = theNextWeek))
-        serializer_class = ScheduledDatesSerializer
+        dates = ScheduledDate.objects.filter(Q(week_number = theWeek) | Q(week_number = theNextWeek))
+        serializer = ScheduledDatesSerializer(dates, many=True, context={'request': request})
 
-        return Response(queryset)
+        return Response({"data": serializer.data})
 

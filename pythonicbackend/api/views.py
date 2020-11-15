@@ -374,7 +374,7 @@ class DailyServiceLockViewSet(viewsets.ModelViewSet):
     queryset = DailyServiceLock.objects.all()
     serializer_class = DailyServiceLockSerializer
 
-class ReturnScheduledSorts(viewsets.ModelViewSet):
+class ReturnScheduledSorts(APIView):
         # Authentication
     permission_classes = (IsAuthenticated,)
 
@@ -389,7 +389,4 @@ class ReturnScheduledSorts(viewsets.ModelViewSet):
         # schedule = ScheduledDate.objects.all()
         schedule = ScheduledDate.objects.filter(Q(week_number = theWeek) | Q(week_number = theNextWeek))
 
-        content = {
-            'data': schedule
-        }
-        return Response(content)   
+        return Response(schedule)   

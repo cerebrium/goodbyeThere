@@ -32,5 +32,7 @@ urlpatterns = [
     path('docdrivers/', views.docDrivers.as_view(), name='docdrivers'),
     path('dailservice/', views.DailyServiceViewSet.as_view(), name='docdrivers'),
     path('vandatesordered/', views.VanWeeklyDatesView.as_view(), name='van dates ordered'),
-    path('weeksschedule/', views.ReturnScheduledSorts.as_view(), name='week schedule data')
+    path('weeksschedule/', views.ReturnScheduledSorts.as_view(), name='week schedule data'),
+    path('deductionschedule/', views.ReturnDeductionsSort.as_view(), name='other name'),
+    path('supportschedule/', views.ReturnSupportSort.as_view(), name='other other name')
 ]

@@ -347,21 +347,36 @@ class docDrivers(APIView):
         return Response(content)
 
 class VanWeeklyDatesView(APIView):
-        # Authentication
+
+            # Authentication
     permission_classes = (IsAuthenticated,)
 
-    serializer_class = VehicleScheduledDateSerializer
-    def post(self, request):
+    def post(self, request): 
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
-        date = body['date']
         theWeek = body['week']
-        vehicleDates = VehicleScheduledDate.objects.filter(Q(week_number = theWeek))
+        theNextWeek = theWeek+1
+        
+        dates = VehicleScheduledDate.objects.filter(Q(week_number = theWeek))
+        serializer = VehicleScheduledDateSerializer(dates, many=True, context={'request': request})
 
-        content = {
-            'data': vanWeeklyDates(vehicleDates, date)
-        }
-        return Response(content)
+        return Response({"data": serializer.data})
+
+        # Authentication
+    # permission_classes = (IsAuthenticated,)
+
+    # serializer_class = VehicleScheduledDateSerializer
+    # def post(self, request):
+    #     body_unicode = request.body.decode('utf-8')
+    #     body = json.loads(body_unicode)
+    #     date = body['date']
+    #     theWeek = body['week']
+    #     vehicleDates = VehicleScheduledDate.objects.filter(Q(week_number = theWeek))
+
+    #     content = {
+    #         'data': vanWeeklyDates(vehicleDates, date)
+    #     }
+    #     return Response(content)
     
 class DailyMessageViewSet(viewsets.ModelViewSet):
     # Authentication
@@ -389,6 +404,34 @@ class ReturnScheduledSorts(APIView):
         
         dates = ScheduledDate.objects.filter(Q(week_number = theWeek) | Q(week_number = theNextWeek))
         serializer = ScheduledDatesSerializer(dates, many=True, context={'request': request})
+
+        return Response({"data": serializer.data})
+
+class ReturnDeductionsSort(APIView):
+        # Authentication
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request): 
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        theWeek = body['week']
+        
+        dates = DeductionType.objects.filter(Q(week_number = theWeek))
+        serializer = DeductionTypeSerializer(dates, many=True, context={'request': request})
+
+        return Response({"data": serializer.data})
+
+class ReturnSupportSort(APIView):
+        # Authentication
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request): 
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        theWeek = body['week']
+        
+        dates = SupportType.objects.filter(Q(week_number = theWeek))
+        serializer = SupportTypeSerializer(dates, many=True, context={'request': request})
 
         return Response({"data": serializer.data})
 

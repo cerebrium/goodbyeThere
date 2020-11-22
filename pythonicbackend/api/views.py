@@ -444,7 +444,7 @@ class ReturnDriverImage(APIView):
         body = json.loads(body_unicode)
         driver_id = body['driver_id']
         
-        dates = Images.objects.filter(Q(week_number = driver_id))
+        dates = Images.objects.filter(Q(driver_id = driver_id))
         serializer = ImagesSerializer(dates, many=True, context={'request': request})
 
         return Response({"data": serializer.data})

@@ -15,6 +15,7 @@ router.register(r'deductions', views.DeductionViewSet)
 router.register(r'vanDates', views.VehicleScheduledDateViewSet)
 router.register(r'dailymessage', views.DailyMessageViewSet)
 router.register(r'dailyservicelock', views.DailyServiceLockViewSet)
+router.register(r'rentallock', views.RentalVanLock)
 
 # Setup automatic URL routing
 # Additionally, we include login URLs for the browsable API.

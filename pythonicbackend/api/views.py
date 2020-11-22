@@ -1,11 +1,11 @@
-from .models import Driver, ScheduledDate, DriverManager, ScheduledDatesManager, Images, Vehicles, Invoice, managers, VehicleDamages, SupportType, DeductionType, VehicleScheduledDate, DailyMessage, DailyServiceLock
+from .models import Driver, ScheduledDate, DriverManager, ScheduledDatesManager, Images, Vehicles, Invoice, managers, VehicleDamages, SupportType, DeductionType, VehicleScheduledDate, DailyMessage, DailyServiceLock, RentalVanLock
 from rest_framework.response import Response
 from rest_framework.views import APIView, View
 from rest_framework import viewsets
 import json
 import base64
 from rest_framework.permissions import IsAuthenticated
-from .serializers import managersSerializer, DriverSerializer, ScheduledDatesSerializer, ImagesSerializer, VehiclesSerializer, InvoiceSerializer, VehicleDamagesSerializer, SupportTypeSerializer, DeductionTypeSerializer, VehicleScheduledDateSerializer, DailyMessageSerializer, DailyServiceLockSerializer
+from .serializers import managersSerializer, DriverSerializer, ScheduledDatesSerializer, ImagesSerializer, VehiclesSerializer, InvoiceSerializer, VehicleDamagesSerializer, SupportTypeSerializer, DeductionTypeSerializer, VehicleScheduledDateSerializer, DailyMessageSerializer, DailyServiceLockSerializer, RentalVanLockSerializer
 from .functions import timeDifference, returnOrderdData, statistics, invoice, returnVanOrderedData, tokenizer, complianceCheck, addDatedDriver, documentsDriversOnly, dailyService, vanWeeklyDates
 from .test_data import importData
 import csv, io 
@@ -389,8 +389,14 @@ class DailyServiceLockViewSet(viewsets.ModelViewSet):
         # Authentication
     permission_classes = (IsAuthenticated,)
 
-    queryset = DailyServiceLock.objects.all()
+    queryset = RentalVanLock.objects.all()
     serializer_class = DailyServiceLockSerializer
+
+class RentalVanLock(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+
+    queryset = RentalVanLock.objects.all()
+    serializer_class = RentalVanLockSerializer
 
 class ReturnScheduledSorts(APIView):
         # Authentication

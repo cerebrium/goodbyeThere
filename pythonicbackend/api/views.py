@@ -435,3 +435,17 @@ class ReturnSupportSort(APIView):
 
         return Response({"data": serializer.data})
 
+class ReturnDriverImage(APIView):
+        # Authentication
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request): 
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        driver_id = body['driver_id']
+        
+        dates = Images.objects.filter(Q(week_number = driver_id))
+        serializer = ImagesSerializer(dates, many=True, context={'request': request})
+
+        return Response({"data": serializer.data})
+

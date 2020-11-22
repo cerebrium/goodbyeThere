@@ -34,5 +34,6 @@ urlpatterns = [
     path('vandatesordered/', views.VanWeeklyDatesView.as_view(), name='van dates ordered'),
     path('weeksschedule/', views.ReturnScheduledSorts.as_view(), name='week schedule data'),
     path('deductionschedule/', views.ReturnDeductionsSort.as_view(), name='other name'),
-    path('supportschedule/', views.ReturnSupportSort.as_view(), name='other other name')
+    path('supportschedule/', views.ReturnSupportSort.as_view(), name='other other name'),
+    path('driverimages/', views.ReturnDriverImage.as_view(), name='Image with id'),
 ]

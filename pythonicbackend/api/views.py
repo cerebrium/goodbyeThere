@@ -413,6 +413,20 @@ class ReturnScheduledSorts(APIView):
 
         return Response({"data": serializer.data})
 
+class ReturnScheduledSortWeek(APIView):
+        # Authentication
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request): 
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        theWeek = body['week']
+        
+        dates = ScheduledDate.objects.filter(Q(week_number = theWeek))
+        serializer = ScheduledDatesSerializer(dates, many=True, context={'request': request})
+
+        return Response({"data": serializer.data})
+
 class ReturnDeductionsSort(APIView):
         # Authentication
     permission_classes = (IsAuthenticated,)

@@ -220,6 +220,7 @@ class VehicleScheduledDate(models.Model):
     date = models.CharField(max_length = 50, null = True, default = datetime.date.today())
     week_number = models.IntegerField("WEEKNUMBER", default=1, editable=True, null = True)
     location = models.CharField(max_length = 15, default='DBS2', null=True)
+    registration = models.CharField(max_length = 20, default='DBS2', null=True)
 
 class DeductionType(models.Model):
     deduction_id = models.AutoField(primary_key=True, unique=True)

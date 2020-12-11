@@ -15,6 +15,7 @@ router.register(r'deductions', views.DeductionViewSet)
 router.register(r'vanDates', views.VehicleScheduledDateViewSet)
 router.register(r'dailymessage', views.DailyMessageViewSet)
 router.register(r'dailyservicelock', views.DailyServiceLockViewSet)
+router.register(r'dailyservicelocktwo', views.DailyServiceLockTwoViewSet)
 router.register(r'rentallock', views.RentalVanLock)
 
 # Setup automatic URL routing

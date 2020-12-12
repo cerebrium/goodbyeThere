@@ -282,4 +282,11 @@ class RentalVanLock(models.Model):
     def __str__(self):
         return self.rental_id
 
+class InvoiceCounter(models.Model):
+    invoice_id = models.AutoField(primary_key=True, unique=True)
+    current_index = models.IntegerField(default=1, editable=True, null = True)
+
+    def __str__(self):
+        return self.invoice_id
+
  

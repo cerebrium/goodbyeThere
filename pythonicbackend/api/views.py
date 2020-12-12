@@ -1,11 +1,11 @@
-from .models import Driver, ScheduledDate, DriverManager, ScheduledDatesManager, Images, Vehicles, Invoice, managers, VehicleDamages, SupportType, DeductionType, VehicleScheduledDate, DailyMessage, DailyServiceLock, RentalVanLock, DailyServiceLockTwo
+from .models import Driver, ScheduledDate, DriverManager, ScheduledDatesManager, Images, Vehicles, Invoice, managers, VehicleDamages, SupportType, DeductionType, VehicleScheduledDate, DailyMessage, DailyServiceLock, RentalVanLock, DailyServiceLockTwo, InvoiceCounter
 from rest_framework.response import Response
 from rest_framework.views import APIView, View
 from rest_framework import viewsets
 import json
 import base64
 from rest_framework.permissions import IsAuthenticated
-from .serializers import managersSerializer, DriverSerializer, ScheduledDatesSerializer, ImagesSerializer, VehiclesSerializer, InvoiceSerializer, VehicleDamagesSerializer, SupportTypeSerializer, DeductionTypeSerializer, VehicleScheduledDateSerializer, DailyMessageSerializer, DailyServiceLockSerializer, RentalVanLockSerializer, DailyServiceLockTwoSerializer
+from .serializers import managersSerializer, DriverSerializer, ScheduledDatesSerializer, ImagesSerializer, VehiclesSerializer, InvoiceSerializer, VehicleDamagesSerializer, SupportTypeSerializer, DeductionTypeSerializer, VehicleScheduledDateSerializer, DailyMessageSerializer, DailyServiceLockSerializer, RentalVanLockSerializer, DailyServiceLockTwoSerializer, InvoiceCounterSerializer
 from .functions import timeDifference, returnOrderdData, statistics, invoice, returnVanOrderedData, tokenizer, complianceCheck, addDatedDriver, documentsDriversOnly, dailyService, vanWeeklyDates
 from .test_data import importData
 import csv, io 
@@ -476,3 +476,8 @@ class ReturnDriverImage(APIView):
 
         return Response({"data": serializer.data})
 
+class ReturnInvoiceNumber(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+
+    queryset = InvoiceCounter.objects.all()
+    serializer_class = InvoiceCounterSerializer

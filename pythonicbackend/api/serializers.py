@@ -204,7 +204,7 @@ class DailyServiceLockTwoSerializer(serializers.HyperlinkedModelSerializer):
         ]
 class InvoiceCounterSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = DailyServiceLockTwo
+        model = InvoiceCounter
         fields = [
             'invoice_id',
             'current_index'

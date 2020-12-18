@@ -227,5 +227,5 @@ class DriverHistorySerializer(serializers.HyperlinkedModelSerializer):
             'week_number',
             'driver_id',
             'name',
-            'van_id'
+            'registration'
         ]

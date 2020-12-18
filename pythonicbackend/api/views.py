@@ -492,7 +492,7 @@ class DriverHistoryView(APIView):
         body = json.loads(body_unicode)
         theVID = body['vehicle_id']
         
-        dates = DriverHistory.objects.filter(Q(van_id = theVID))
+        dates = DriverHistory.objects.filter(Q(registration = theVID))
         serializer = DriverHistorySerializer(dates, many=True, context={'request': request})
 
         return Response({"data": serializer.data})

@@ -482,6 +482,12 @@ class ReturnInvoiceNumber(viewsets.ModelViewSet):
     queryset = InvoiceCounter.objects.all()
     serializer_class = InvoiceCounterSerializer
 
+class DriverHistoryAddView(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+
+    queryset = DriverHistory.objects.all()
+    serializer_class = DriverHistorySerializer
+
 class DriverHistoryView(APIView):
     
     # Authentication

@@ -41,5 +41,4 @@ urlpatterns = [
     path('supportschedule/', views.ReturnSupportSort.as_view(), name='other other name'),
     path('driverimages/', views.ReturnDriverImage.as_view(), name='Image with id'),
     path('driverhistory/', views.DriverHistoryView.as_view(), name='drivers associated with van'),
-
 ]

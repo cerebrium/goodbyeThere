@@ -285,8 +285,24 @@ class RentalVanLock(models.Model):
 class InvoiceCounter(models.Model):
     invoice_id = models.AutoField(primary_key=True, unique=True)
     current_index = models.IntegerField(default=1, editable=True, null = True)
+    date = models.CharField(null=True, max_length = 30)
 
     def __str__(self):
         return self.invoice_id
+
+class DriverHistory(models.Model):
+    DriverHistory_id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
+    date = models.CharField(null=True, max_length = 30)
+    week_number = models.IntegerField("WEEKNUMBER", default=1, editable=True, null = True)
+    driver_id = models.CharField(null=True, max_length = 100)
+    van_id = models.CharField(null=True, max_length = 100)
+    name = models.CharField(null=True, max_length = 30)
+
+    def __str__(self):
+        return self.DriverHistory_id
 
  

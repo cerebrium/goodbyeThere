@@ -1,4 +1,4 @@
-from .models import Driver, ScheduledDate, Images, Vehicles, Invoice, managers, VehicleDamages, DeductionType, SupportType, VehicleScheduledDate, DailyMessage, DailyServiceLock, RentalVanLock, DailyServiceLockTwo, InvoiceCounter
+from .models import Driver, ScheduledDate, Images, Vehicles, Invoice, managers, VehicleDamages, DeductionType, SupportType, VehicleScheduledDate, DailyMessage, DailyServiceLock, RentalVanLock, DailyServiceLockTwo, InvoiceCounter, DriverHistory
 from rest_framework import serializers
 
 
@@ -216,4 +216,16 @@ class RentalVanLockSerializer(serializers.HyperlinkedModelSerializer):
         fields = [
             'rental_id',
             'date'
+        ]
+
+class DriverHistorySerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = DriverHistory
+        fields = [
+            'DriverHistory_id',
+            'date',
+            'week_number',
+            'driver_id',
+            'name',
+            'van_id'
         ]

@@ -1,11 +1,11 @@
-from .models import Driver, ScheduledDate, DriverManager, ScheduledDatesManager, Images, Vehicles, Invoice, managers, VehicleDamages, SupportType, DeductionType, VehicleScheduledDate, DailyMessage, DailyServiceLock, RentalVanLock, DailyServiceLockTwo, InvoiceCounter
+from .models import Driver, ScheduledDate, DriverManager, ScheduledDatesManager, Images, Vehicles, Invoice, managers, VehicleDamages, SupportType, DeductionType, VehicleScheduledDate, DailyMessage, DailyServiceLock, RentalVanLock, DailyServiceLockTwo, InvoiceCounter, DriverHistory
 from rest_framework.response import Response
 from rest_framework.views import APIView, View
 from rest_framework import viewsets
 import json
 import base64
 from rest_framework.permissions import IsAuthenticated
-from .serializers import managersSerializer, DriverSerializer, ScheduledDatesSerializer, ImagesSerializer, VehiclesSerializer, InvoiceSerializer, VehicleDamagesSerializer, SupportTypeSerializer, DeductionTypeSerializer, VehicleScheduledDateSerializer, DailyMessageSerializer, DailyServiceLockSerializer, RentalVanLockSerializer, DailyServiceLockTwoSerializer, InvoiceCounterSerializer
+from .serializers import managersSerializer, DriverSerializer, ScheduledDatesSerializer, ImagesSerializer, VehiclesSerializer, InvoiceSerializer, VehicleDamagesSerializer, SupportTypeSerializer, DeductionTypeSerializer, VehicleScheduledDateSerializer, DailyMessageSerializer, DailyServiceLockSerializer, RentalVanLockSerializer, DailyServiceLockTwoSerializer, InvoiceCounterSerializer, DriverHistorySerializer
 from .functions import timeDifference, returnOrderdData, statistics, invoice, returnVanOrderedData, tokenizer, complianceCheck, addDatedDriver, documentsDriversOnly, dailyService, vanWeeklyDates
 from .test_data import importData
 import csv, io 
@@ -481,3 +481,18 @@ class ReturnInvoiceNumber(viewsets.ModelViewSet):
 
     queryset = InvoiceCounter.objects.all()
     serializer_class = InvoiceCounterSerializer
+
+class DriverHistoryView(APIView):
+    
+    # Authentication
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request): 
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        theVID = body['vehicle_id']
+        
+        dates = DriverHistory.objects.filter(Q(vehicle_id = theVID))
+        serializer = DriverHistorySerializer(dates, many=True, context={'request': request})
+
+        return Response({"data": serializer.data})

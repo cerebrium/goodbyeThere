@@ -420,6 +420,20 @@ class ReturnScheduledSorts(APIView):
 
         return Response({"data": serializer.data})
 
+class ReturnScheduledSingleSorts(APIView):
+        # Authentication
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request): 
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        theDriver = body['driver_id']
+        
+        dates = ScheduledDate.objects.filter(Q(driver_id = theDriver))
+        serializer = ScheduledDatesSerializer(dates, many=True, context={'request': request})
+
+        return Response({"data": serializer.data})
+
 class ReturnScheduledSortWeek(APIView):
         # Authentication
     permission_classes = (IsAuthenticated,)

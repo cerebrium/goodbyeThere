@@ -428,8 +428,9 @@ class ReturnScheduledSingleSorts(APIView):
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
         theDriver = body['driver_id']
+        theWeek = body['week']
         
-        dates = ScheduledDate.objects.filter(Q(driver_id = theDriver))
+        dates = ScheduledDate.objects.filter(Q(driver_id = theDriver), Q(week_number = theWeek))
         serializer = ScheduledDatesSerializer(dates, many=True, context={'request': request})
 
         return Response({"data": serializer.data})

@@ -427,7 +427,7 @@ class ReturnScheduledSingleSorts(APIView):
     def post(self, request): 
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
-        theDriver = body['driver_id']
+        theDriver = body['driverId']
         theWeek = body['week']
         
         dates = ScheduledDate.objects.filter(Q(driver_id = theDriver), Q(week_number = theWeek))

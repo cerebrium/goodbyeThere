@@ -205,7 +205,7 @@ class DailyServiceLockTwoSerializer(serializers.HyperlinkedModelSerializer):
 
 class DailyServiceOverrideSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = DailyServiceLockTwo
+        model = DailyServiceOverride
         fields = [
             'service_id',
             'date'

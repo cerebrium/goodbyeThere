@@ -20,6 +20,7 @@ router.register(r'rentallock', views.RentalVanLock)
 router.register(r'invoicecounter', views.ReturnInvoiceNumber)
 router.register(r'driveraddhistory', views.DriverHistoryAddView)
 router.register(r'dailyserviceoverride', views.DailyServiceOverrideViewSet)
+router.register(r'dailyserviceoverridetwo', views.DailyServiceOverrideTwoViewSet)
 
 # Setup automatic URL routing
 # Additionally, we include login URLs for the browsable API.

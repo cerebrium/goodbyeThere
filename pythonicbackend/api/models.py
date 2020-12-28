@@ -327,4 +327,21 @@ class DriverHistory(models.Model):
     def __str__(self):
         return self.DriverHistory_id
 
+class ValidationSheet(models.Model):
+    validationSheet_id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
+    date = models.CharField(null=True, max_length = 30)
+    week_number = models.IntegerField("WEEKNUMBER", default=1, editable=True, null = True)
+    support = MoneyField("Support", default=0, max_digits=19, decimal_places=2, default_currency='GBP', null = True)
+    miles = models.IntegerField("miles", default=1, editable=True, null = True)
+    totalLwp = models.IntegerField("miles", default=1, editable=True, null = True)
+    totalLVP = models.IntegerField("miles", default=1, editable=True, null = True)
+    totalTraining = models.IntegerField("miles", default=1, editable=True, null = True)
+
+    def __str__(self):
+        return self.DriverHistory_id
+
  

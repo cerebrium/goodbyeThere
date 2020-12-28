@@ -21,6 +21,7 @@ router.register(r'invoicecounter', views.ReturnInvoiceNumber)
 router.register(r'driveraddhistory', views.DriverHistoryAddView)
 router.register(r'dailyserviceoverride', views.DailyServiceOverrideViewSet)
 router.register(r'dailyserviceoverridetwo', views.DailyServiceOverrideTwoViewSet)
+router.register(r'validationsheet', views.ValidationSheetView)
 
 # Setup automatic URL routing
 # Additionally, we include login URLs for the browsable API.
@@ -45,4 +46,5 @@ urlpatterns = [
     path('driverimages/', views.ReturnDriverImage.as_view(), name='Image with id'),
     path('driverhistory/', views.DriverHistoryView.as_view(), name='drivers associated with van'),
     path('singledriverdates/', views.ReturnScheduledSingleSorts.as_view(), name='drivers associated with van'),
+    path('validationsort/', views.ValidationSheetSort.as_view(), name='drivers associated with van'),
 ]

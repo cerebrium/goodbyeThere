@@ -552,3 +552,17 @@ class ValidationSheetSort(APIView):
         serializer = ValidationSheetSerializer(dates, many=True, context={'request': request})
 
         return Response({"data": serializer.data})
+
+class ValidationSheetSortTwo(APIView):
+        # Authentication
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request): 
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        theWeek = body['week']
+        
+        dates = ValidationSheet.objects.filter(Q(week_number = theWeek))
+        serializer = ValidationSheetSerializer(dates, many=True, context={'request': request})
+
+        return Response({"data": serializer.data})

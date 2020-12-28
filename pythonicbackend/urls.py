@@ -46,5 +46,5 @@ urlpatterns = [
     path('driverimages/', views.ReturnDriverImage.as_view(), name='Image with id'),
     path('driverhistory/', views.DriverHistoryView.as_view(), name='drivers associated with van'),
     path('singledriverdates/', views.ReturnScheduledSingleSorts.as_view(), name='drivers associated with van'),
-    path('validationsort/', views.ValidationSheetSortTwo.as_view(), name='validation sorted'),
+    path('validationsort/', views.ValidationSheetSort.as_view(), name='validation sorted'),
 ]

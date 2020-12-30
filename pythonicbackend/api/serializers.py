@@ -265,5 +265,6 @@ class ValidationSheetSerializer(serializers.HyperlinkedModelSerializer):
             'R6',
             'Missortfourth',
             'Missortsixth',
-            'DpmoBonus'
+            'DpmoBonus',
+            'station'
         ]

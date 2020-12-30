@@ -336,10 +336,16 @@ class ValidationSheet(models.Model):
     date = models.CharField(null=True, max_length = 30)
     week_number = models.IntegerField("WEEKNUMBER", default=1, editable=True, null = True)
     support = MoneyField("Support", default=0, max_digits=19, decimal_places=2, default_currency='GBP', null = True)
-    miles = models.IntegerField("miles", default=1, editable=True, null = True)
-    totalLwp = models.IntegerField("miles", default=1, editable=True, null = True)
-    totalLVP = models.IntegerField("miles", default=1, editable=True, null = True)
-    totalTraining = models.IntegerField("miles", default=1, editable=True, null = True)
+    miles = models.IntegerField("miles", default=0, editable=True, null = True)
+    totalLwp = models.IntegerField("miles", default=0, editable=True, null = True)
+    totalLVP = models.IntegerField("miles", default=0, editable=True, null = True)
+    totalTraining = models.IntegerField("miles", default=0, editable=True, null = True)
+    R2 = models.IntegerField("miles", default=0, editable=True, null = True)
+    R4 = models.IntegerField("miles", default=0, editable=True, null = True)
+    R6 = models.IntegerField("miles", default=0, editable=True, null = True)
+    Missortfourth = models.IntegerField("miles", default=0, editable=True, null = True)
+    Missortsixth = models.IntegerField("miles", default=0, editable=True, null = True)
+    DpmoBonus = models.IntegerField("miles", default=0, editable=True, null = True)
 
     def __str__(self):
         return self.DriverHistory_id

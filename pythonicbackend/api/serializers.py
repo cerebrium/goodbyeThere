@@ -259,5 +259,11 @@ class ValidationSheetSerializer(serializers.HyperlinkedModelSerializer):
             'miles',
             'totalLwp',
             'totalLVP',
-            'totalTraining'
+            'totalTraining',
+            'R2',
+            'R4',
+            'R6',
+            'Missortfourth',
+            'Missortsixth',
+            'DpmoBonus'
         ]

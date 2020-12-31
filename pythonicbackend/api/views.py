@@ -293,7 +293,10 @@ class AutoSchedulingMapViewSet(APIView):
         body = json.loads(body_unicode)
         theDate = body['date']
         theWeek = body['week']
-        theNextWeek = theWeek+1
+        if theWeek == 52:
+            theNextWeek = 1
+        else:    
+            theNextWeek = theWeek+1
         drivers = Driver.objects.all()
         
         # schedule = ScheduledDate.objects.all()
@@ -355,7 +358,10 @@ class VanWeeklyDatesView(APIView):
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
         theWeek = body['week']
-        theNextWeek = theWeek+1
+        if theWeek == 52:
+            theNextWeek = 1
+        else:    
+            theNextWeek = theWeek+1
         
         dates = VehicleScheduledDate.objects.filter(Q(week_number = theWeek))
         serializer = VehicleScheduledDateSerializer(dates, many=True, context={'request': request})
@@ -427,7 +433,10 @@ class ReturnScheduledSorts(APIView):
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
         theWeek = body['week']
-        theNextWeek = theWeek+1
+        if theWeek == 52:
+            theNextWeek = 1
+        else:    
+            theNextWeek = theWeek+1
         
         dates = ScheduledDate.objects.filter(Q(week_number = theWeek) | Q(week_number = theNextWeek))
         serializer = ScheduledDatesSerializer(dates, many=True, context={'request': request})

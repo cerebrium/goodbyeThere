@@ -293,7 +293,7 @@ class AutoSchedulingMapViewSet(APIView):
         body = json.loads(body_unicode)
         theDate = body['date']
         theWeek = body['week']
-        if theWeek == 52:
+        if theWeek == 53:
             theNextWeek = 1
         else:    
             theNextWeek = theWeek+1
@@ -358,7 +358,7 @@ class VanWeeklyDatesView(APIView):
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
         theWeek = body['week']
-        if theWeek == 52:
+        if theWeek == 53:
             theNextWeek = 1
         else:    
             theNextWeek = theWeek+1
@@ -433,7 +433,7 @@ class ReturnScheduledSorts(APIView):
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
         theWeek = body['week']
-        if theWeek == 52:
+        if theWeek == 53:
             theNextWeek = 1
         else:    
             theNextWeek = theWeek+1

@@ -443,6 +443,26 @@ class ReturnScheduledSorts(APIView):
 
         return Response({"data": serializer.data})
 
+class ReturnScheduledSortsTriple(APIView):
+        # Authentication
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request): 
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        theWeek = body['week']
+        if theWeek == 53:
+            theNextWeek = 1
+            theSecondWeek = 2
+        else:    
+            theNextWeek = theWeek+1
+            theSecondWeek = theWeek+2
+        
+        dates = ScheduledDate.objects.filter(Q(week_number = theWeek) | Q(week_number = theNextWeek) | Q(week_number = theSecondWeek))
+        serializer = ScheduledDatesSerializer(dates, many=True, context={'request': request})
+
+        return Response({"data": serializer.data})
+
 class ReturnScheduledSingleSorts(APIView):
         # Authentication
     permission_classes = (IsAuthenticated,)

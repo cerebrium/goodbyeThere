@@ -256,6 +256,7 @@ class ValidationSheetSerializer(serializers.HyperlinkedModelSerializer):
             'validationSheet_id',
             'date',
             'week_number',
+            'routes',
             'support',
             'miles',
             'totalLwp',

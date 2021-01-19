@@ -336,6 +336,7 @@ class ValidationSheet(models.Model):
     )
     station = models.CharField(null=True, max_length = 20)
     date = models.CharField(null=True, max_length = 30)
+    routes = models.IntegerField("routes", default=0, editable=True, null = True)
     week_number = models.IntegerField("WEEKNUMBER", default=1, editable=True, null = True)
     support = MoneyField("Support", default=0, max_digits=19, decimal_places=2, default_currency='GBP', null = True)
     miles = models.IntegerField("miles", default=0, editable=True, null = True)

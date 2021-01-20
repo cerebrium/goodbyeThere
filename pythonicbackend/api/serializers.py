@@ -186,7 +186,8 @@ class DailyMessageSerializer(serializers.HyperlinkedModelSerializer):
             'message_id',
             'date',
             'message',
-            'name'
+            'name',
+            'station'
         ]
 
 class DailyServiceLockSerializer(serializers.HyperlinkedModelSerializer):

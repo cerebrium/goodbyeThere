@@ -39,7 +39,7 @@ class Driver(models.Model):
     #the following fields will be displayed when a manager clicks on "Add Driver"
     name = models.CharField(max_length = 100, null = True)
     location = models.CharField(max_length = 15, default = 'DBS2', null = True) #want to change to depot
-    email = models.CharField(max_length = 50, null=True)
+    email = models.CharField(max_length = 50, null=True, unique=True)
     phone = models.CharField(max_length = 20, null=True)
     address = models.CharField(max_length=100, null=True)
     datesList = ArrayField(models.CharField(max_length=20), default=list, blank=True)

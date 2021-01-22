@@ -22,6 +22,7 @@ router.register(r'driveraddhistory', views.DriverHistoryAddView)
 router.register(r'dailyserviceoverride', views.DailyServiceOverrideViewSet)
 router.register(r'dailyserviceoverridetwo', views.DailyServiceOverrideTwoViewSet)
 router.register(r'validationsheet', views.ValidationSheetView)
+router.register(r'validationmessage', views.ValidationMessageViewSet)
 
 # Setup automatic URL routing
 # Additionally, we include login URLs for the browsable API.

@@ -1,4 +1,4 @@
-from .models import Driver, ScheduledDate, Images, Vehicles, Invoice, managers, VehicleDamages, DeductionType, SupportType, VehicleScheduledDate, DailyMessage, DailyServiceLock, RentalVanLock, DailyServiceLockTwo, InvoiceCounter, DriverHistory, DailyServiceOverride, DailyServiceOverrideTwo, ValidationSheet
+from .models import Driver, ScheduledDate, Images, Vehicles, Invoice, managers, VehicleDamages, DeductionType, SupportType, VehicleScheduledDate, DailyMessage, DailyServiceLock, RentalVanLock, DailyServiceLockTwo, InvoiceCounter, DriverHistory, DailyServiceOverride, DailyServiceOverrideTwo, ValidationSheet, ValidationMessage
 from rest_framework import serializers
 
 
@@ -182,6 +182,16 @@ class VehicleScheduledDateSerializer(serializers.HyperlinkedModelSerializer):
 class DailyMessageSerializer(serializers.HyperlinkedModelSerializer):
     class  Meta:
         model = DailyMessage
+        fields = [
+            'message_id',
+            'date',
+            'message',
+            'name',
+            'station'
+        ]
+class ValidationMessageSerializer(serializers.HyperlinkedModelSerializer):
+    class  Meta:
+        model = ValidationMessage
         fields = [
             'message_id',
             'date',

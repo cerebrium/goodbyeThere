@@ -360,6 +360,7 @@ class ValidationMessage(models.Model):
     message = models.CharField(null=True, max_length = 900)
     name = models.CharField(null=True, max_length = 300)
     station = models.CharField(null=True, max_length = 15)
+    week_number = models.IntegerField("WEEKNUMBER", default=1, editable=True, null = True)
 
     def __str__(self):
         return self.message

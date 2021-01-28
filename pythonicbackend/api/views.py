@@ -548,6 +548,20 @@ class ReturnDriverImage(APIView):
 
         return Response({"data": serializer.data})
 
+class ReturnVanImage(APIView):
+        # Authentication
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request): 
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        van_id = body['van_id']
+        
+        dates = Images.objects.filter(Q(vehicle_id = van_id))
+        serializer = ImagesSerializer(dates, many=True, context={'request': request})
+
+        return Response({"data": serializer.data})
+
 class ReturnInvoiceNumber(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
 
@@ -580,7 +594,6 @@ class ValidationSheetView(viewsets.ModelViewSet):
 
     queryset = ValidationSheet.objects.all()
     serializer_class = ValidationSheetSerializer
-
 
 class ValidationSheetSort(APIView):
     # Authentication

@@ -366,4 +366,15 @@ class ValidationMessage(models.Model):
     def __str__(self):
         return self.message
 
+class RentalVanOveride(models.Model):
+    service_id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
+    date = models.CharField(null=True, max_length = 30)
+
+    def __str__(self):
+        return self.service_id
+
  

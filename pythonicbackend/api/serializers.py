@@ -267,7 +267,8 @@ class DriverHistorySerializer(serializers.HyperlinkedModelSerializer):
             'week_number',
             'driver_id',
             'name',
-            'registration'
+            'registration',
+            'endDate'
         ]
 
 class ValidationSheetSerializer(serializers.HyperlinkedModelSerializer):

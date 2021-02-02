@@ -33,7 +33,7 @@ class DriverManager(models.Manager):
 class Driver(models.Model):
     driver_id = models.AutoField(primary_key=True, unique=True) #need to connect to DA Compliance Check
     vehicle_name = models.CharField(max_length = 20, null=True)
-    vehicle_list = ArrayField(models.CharField(max_length=20), default=list, blank=True)
+    vehicle_list = ArrayField(models.CharField(max_length=60), default=list, blank=True)
     deleteButton = models.CharField(max_length = 100, null=True)
 
     #the following fields will be displayed when a manager clicks on "Add Driver"

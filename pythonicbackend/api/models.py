@@ -51,7 +51,7 @@ class Driver(models.Model):
     approvedBy = models.CharField(max_length = 30, null=True)
     approvedDateAndTime = models.CharField(max_length = 100, null=True)
     vanOwner = models.BooleanField(default=False)
-    registration = models.CharField(max_length = 30, null=True)
+    registration = ArrayField(models.CharField(max_length=20), default=list, blank=True)
     vtype = models.CharField(max_length = 30, null=True)
 
     compliance_list = ArrayField(models.CharField(max_length=20), default=list, blank=True)

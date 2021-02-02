@@ -32,7 +32,7 @@ class DriverManager(models.Manager):
         
 class Driver(models.Model):
     driver_id = models.AutoField(primary_key=True, unique=True) #need to connect to DA Compliance Check
-    vehicle_name = models.CharField(max_length=50, null = True)
+    vehicle_name = models.CharField(max_length = 20, null=True)
     vehicle_list = ArrayField(models.CharField(max_length=20), default=list, blank=True)
     deleteButton = models.CharField(max_length = 100, null=True)
 
@@ -51,7 +51,7 @@ class Driver(models.Model):
     approvedBy = models.CharField(max_length = 30, null=True)
     approvedDateAndTime = models.CharField(max_length = 100, null=True)
     vanOwner = models.BooleanField(default=False)
-    registration = ArrayField(models.CharField(max_length=20), default=list, blank=True)
+    registration = models.CharField(max_length = 30, null=True)
     vtype = models.CharField(max_length = 30, null=True)
 
     compliance_list = ArrayField(models.CharField(max_length=20), default=list, blank=True)

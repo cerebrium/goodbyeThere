@@ -54,7 +54,7 @@ class Driver(models.Model):
     registration = models.CharField(max_length = 30, null=True)
     vtype = models.CharField(max_length = 30, null=True)
 
-    compliance_list = ArrayField(models.CharField(max_length=20), default=list, blank=True)
+    compliance_list = ArrayField(models.CharField(max_length=100), default=list, blank=True)
     complianceCheck = models.CharField(max_length = 30, null=True)
     vat = models.BooleanField(default=False)
 

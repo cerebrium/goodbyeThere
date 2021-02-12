@@ -185,8 +185,8 @@ class ScheduledDate(models.Model):
     inOff = models.IntegerField("IN", default=1, editable=True, null = True)
     route = models.CharField("Route", max_length = 30, default = "0", null = True)
     routeNumber = models.CharField("Route", max_length = 30, default = "0", null = True)
-    logOut_time = models.TimeField("LOG OUT", null = True)
-    logIn_time = models.TimeField("LOG IN", null = True)
+    logOut_time = models.TimeField("LOG OUT", null = True, default = '00:00')
+    logIn_time = models.TimeField("LOG IN", null = True, default = '00:00')
 
     # sorting field
     week_number = models.IntegerField("WEEKNUMBER", default=1, editable=True, null = True)

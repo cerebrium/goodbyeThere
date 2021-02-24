@@ -604,10 +604,10 @@ class TrackerView(APIView):
     def post(self, request): 
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
-        theVID = body['vehicle_id']
+        theID = body['ID']
         
-        dates = DriverHistory.objects.filter(Q(registration = theVID))
-        serializer = DriverHistorySerializer(dates, many=True, context={'request': request})
+        dates = TrackerClass.objects.filter(Q(manager_id = theID))
+        serializer = TrackerClassSerializer(dates, many=True, context={'request': request})
 
         return Response({"data": serializer.data})
 

@@ -1,4 +1,4 @@
-from .models import Driver, ScheduledDate, Images, Vehicles, Invoice, managers, VehicleDamages, DeductionType, SupportType, VehicleScheduledDate, DailyMessage, DailyServiceLock, RentalVanLock, DailyServiceLockTwo, InvoiceCounter, DriverHistory, DailyServiceOverride, DailyServiceOverrideTwo, ValidationSheet, ValidationMessage, RentalVanOveride
+from .models import Driver, ScheduledDate, Images, Vehicles, Invoice, managers, VehicleDamages, DeductionType, SupportType, VehicleScheduledDate, DailyMessage, DailyServiceLock, RentalVanLock, DailyServiceLockTwo, InvoiceCounter, DriverHistory, DailyServiceOverride, DailyServiceOverrideTwo, ValidationSheet, ValidationMessage, RentalVanOveride, TrackerClass
 from rest_framework import serializers
 
 
@@ -122,6 +122,7 @@ class ScheduledDatesSerializer(serializers.HyperlinkedModelSerializer):
         model = ScheduledDate
         fields = [
             'date_id',
+            'manager_id',
             'name',
             'inOff',
             'route',
@@ -171,6 +172,7 @@ class VehicleScheduledDateSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = VehicleScheduledDate
         fields = [  
+            'manager_id',
             'vehicleDate_id',
             'vehicle_id',
             'driver_id',
@@ -271,10 +273,23 @@ class DriverHistorySerializer(serializers.HyperlinkedModelSerializer):
             'endDate'
         ]
 
+class TrackerClassSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = TrackerClass
+        fields = [
+            '_id',
+            'date',
+            'manager_id',
+            'logOut_time',
+            'logIn_time',
+            'pages_list'
+        ]
+
 class ValidationSheetSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ValidationSheet
         fields = [
+            'manager_id',
             'validationSheet_id',
             'date',
             'week_number',

@@ -1,11 +1,11 @@
-from .models import Driver, ScheduledDate, DriverManager, ScheduledDatesManager, Images, Vehicles, Invoice, managers, VehicleDamages, SupportType, DeductionType, VehicleScheduledDate, DailyMessage, DailyServiceLock, RentalVanLock, DailyServiceLockTwo, InvoiceCounter, DriverHistory, DailyServiceOverride, DailyServiceOverrideTwo, ValidationSheet, ValidationMessage, RentalVanOveride
+from .models import Driver, ScheduledDate, DriverManager, ScheduledDatesManager, Images, Vehicles, Invoice, managers, VehicleDamages, SupportType, DeductionType, VehicleScheduledDate, DailyMessage, DailyServiceLock, RentalVanLock, DailyServiceLockTwo, InvoiceCounter, DriverHistory, DailyServiceOverride, DailyServiceOverrideTwo, ValidationSheet, ValidationMessage, RentalVanOveride, TrackerClass
 from rest_framework.response import Response
 from rest_framework.views import APIView, View
 from rest_framework import viewsets
 import json
 import base64
 from rest_framework.permissions import IsAuthenticated
-from .serializers import managersSerializer, DriverSerializer, ScheduledDatesSerializer, ImagesSerializer, VehiclesSerializer, InvoiceSerializer, VehicleDamagesSerializer, SupportTypeSerializer, DeductionTypeSerializer, VehicleScheduledDateSerializer, DailyMessageSerializer, DailyServiceLockSerializer, RentalVanLockSerializer, DailyServiceLockTwoSerializer, InvoiceCounterSerializer, DriverHistorySerializer, DailyServiceOverrideSerializer, DailyServiceOverrideSerializerTwo, ValidationSheetSerializer, ValidationMessageSerializer, RentalVanOverideSerializer
+from .serializers import managersSerializer, DriverSerializer, ScheduledDatesSerializer, ImagesSerializer, VehiclesSerializer, InvoiceSerializer, VehicleDamagesSerializer, SupportTypeSerializer, DeductionTypeSerializer, VehicleScheduledDateSerializer, DailyMessageSerializer, DailyServiceLockSerializer, RentalVanLockSerializer, DailyServiceLockTwoSerializer, InvoiceCounterSerializer, DriverHistorySerializer, DailyServiceOverrideSerializer, DailyServiceOverrideSerializerTwo, ValidationSheetSerializer, ValidationMessageSerializer, RentalVanOverideSerializer, TrackerClassSerializer
 from .functions import timeDifference, returnOrderdData, statistics, invoice, returnVanOrderedData, tokenizer, complianceCheck, addDatedDriver, documentsDriversOnly, dailyService, vanWeeklyDates
 from .test_data import importData
 import csv, io 
@@ -134,6 +134,13 @@ class DeductionViewSet(viewsets.ModelViewSet):
 
     queryset = DeductionType.objects.all()
     serializer_class = DeductionTypeSerializer
+
+class TrackerViewSet(viewsets.ModelViewSet):
+    # Authentication
+    permission_classes = (IsAuthenticated,)
+
+    queryset = TrackerClass.objects.all()
+    serializer_class = TrackerClassSerializer
 
 class VehicleScheduledDateViewSet(viewsets.ModelViewSet):
     # Authentication
@@ -589,6 +596,21 @@ class DriverHistoryView(APIView):
 
         return Response({"data": serializer.data})
 
+class TrackerView(APIView):
+    
+    # Authentication
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request): 
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        ID = body['_id']
+        
+        dates = TrackerClass.objects.filter(Q(_id = ID))
+        serializer = TrackerClassSerializer(dates, many=True, context={'request': request})
+
+        return Response({"data": serializer.data})
+
 class ValidationSheetView(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
 
@@ -608,3 +630,34 @@ class ValidationSheetSort(APIView):
         serializer = ValidationSheetSerializer(dates, many=True, context={'request': request})
 
         return Response({"data": serializer.data})
+
+class UserDataSort(APIView):
+    # Authentication
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request): 
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+
+        theWeek = body['week']
+        manager_id = body['_id']
+
+        # validation data
+        validationDates = ValidationSheet.objects.filter(Q(week_number = theWeek), Q(manager_id = manager_id))
+        validationSerializer = ValidationSheetSerializer(validationDates, many=True, context={'request': request})
+        
+        # rental van tracker
+        rentalDates = VehicleScheduledDate.objects.filter(Q(week_number = theWeek), Q(manager_id = manager_id))
+        rentalSerializer = VehicleScheduledDateSerializer(rentalDates, many=True, context={'request': request})
+
+        # normal dates
+        scheduleDates = ScheduledDate.objects.filter(Q(week_number = theWeek), Q(manager_id = manager_id))
+        scheduleSerializer = ScheduledDatesSerializer(scheduleDates, many=True, context={'request': request})
+
+        return Response(
+            {
+                "validationData": validationSerializer.data,
+                "rentalData": rentalSerializer.data,
+                "scheduleDates": scheduleDates
+            }
+        )

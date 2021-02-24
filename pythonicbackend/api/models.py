@@ -12,9 +12,9 @@ import pytz
 class managers(models.Model):
     user_id = models.UUIDField(
         primary_key=True,
-        default=uuid.uuid4,
+        default=uuid.uuid4, 
         editable=False
-        )
+    )
     email = models.CharField(max_length = 100, unique=True)
     name = models.CharField(max_length = 100, null = True)
     DBS2 = models.BooleanField(default=False)
@@ -169,6 +169,7 @@ class ScheduledDatesManager(models.Manager):
   
 class ScheduledDate(models.Model):
     # adding live update
+    manager_id = models.CharField(null=True, max_length = 100)
 
     # have to add this
     objects = ScheduledDatesManager()
@@ -212,6 +213,7 @@ class ScheduledDate(models.Model):
         return str(self.date_id)
 
 class VehicleScheduledDate(models.Model):
+    manager_id = models.CharField(null=True, max_length = 100)
     vehicleDate_id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
@@ -332,6 +334,7 @@ class DriverHistory(models.Model):
         return self.DriverHistory_id
 
 class ValidationSheet(models.Model):
+    manager_id = models.CharField(null=True, max_length = 100)
     validationSheet_id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
@@ -377,5 +380,20 @@ class RentalVanOveride(models.Model):
 
     def __str__(self):
         return self.service_id
+
+class TrackerClass(models.Model):
+    _id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
+    date = models.CharField(null=True, max_length = 30)
+    manager_id = models.CharField(null=True, max_length = 100)
+    logOut_time = ArrayField(models.CharField(max_length=40), default=list, blank=True)
+    logIn_time = ArrayField(models.CharField(max_length=40), default=list, blank=True)
+    pages_list = ArrayField(models.CharField(max_length=40), default=list, blank=True)
+    submitted_data = ArrayField(models.CharField(max_length=40), default=list, blank=True)
+
+
 
  

@@ -24,6 +24,7 @@ router.register(r'rentalvanoverride', views.RentalVanOverideViewSet)
 router.register(r'dailyserviceoverridetwo', views.DailyServiceOverrideTwoViewSet)
 router.register(r'validationsheet', views.ValidationSheetView)
 router.register(r'validationmessage', views.ValidationMessageViewSet)
+router.register(r'trackeradditions', views.TrackerViewSet)
 
 # Setup automatic URL routing
 # Additionally, we include login URLs for the browsable API.
@@ -50,5 +51,7 @@ urlpatterns = [
     path('singledriverdates/', views.ReturnScheduledSingleSorts.as_view(), name='drivers associated with van'),
     path('validationsort/', views.ValidationSheetSort.as_view(), name='validation sorted'),
     path('tripledates/', views.ReturnScheduledSortsTriple.as_view(), name='triple week dates'),
-    path('vansingleimage/', views.ReturnVanImage.as_view(), name='get images for van')
+    path('vansingleimage/', views.ReturnVanImage.as_view(), name='get images for van'),
+    path('tracker/', views.TrackerView.as_view(), name='grab manager data'),
+    path('associatedtracker/', views.UserDataSort.as_view(), name="manager associated additions")
 ]

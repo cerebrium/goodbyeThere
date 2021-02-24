@@ -606,7 +606,7 @@ class TrackerView(APIView):
         body = json.loads(body_unicode)
         theID = body['ID']
         
-        dates = TrackerClass.objects.filter(Q(_id = theID))
+        dates = TrackerClass.objects.filter(Q(manager_id = theID))
         serializer = TrackerClassSerializer(dates, many=True, context={'request': request})
 
         return Response({"data": serializer.data})

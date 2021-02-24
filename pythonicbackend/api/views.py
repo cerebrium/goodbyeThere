@@ -604,9 +604,9 @@ class TrackerView(APIView):
     def post(self, request): 
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
-        ID = body['_id']
+        theID = body['ID']
         
-        dates = TrackerClass.objects.filter(Q(_id = ID))
+        dates = TrackerClass.objects.filter(Q(_id = theID))
         serializer = TrackerClassSerializer(dates, many=True, context={'request': request})
 
         return Response({"data": serializer.data})

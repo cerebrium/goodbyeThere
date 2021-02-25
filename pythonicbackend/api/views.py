@@ -640,7 +640,7 @@ class UserDataSort(APIView):
         body = json.loads(body_unicode)
 
         theWeek = body['week']
-        manager_id = body['_id']
+        manager_id = body['manId']
 
         # validation data
         validationDates = ValidationSheet.objects.filter(Q(week_number = theWeek), Q(manager_id = manager_id))
@@ -671,7 +671,7 @@ class UserDataScheduleDates(APIView):
         body = json.loads(body_unicode)
 
         theWeek = body['week']
-        manager_id = body['_id']
+        manager_id = body['manId']
 
                 # normal dates
         scheduleDates = ScheduledDate.objects.filter(Q(week_number = theWeek), Q(manager_id = manager_id))
@@ -692,7 +692,7 @@ class UserDataValidationDates(APIView):
         body = json.loads(body_unicode)
 
         theWeek = body['week']
-        manager_id = body['_id']
+        manager_id = body['manId']
 
         # validation data
         validationDates = ValidationSheet.objects.filter(Q(week_number = theWeek), Q(manager_id = manager_id))
@@ -713,7 +713,7 @@ class UserDataRentalDates(APIView):
         body = json.loads(body_unicode)
 
         theWeek = body['week']
-        manager_id = body['_id']
+        manager_id = body['manId']
 
                 # normal dates
         # rental van tracker

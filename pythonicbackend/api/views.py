@@ -658,7 +658,7 @@ class UserDataSort(APIView):
             {
                 "validationData": validationSerializer.data,
                 "rentalData": rentalSerializer.data,
-                "scheduleDates": scheduleDates.data
+                "scheduleDates": scheduleSerializer.data
             }
         )
 
@@ -679,7 +679,7 @@ class UserDataScheduleDates(APIView):
 
         return Response(
             {
-                "scheduleDates": scheduleDates.data
+                "scheduleDates": scheduleSerializer.data
             }
         )
 

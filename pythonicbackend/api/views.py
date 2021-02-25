@@ -661,3 +661,67 @@ class UserDataSort(APIView):
                 "scheduleDates": scheduleDates
             }
         )
+
+class UserDataScheduleDates(APIView):
+        # Authentication
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request): 
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+
+        theWeek = body['week']
+        manager_id = body['_id']
+
+                # normal dates
+        scheduleDates = ScheduledDate.objects.filter(Q(week_number = theWeek), Q(manager_id = manager_id))
+        scheduleSerializer = ScheduledDatesSerializer(scheduleDates, many=True, context={'request': request})
+
+        return Response(
+            {
+                "scheduleDates": scheduleDates
+            }
+        )
+
+class UserDataValidationDates(APIView):
+        # Authentication
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request): 
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+
+        theWeek = body['week']
+        manager_id = body['_id']
+
+        # validation data
+        validationDates = ValidationSheet.objects.filter(Q(week_number = theWeek), Q(manager_id = manager_id))
+        validationSerializer = ValidationSheetSerializer(validationDates, many=True, context={'request': request})
+
+        return Response(
+            {
+                "validationData": validationSerializer.data,
+            }
+        )
+
+class UserDataRentalDates(APIView):
+        # Authentication
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request): 
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+
+        theWeek = body['week']
+        manager_id = body['_id']
+
+                # normal dates
+        # rental van tracker
+        rentalDates = VehicleScheduledDate.objects.filter(Q(week_number = theWeek), Q(manager_id = manager_id))
+        rentalSerializer = VehicleScheduledDateSerializer(rentalDates, many=True, context={'request': request})
+
+        return Response(
+            {
+                "rentalData": rentalSerializer.data,
+            }
+        )

@@ -53,5 +53,8 @@ urlpatterns = [
     path('tripledates/', views.ReturnScheduledSortsTriple.as_view(), name='triple week dates'),
     path('vansingleimage/', views.ReturnVanImage.as_view(), name='get images for van'),
     path('tracker/', views.TrackerView.as_view(), name='grab manager data'),
-    path('associatedtracker/', views.UserDataSort.as_view(), name="manager associated additions")
+    path('associatedtracker/', views.UserDataSort.as_view(), name="manager associated additions"),
+    path('associatedschedule/', views.UserDataScheduleDates.as_view(), name="manager associated additions"),
+    path('associatedvalidation/', views.UserDataValidationDates.as_view(), name="manager associated additions"),
+    path('associatedrental/', views.UserDataRentalDates.as_view(), name="manager associated additions")
 ]

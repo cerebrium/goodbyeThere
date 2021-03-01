@@ -269,6 +269,18 @@ class DailyServiceLock(models.Model):
     def __str__(self):
         return self.service_id
 
+class ValidationLock(models.Model):
+    validation_id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    ) 
+    date = models.CharField(null=True, max_length = 30)
+    overriden = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.validation_id
+
 class DailyServiceLockTwo(models.Model):
     service_id = models.UUIDField(
         primary_key=True,
@@ -393,7 +405,3 @@ class TrackerClass(models.Model):
     logIn_time = ArrayField(models.CharField(max_length=40), default=list, blank=True)
     pages_list = ArrayField(models.CharField(max_length=40), default=list, blank=True)
     submitted_data = ArrayField(models.CharField(max_length=40), default=list, blank=True)
-
-
-
- 

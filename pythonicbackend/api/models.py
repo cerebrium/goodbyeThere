@@ -105,7 +105,7 @@ class Vehicles(models.Model):
     vtype = models.CharField(max_length=20, default='standard')
     quotePrice = MoneyField("RENTAL QUOTE", default=0, max_digits=19, decimal_places=2, default_currency='GBP', null = True)
     invoice = MoneyField("INVOICE", default=0, max_digits=19, decimal_places=2, default_currency='GBP', null = True)
-    offboarded = models.BooleanField(default=False)
+    offboarded = models.BooleanField(default=False, null = True)
 
     def __str__(self):
         return self.registration

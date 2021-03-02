@@ -74,7 +74,8 @@ class VehiclesSerializer(serializers.HyperlinkedModelSerializer):
             'companyOwned',
             'vtype',
             'quotePrice',
-            'invoice'
+            'invoice',
+            'offboarded'
         ]
 
 class VehicleDamagesSerializer(serializers.HyperlinkedModelSerializer):

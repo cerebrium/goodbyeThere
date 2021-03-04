@@ -291,7 +291,9 @@ class TrackerClassSerializer(serializers.HyperlinkedModelSerializer):
             'manager_id',
             'logOut_time',
             'logIn_time',
-            'pages_list'
+            'pages_list',
+            'latitude',
+            'longitude'
         ]
 
 class ValidationSheetSerializer(serializers.HyperlinkedModelSerializer):

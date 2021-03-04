@@ -406,3 +406,5 @@ class TrackerClass(models.Model):
     logIn_time = ArrayField(models.CharField(max_length=40), default=list, blank=True)
     pages_list = ArrayField(models.CharField(max_length=40), default=list, blank=True)
     submitted_data = ArrayField(models.CharField(max_length=40), default=list, blank=True)
+    latitude = models.CharField(null=True, max_length = 40)
+    longitude = models.CharField(null=True, max_length = 40)

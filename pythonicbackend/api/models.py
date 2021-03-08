@@ -44,7 +44,7 @@ class Driver(models.Model):
     address = models.CharField(max_length=100, null=True)
     datesList = ArrayField(models.CharField(max_length=20), default=list, blank=True)
     rentalCheckList = ArrayField(models.CharField(max_length=25), default=list, blank=True)
-    status = models.CharField(max_length = 30, null = True)
+    status = models.CharField(max_length = 50, null = True)
     DriverUniqueId = models.CharField(max_length = 30, null=True)
     SigningUrlNumber = models.CharField(max_length = 100, null=True)
     Signed = models.BooleanField(default=False)

@@ -1,4 +1,4 @@
-from .models import Driver, ScheduledDate, Images, Vehicles, Invoice, managers, VehicleDamages, DeductionType, SupportType, VehicleScheduledDate, DailyMessage, DailyServiceLock, RentalVanLock, DailyServiceLockTwo, InvoiceCounter, DriverHistory, DailyServiceOverride, DailyServiceOverrideTwo, ValidationSheet, ValidationMessage, RentalVanOveride, TrackerClass, ValidationLock
+from .models import Driver, ScheduledDate, Images, Vehicles, Invoice, managers, VehicleDamages, DeductionType, SupportType, VehicleScheduledDate, DailyMessage, DailyServiceLock, RentalVanLock, DailyServiceLockTwo, InvoiceCounter, DriverHistory, DailyServiceOverride, DailyServiceOverrideTwo, ValidationSheet, ValidationMessage, RentalVanOveride, TrackerClass, ValidationLock, DeletedData
 from rest_framework import serializers
 
 
@@ -317,4 +317,14 @@ class ValidationSheetSerializer(serializers.HyperlinkedModelSerializer):
             'Missortsixth',
             'DpmoBonus',
             'station'
+        ]
+
+class DeletedDataSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = DeletedData
+        fields = [
+            '_id',
+            'date',
+            'manager_id',
+            'deletion_info'
         ]

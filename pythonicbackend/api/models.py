@@ -408,3 +408,13 @@ class TrackerClass(models.Model):
     submitted_data = ArrayField(models.CharField(max_length=40), default=list, blank=True)
     latitude = models.CharField(null=True, max_length = 40)
     longitude = models.CharField(null=True, max_length = 40)
+
+class DeletedData(models.Model):
+    _id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
+    date = models.CharField(null=True, max_length = 30)
+    manager_id = models.CharField(null=True, max_length = 100)
+    deletion_info = ArrayField(models.CharField(max_length=40), default=list, blank=True)

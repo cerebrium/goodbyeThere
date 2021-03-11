@@ -140,7 +140,8 @@ class ScheduledDatesSerializer(serializers.HyperlinkedModelSerializer):
             'parcelNotDelivered',
             'TORH',
             'totalRouteForDay',
-            'week_number'
+            'week_number',
+            'manager_movement'
         ]
 
 class DeductionTypeSerializer(serializers.HyperlinkedModelSerializer):
@@ -180,7 +181,8 @@ class VehicleScheduledDateSerializer(serializers.HyperlinkedModelSerializer):
             'date',
             'week_number',
             'location',
-            'registration'
+            'registration',
+            'manager_movement'
         ]
 
 class DailyMessageSerializer(serializers.HyperlinkedModelSerializer):
@@ -316,7 +318,8 @@ class ValidationSheetSerializer(serializers.HyperlinkedModelSerializer):
             'Missortfourth',
             'Missortsixth',
             'DpmoBonus',
-            'station'
+            'station',
+            'manager_movement'
         ]
 
 class DeletedDataSerializer(serializers.HyperlinkedModelSerializer):

@@ -193,7 +193,8 @@ class DailyMessageSerializer(serializers.HyperlinkedModelSerializer):
             'date',
             'message',
             'name',
-            'station'
+            'station',
+            'dateSubmit'
         ]
 class ValidationMessageSerializer(serializers.HyperlinkedModelSerializer):
     class  Meta:

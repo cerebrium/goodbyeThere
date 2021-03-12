@@ -171,7 +171,7 @@ class ScheduledDatesManager(models.Manager):
 class ScheduledDate(models.Model):
     # adding live update
     manager_id = models.CharField(null=True, max_length = 100)
-    manager_movement = ArrayField(models.CharField(max_length=80), default=list, blank=True)
+    manager_movement = ArrayField(models.CharField(max_length=120), default=list, blank=True)
 
     # have to add this
     objects = ScheduledDatesManager()
@@ -216,7 +216,7 @@ class ScheduledDate(models.Model):
 
 class VehicleScheduledDate(models.Model):
     manager_id = models.CharField(null=True, max_length = 100)
-    manager_movement = ArrayField(models.CharField(max_length=50), default=list, blank=True)
+    manager_movement = ArrayField(models.CharField(max_length=120), default=list, blank=True)
     vehicleDate_id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
@@ -350,7 +350,7 @@ class DriverHistory(models.Model):
 
 class ValidationSheet(models.Model):
     manager_id = models.CharField(null=True, max_length = 100)
-    manager_movement = ArrayField(models.CharField(max_length=50), default=list, blank=True)
+    manager_movement = ArrayField(models.CharField(max_length=120), default=list, blank=True)
     validationSheet_id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,

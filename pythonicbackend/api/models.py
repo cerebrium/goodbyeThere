@@ -422,3 +422,24 @@ class DeletedData(models.Model):
     date = models.CharField(null=True, max_length = 30)
     manager_id = models.CharField(null=True, max_length = 100)
     deletion_info = ArrayField(models.CharField(max_length=40), default=list, blank=True)
+
+class EightHourList(models.Model):
+    _id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
+    date = models.CharField(null=True, max_length = 100)
+
+class ManagerChangeList(models.Model):
+    _id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
+    date = models.CharField(null=True, max_length = 100)
+    week_number = models.CharField(null=True, max_length = 10)
+    station = models.CharField(null=True, max_length = 20)
+
+
+    

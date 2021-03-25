@@ -27,6 +27,8 @@ router.register(r'validationmessage', views.ValidationMessageViewSet)
 router.register(r'trackeradditions', views.TrackerViewSet)
 router.register(r'validationlock', views.ValidationLockViewSet)
 router.register(r'deletedData', views.DeletedDataViewSet)
+router.register(r'eighthour', views.eightHourViewSet)
+router.register(r'managerchange', views.managerChangeListViewSet)
 
 # Setup automatic URL routing
 # Additionally, we include login URLs for the browsable API.

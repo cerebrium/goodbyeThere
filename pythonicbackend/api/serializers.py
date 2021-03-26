@@ -351,5 +351,6 @@ class ManagerChangeListSerializer(serializers.HyperlinkedModelSerializer):
             '_id',
             'date',
             'week_number',
-            'station'
+            'station',
+            'driver_id'
         ]

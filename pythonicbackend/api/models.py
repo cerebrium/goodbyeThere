@@ -443,6 +443,7 @@ class ManagerChangeList(models.Model):
     date = models.CharField(null=True, max_length = 100)
     week_number = models.CharField(null=True, max_length = 10)
     station = models.CharField(null=True, max_length = 20)
+    driver_id = models.CharField(null=True, max_length = 100)
 
 
     

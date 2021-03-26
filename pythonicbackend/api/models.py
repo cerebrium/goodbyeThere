@@ -429,6 +429,7 @@ class EightHourList(models.Model):
         default=uuid.uuid4,
         editable=False
     )
+    current_date = models.CharField(null=True, max_length = 30)
     date = models.CharField(null=True, max_length = 100)
     locktype = models.CharField(null=True, max_length = 100)
     lockid = models.CharField(null=True, max_length = 100)

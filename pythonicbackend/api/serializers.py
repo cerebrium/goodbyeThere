@@ -340,7 +340,8 @@ class EightHourListSerializer(serializers.HyperlinkedModelSerializer):
             '_id',
             'date',
             'locktype',
-            'lockid'
+            'lockid',
+            'current_date'
         ]
 
 class ManagerChangeListSerializer(serializers.HyperlinkedModelSerializer):

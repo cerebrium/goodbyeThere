@@ -339,6 +339,8 @@ class EightHourListSerializer(serializers.HyperlinkedModelSerializer):
         fields = [
             '_id',
             'date',
+            'locktype',
+            'lockid'
         ]
 
 class ManagerChangeListSerializer(serializers.HyperlinkedModelSerializer):

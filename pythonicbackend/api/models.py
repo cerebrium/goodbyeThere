@@ -430,6 +430,8 @@ class EightHourList(models.Model):
         editable=False
     )
     date = models.CharField(null=True, max_length = 100)
+    locktype = models.CharField(null=True, max_length = 100)
+    lockid = models.CharField(null=True, max_length = 100)
 
 class ManagerChangeList(models.Model):
     _id = models.UUIDField(

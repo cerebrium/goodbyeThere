@@ -29,6 +29,7 @@ router.register(r'validationlock', views.ValidationLockViewSet)
 router.register(r'deletedData', views.DeletedDataViewSet)
 router.register(r'eighthour', views.eightHourViewSet)
 router.register(r'managerchange', views.managerChangeListViewSet)
+router.register(r'rotalock', views.rotaLockViewSet)
 
 # Setup automatic URL routing
 # Additionally, we include login URLs for the browsable API.
@@ -60,5 +61,6 @@ urlpatterns = [
     path('associatedtracker/', views.UserDataSort.as_view(), name="manager associated additions"),
     path('associatedschedule/', views.UserDataScheduleDates.as_view(), name="manager associated additions"),
     path('associatedvalidation/', views.UserDataValidationDates.as_view(), name="manager associated additions"),
-    path('associatedrental/', views.UserDataRentalDates.as_view(), name="manager associated additions")
+    path('associatedrental/', views.UserDataRentalDates.as_view(), name="manager associated additions"),
+    path('rotaweeksort', views.rotaWeekSortView.as_view(), name='get the rota locks by week')
 ]

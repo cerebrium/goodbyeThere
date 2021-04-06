@@ -1,11 +1,11 @@
-from .models import Driver, ScheduledDate, DriverManager, ScheduledDatesManager, Images, Vehicles, Invoice, managers, VehicleDamages, SupportType, DeductionType, VehicleScheduledDate, DailyMessage, DailyServiceLock, RentalVanLock, DailyServiceLockTwo, InvoiceCounter, DriverHistory, DailyServiceOverride, DailyServiceOverrideTwo, ValidationSheet, ValidationMessage, RentalVanOveride, TrackerClass, ValidationLock, DeletedData, EightHourList, ManagerChangeList
+from .models import Driver, ScheduledDate, DriverManager, ScheduledDatesManager, Images, Vehicles, Invoice, managers, VehicleDamages, SupportType, DeductionType, VehicleScheduledDate, DailyMessage, DailyServiceLock, RentalVanLock, DailyServiceLockTwo, InvoiceCounter, DriverHistory, DailyServiceOverride, DailyServiceOverrideTwo, ValidationSheet, ValidationMessage, RentalVanOveride, TrackerClass, ValidationLock, DeletedData, EightHourList, ManagerChangeList, RotaLock
 from rest_framework.response import Response
 from rest_framework.views import APIView, View
 from rest_framework import viewsets
 import json
 import base64
 from rest_framework.permissions import IsAuthenticated
-from .serializers import managersSerializer, DriverSerializer, ScheduledDatesSerializer, ImagesSerializer, VehiclesSerializer, InvoiceSerializer, VehicleDamagesSerializer, SupportTypeSerializer, DeductionTypeSerializer, VehicleScheduledDateSerializer, DailyMessageSerializer, DailyServiceLockSerializer, RentalVanLockSerializer, DailyServiceLockTwoSerializer, InvoiceCounterSerializer, DriverHistorySerializer, DailyServiceOverrideSerializer, DailyServiceOverrideSerializerTwo, ValidationSheetSerializer, ValidationMessageSerializer, RentalVanOverideSerializer, TrackerClassSerializer, ValidationLockSerializer, DeletedDataSerializer, EightHourListSerializer, ManagerChangeListSerializer
+from .serializers import managersSerializer, DriverSerializer, ScheduledDatesSerializer, ImagesSerializer, VehiclesSerializer, InvoiceSerializer, VehicleDamagesSerializer, SupportTypeSerializer, DeductionTypeSerializer, VehicleScheduledDateSerializer, DailyMessageSerializer, DailyServiceLockSerializer, RentalVanLockSerializer, DailyServiceLockTwoSerializer, InvoiceCounterSerializer, DriverHistorySerializer, DailyServiceOverrideSerializer, DailyServiceOverrideSerializerTwo, ValidationSheetSerializer, ValidationMessageSerializer, RentalVanOverideSerializer, TrackerClassSerializer, ValidationLockSerializer, DeletedDataSerializer, EightHourListSerializer, ManagerChangeListSerializer, RotaLockSerializer
 from .functions import timeDifference, returnOrderdData, statistics, invoice, returnVanOrderedData, tokenizer, complianceCheck, addDatedDriver, documentsDriversOnly, dailyService, vanWeeklyDates
 from .test_data import importData
 import csv, io 
@@ -41,6 +41,33 @@ class managerChangeListViewSet(viewsets.ModelViewSet):
     # Users
     queryset = ManagerChangeList.objects.all()
     serializer_class = ManagerChangeListSerializer
+
+class rotaLockViewSet(viewsets.ModelViewSet):
+    # Authentication
+    permission_classes = (IsAuthenticated,)
+
+    queryset = RotaLock.objects.all()
+    serializer_class = RotaLockSerializer
+
+class rotaWeekSortView(APIView):
+    # Authentication
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request): 
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+
+        theWeek = body['week']
+
+                # normal dates
+        rotaLocks = RotaLock.objects.filter(Q(week_number = theWeek))
+        rotaSerializer = RotaLockSerializer(rotaLocks, many=True, context={'request': request})
+
+        return Response(
+            {
+                "rotaLocks": rotaSerializer.data
+            }
+        )
 
 class DriverViewSet(viewsets.ModelViewSet):
     # Authentication

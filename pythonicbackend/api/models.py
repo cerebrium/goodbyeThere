@@ -445,5 +445,18 @@ class ManagerChangeList(models.Model):
     station = models.CharField(null=True, max_length = 20)
     driver_id = models.CharField(null=True, max_length = 100)
 
+class RotaLock(models.Model):
+    validation_id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    ) 
+    date = models.CharField(null=True, max_length = 30)
+    week_number = models.CharField(null=True, max_length = 10)
+    overriden = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.validation_id
+
 
     

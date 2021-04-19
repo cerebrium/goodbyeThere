@@ -22,6 +22,7 @@ class managers(models.Model):
     DEX2 = models.BooleanField(default=False)
     DXP1 = models.BooleanField(default=False)
     DRR1 = models.BooleanField(default=False)
+    DCF1 = models.BooleanField(default=False)
     creationDate = models.CharField(max_length = 50, default = datetime.date.today())
 
 class DriverManager(models.Manager):

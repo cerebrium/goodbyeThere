@@ -321,6 +321,7 @@ class ValidationSheetSerializer(serializers.HyperlinkedModelSerializer):
             'Missortsixth',
             'DpmoBonus',
             'station',
+            'Jumper',
             'manager_movement'
         ]
 

@@ -7,7 +7,6 @@ from django.contrib.postgres.fields import ArrayField
 import datetime
 from django import forms
 from django.utils import timezone
-import pytz
 
 class managers(models.Model):
     user_id = models.UUIDField(
@@ -229,6 +228,7 @@ class VehicleScheduledDate(models.Model):
     week_number = models.IntegerField("WEEKNUMBER", default=1, editable=True, null = True)
     location = models.CharField(max_length = 15, default='DBS2', null=True)
     registration = models.CharField(max_length = 20, default='DBS2', null=True)
+    vtype = models.CharField(max_length = 20, default='standard', null=True)
 
 class DeductionType(models.Model):
     deduction_id = models.AutoField(primary_key=True, unique=True)

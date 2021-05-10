@@ -277,7 +277,7 @@ class InvoiceViewSet(APIView):
 
 class DailyServiceViewSet(APIView):
     # function for all data
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
 
     def post(self, request): 
         body_unicode = request.body.decode('utf-8')
@@ -287,9 +287,9 @@ class DailyServiceViewSet(APIView):
         drivers = Driver.objects.all()
         
         # filtered queries
-        schedule = ScheduledDate.objects.filter(Q(week_number = theWeek))
-        deductions = DeductionType.objects.filter(Q(week_number = theWeek))
-        support = SupportType.objects.filter(Q(week_number = theWeek))
+        schedule = ScheduledDate.objects.filter(Q(date = theDate))
+        deductions = DeductionType.objects.filter(Q(date = theDate))
+        support = SupportType.objects.filter(Q(date = theDate))
 
         drivers = Driver.objects.all().order_by('name')
 

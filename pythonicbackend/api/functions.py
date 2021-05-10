@@ -993,7 +993,7 @@ def dailyService(driversList, datesList, deductions, support, selectedDate=None)
 
         for ele in deductions:
             if not ele.date:
-                print('')
+                pass
             else:    
                 if datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() == currentDate:
                     myTransientDeduction = {}
@@ -1008,7 +1008,7 @@ def dailyService(driversList, datesList, deductions, support, selectedDate=None)
 
         for ele in support:
             if not ele.date:
-                print('')
+                pass
             else:    
                 if datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() == currentDate:
                     myTransientSupport = {}
@@ -1081,7 +1081,7 @@ def dailyService(driversList, datesList, deductions, support, selectedDate=None)
 
         for ele in deductions:
             if not ele.date:
-                print('')
+                pass
             else:    
                 if datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() == selectedDate:
                     myTransientDeduction = {}
@@ -1096,7 +1096,7 @@ def dailyService(driversList, datesList, deductions, support, selectedDate=None)
 
         for ele in support:
             if not ele.date:
-                print('')
+                pass
             else: 
                 if datetime.datetime.strptime(ele.date, '%a %b %d %Y').date() == selectedDate:
                     myTransientSupport = {}

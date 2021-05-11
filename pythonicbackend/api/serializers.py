@@ -376,7 +376,8 @@ class ComplianceVanSerializer(serializers.HyperlinkedModelSerializer):
             'Assighned_Date',
             'Returned_Date',
             'Driver_Id',
-            'vehicle_Id'
+            'vehicle_Id',
+            'next'
         ]
 
 

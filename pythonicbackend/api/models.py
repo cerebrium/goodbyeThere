@@ -460,5 +460,16 @@ class RotaLock(models.Model):
     def __str__(self):
         return self.validation_id
 
+class ComplianceVan(models.Model):
+    Compliance_Van_Id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    ) 
+    Assighned_Date = models.CharField(null=True, max_length = 30)
+    Returned_Date = models.CharField(null=True, max_length = 30)
+    Driver_Id = models.ForeignKey(Driver, on_delete=models.CASCADE)
+    vehicle_Id = models.ForeignKey(Vehicles, null=True, on_delete=models.CASCADE)
+
 
     

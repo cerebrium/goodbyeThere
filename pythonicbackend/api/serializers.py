@@ -1,4 +1,4 @@
-from .models import Driver, ScheduledDate, Images, Vehicles, Invoice, managers, VehicleDamages, DeductionType, SupportType, VehicleScheduledDate, DailyMessage, DailyServiceLock, RentalVanLock, DailyServiceLockTwo, InvoiceCounter, DriverHistory, DailyServiceOverride, DailyServiceOverrideTwo, ValidationSheet, ValidationMessage, RentalVanOveride, TrackerClass, ValidationLock, DeletedData, EightHourList, ManagerChangeList, RotaLock
+from .models import Driver, ScheduledDate, Images, Vehicles, Invoice, managers, VehicleDamages, DeductionType, SupportType, VehicleScheduledDate, DailyMessage, DailyServiceLock, RentalVanLock, DailyServiceLockTwo, InvoiceCounter, DriverHistory, DailyServiceOverride, DailyServiceOverrideTwo, ValidationSheet, ValidationMessage, RentalVanOveride, TrackerClass, ValidationLock, DeletedData, EightHourList, ManagerChangeList, RotaLock, ComplianceVan
 from rest_framework import serializers
 
 
@@ -367,3 +367,16 @@ class RotaLockSerializer(serializers.HyperlinkedModelSerializer):
             'week_number',
             'overriden'
         ]
+
+class ComplianceVanSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = ComplianceVan
+        fields = [
+            'Compliance_Van_Id',
+            'Assighned_Date',
+            'Returned_Date',
+            'Driver_Id',
+            'vehicle_Id'
+        ]
+
+

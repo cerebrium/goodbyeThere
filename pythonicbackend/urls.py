@@ -30,6 +30,7 @@ router.register(r'deletedData', views.DeletedDataViewSet)
 router.register(r'eighthour', views.eightHourViewSet)
 router.register(r'managerchange', views.managerChangeListViewSet)
 router.register(r'rotalock', views.rotaLockViewSet)
+router.register(r'compliancevan', views.ComplianceVanView)
 
 # Setup automatic URL routing
 # Additionally, we include login URLs for the browsable API.

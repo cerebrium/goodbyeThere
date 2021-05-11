@@ -58,6 +58,9 @@ class Driver(models.Model):
     complianceCheck = models.CharField(max_length = 30, null=True)
     vat = models.BooleanField(default=False)
 
+    # head of linked list
+    Compliance_Van = models.CharField(max_length = 50, null = True)
+
     objects = DriverManager() # allows us to call method above
     #week = models.DateField("week", default = datetime.date.today.isocalendar()[1])
     

@@ -473,7 +473,7 @@ class ComplianceVan(models.Model):
     Returned_Date = models.CharField(null=True, max_length = 30)
     Driver_Id = models.ForeignKey(Driver, on_delete=models.CASCADE)
     vehicle_Id = models.CharField(null=True, max_length = 30)
-    next = models.CharField(null=True, max_length = 30)
+    next = models.CharField(null=True, max_length = 50)
 
 
     

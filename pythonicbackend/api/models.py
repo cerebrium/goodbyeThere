@@ -57,6 +57,7 @@ class Driver(models.Model):
     compliance_list = ArrayField(models.CharField(max_length=100), default=list, blank=True)
     complianceCheck = models.CharField(max_length = 30, null=True)
     vat = models.BooleanField(default=False)
+    offBoard = models.CharField(max_length = 50, null = True)
 
     # head of linked list
     Compliance_Van = models.CharField(max_length = 50, null = True)

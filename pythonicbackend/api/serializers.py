@@ -46,7 +46,8 @@ class DriverSerializer(serializers.HyperlinkedModelSerializer):
             'vehicle_list',
             'compliance_list',
             'rentalCheckList',
-            'Compliance_Van'
+            'Compliance_Van',
+            'offBoard'
         ]
         
 class InvoiceSerializer(serializers.HyperlinkedModelSerializer):

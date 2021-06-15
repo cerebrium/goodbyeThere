@@ -53,6 +53,7 @@ class Driver(models.Model):
     vanOwner = models.BooleanField(default=False)
     registration = models.CharField(max_length = 30, null=True)
     vtype = models.CharField(max_length = 30, null=True)
+    startList = ArrayField(models.CharField(max_length=25), default=list, blank=True)
 
     compliance_list = ArrayField(models.CharField(max_length=100), default=list, blank=True)
     complianceCheck = models.CharField(max_length = 30, null=True)

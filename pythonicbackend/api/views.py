@@ -6,7 +6,7 @@ import json
 import base64
 from rest_framework.permissions import IsAuthenticated
 from .serializers import managersSerializer, DriverSerializer, ScheduledDatesSerializer, ImagesSerializer, VehiclesSerializer, InvoiceSerializer, VehicleDamagesSerializer, SupportTypeSerializer, DeductionTypeSerializer, VehicleScheduledDateSerializer, DailyMessageSerializer, DailyServiceLockSerializer, RentalVanLockSerializer, DailyServiceLockTwoSerializer, InvoiceCounterSerializer, DriverHistorySerializer, DailyServiceOverrideSerializer, DailyServiceOverrideSerializerTwo, ValidationSheetSerializer, ValidationMessageSerializer, RentalVanOverideSerializer, TrackerClassSerializer, ValidationLockSerializer, DeletedDataSerializer, EightHourListSerializer, ManagerChangeListSerializer, RotaLockSerializer, ComplianceVanSerializer
-from .functions import timeDifference, returnOrderdData, statistics, invoice, returnVanOrderedData, tokenizer, complianceCheck, addDatedDriver, documentsDriversOnly, dailyService, vanWeeklyDates
+from .functions import timeDifference, returnOrderdData, statistics, invoice, returnVanOrderedData, tokenizer, complianceCheck, addDatedDriver, documentsDriversOnly, dailyService, vanWeeklyDates, rotaQue
 from .test_data import importData
 import csv, io 
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -285,7 +285,7 @@ class InvoiceViewSet(APIView):
 
 class DailyServiceViewSet(APIView):
     # function for all data
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request): 
         body_unicode = request.body.decode('utf-8')
@@ -442,7 +442,7 @@ class VanWeeklyDatesView(APIView):
         return Response({"data": serializer.data})
 
         # Authentication
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     # serializer_class = VehicleScheduledDateSerializer
     # def post(self, request):
@@ -791,3 +791,24 @@ class UserDataRentalDates(APIView):
                 "rentalData": rentalSerializer.data,
             }
         )
+
+class SubmitRota(APIView):
+    # Authentication
+    permission_classes = (IsAuthenticated,)
+    
+    def post(self, request): 
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+
+        # data to sort by
+        driverId = body['driver_id'].split('/')[4]
+        incDate = body['date']
+
+        scheduledDates = ScheduledDate.objects.filter(Q(date = incDate), Q(driver_id = driverId))
+        scheduledSerializer = ScheduledDatesSerializer(scheduledDates, many=True, context={'request': request})
+
+        return Response(
+            {
+                "dateCreated": rotaQue(body, scheduledDates),
+            }
+    )

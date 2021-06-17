@@ -1,16 +1,12 @@
 ##### functions file #####
 ## make sure to import anything you plan to use
 import datetime
-import math
 import pandas as pd
 import numpy as np
-import glob
 from collections import defaultdict
 from collections import Counter
-import math
-import csv
-import collections, functools, operator
-import re
+from .models import ScheduledDate
+import json
 
 ## declare a function - this one is going to return an array containing the difference between log in and log out times
 def timeDifference(logIn, logOut):
@@ -1221,3 +1217,22 @@ def vanWeeklyDates(vanDatesList, selectedDate):
     } 
 
     return myFinalObject
+
+def rotaQue(object, checkList):
+    # check for instance of current date
+    for ele in checkList:
+        if ele:
+            return False
+
+    # Parse JSON into an object with attributes corresponding to dict keys.
+
+    if "manager_movement" in object:
+        ScheduledDate.objects.create_date(object['route'], object['date'], object['driver_id'].split('/')[4], object['location'], object['week_number'], object['manager_id'], object['manager_movement'])
+    else:
+        ScheduledDate.objects.create_date(object['route'], object['date'], object['driver_id'].split('/')[4], object['location'], object['week_number'], object['manager_id'], None)
+
+        
+    # ROUTE, date, driver_id, location, week_number, manager_id, manager_movement
+
+    return object
+            

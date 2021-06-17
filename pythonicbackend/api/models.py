@@ -150,25 +150,15 @@ class Images(models.Model):
 
 class ScheduledDatesManager(models.Manager):
 
-    def create_date(self, NAME, IN, ROUTE, LOGIN, LOGOUT, TORH, MILEAGE, PARCEL, SUP, deductions, date, driver_id):
+    def create_date(self, ROUTE, date, driver_id, location, week_number, manager_id, manager_movement):
         date = self.create(
-            name=NAME,
-            inOff=IN,
             route=ROUTE,
-            logIn_time=LOGIN,
-            logOut_time=LOGOUT,
-            TORH=TORH,
-            mileage=MILEAGE,
-            parcel=PARCEL,
-            #LateWavePayment=LWP,
-            #LVP=LVP,
-            #CRT=CRT,
-            #RL=RL,
-            support=SUP,
-            #fuel=FUEL,
-            deductions=deductions,
             date=date,
             driver_id=Driver(driver_id),
+            location=location,
+            week_number=week_number,
+            manager_id=manager_id,
+            manager_movement=manager_movement
         )
 
         return date
@@ -176,7 +166,7 @@ class ScheduledDatesManager(models.Manager):
 class ScheduledDate(models.Model):
     # adding live update
     manager_id = models.CharField(null=True, max_length = 100)
-    manager_movement = ArrayField(models.CharField(max_length=120), default=list, blank=True)
+    manager_movement = ArrayField(models.CharField(max_length=120), default=list, blank=True, null = True)
 
     # have to add this
     objects = ScheduledDatesManager()
@@ -212,9 +202,6 @@ class ScheduledDate(models.Model):
 
     #the following fields are Extra's report fields 
     TORH = models.TimeField("TORH", null = True)
-
-    #the following fields are money DEDUCTION fields 
-    objects = ScheduledDatesManager()
 
     def __str__(self):
         return str(self.date_id)

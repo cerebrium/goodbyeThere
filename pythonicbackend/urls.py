@@ -63,5 +63,6 @@ urlpatterns = [
     path('associatedschedule/', views.UserDataScheduleDates.as_view(), name="manager associated additions"),
     path('associatedvalidation/', views.UserDataValidationDates.as_view(), name="manager associated additions"),
     path('associatedrental/', views.UserDataRentalDates.as_view(), name="manager associated additions"),
-    path('rotaweeksort/', views.rotaWeekSortView.as_view(), name='get the rota locks by week')
+    path('rotaweeksort/', views.rotaWeekSortView.as_view(), name='get the rota locks by week'),
+    path('singlerota/', views.SubmitRota.as_view(), name='check and submit to scheduled date class')
 ]

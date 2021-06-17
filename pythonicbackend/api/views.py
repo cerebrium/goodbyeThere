@@ -807,8 +807,5 @@ class SubmitRota(APIView):
         scheduledDates = ScheduledDate.objects.filter(Q(date = incDate), Q(driver_id = driverId))
         scheduledSerializer = ScheduledDatesSerializer(scheduledDates, many=True, context={'request': request})
 
-        return Response(
-            {
-                "dateCreated": rotaQue(body, scheduledDates),
-            }
+        return Response(rotaQue(body, scheduledDates)
     )

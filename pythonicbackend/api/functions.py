@@ -1219,6 +1219,9 @@ def vanWeeklyDates(vanDatesList, selectedDate):
     return myFinalObject
 
 def rotaQue(object, checkList):
+    print("hitting this route: ", object)
+    newObj = None
+
     # check for instance of current date
     for ele in checkList:
         if ele:
@@ -1227,18 +1230,17 @@ def rotaQue(object, checkList):
     # Parse JSON into an object with attributes corresponding to dict keys.
     if "route" in object:
         if "manager_movement" in object:
-            ScheduledDate.objects.create_date(object['route'], object['date'], object['driver_id'].split('/')[4], object['location'], object['week_number'], object['manager_id'], object['manager_movement'])
+            newObj = ScheduledDate.objects.create_date(object['route'], object['date'], object['driver_id'].split('/')[4], object['location'], object['week_number'], object['manager_id'], object['manager_movement'])
         else:
-            ScheduledDate.objects.create_date(object['route'], object['date'], object['driver_id'].split('/')[4], object['location'], object['week_number'], object['manager_id'], None)
+            newObj = ScheduledDate.objects.create_date(object['route'], object['date'], object['driver_id'].split('/')[4], object['location'], object['week_number'], object['manager_id'], None)
     else:
         if "manager_movement" in object:
-            ScheduledDate.objects.create_date(None, object['date'], object['driver_id'].split('/')[4], object['location'], object['week_number'], object['manager_id'], object['manager_movement'])
+            newObj = ScheduledDate.objects.create_date(None, object['date'], object['driver_id'].split('/')[4], object['location'], object['week_number'], object['manager_id'], object['manager_movement'])
         else:
-            ScheduledDate.objects.create_date(None, object['date'], object['driver_id'].split('/')[4], object['location'], object['week_number'], object['manager_id'], None)
+            newObj = ScheduledDate.objects.create_date(None, object['date'], object['driver_id'].split('/')[4], object['location'], object['week_number'], object['manager_id'], None)
 
-
+    print("new obj: ", newObj)
         
     # ROUTE, date, driver_id, location, week_number, manager_id, manager_movement
 
-    return object
-            
+    return newObj

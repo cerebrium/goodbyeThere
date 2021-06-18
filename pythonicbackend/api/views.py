@@ -794,7 +794,7 @@ class UserDataRentalDates(APIView):
 
 class SubmitRota(APIView):
     # Authentication
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
     
     def post(self, request): 
         body_unicode = request.body.decode('utf-8')
@@ -805,7 +805,11 @@ class SubmitRota(APIView):
         incDate = body['date']
 
         scheduledDates = ScheduledDate.objects.filter(Q(date = incDate), Q(driver_id = driverId))
-        scheduledSerializer = ScheduledDatesSerializer(scheduledDates, many=True, context={'request': request})
 
-        return Response(rotaQue(body, scheduledDates)
-    )
+        data = rotaQue(body, scheduledDates)
+        scheduledSerializer = ScheduledDatesSerializer(data, many=False, context={'request': request})
+
+        if data == False:
+            return Response({'data': 'false'})
+        else:
+            return Response(scheduledSerializer.data)

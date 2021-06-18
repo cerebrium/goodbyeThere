@@ -794,7 +794,7 @@ class UserDataRentalDates(APIView):
 
 class SubmitRota(APIView):
     # Authentication
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     
     def post(self, request): 
         body_unicode = request.body.decode('utf-8')

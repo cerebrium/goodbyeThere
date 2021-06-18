@@ -1219,7 +1219,6 @@ def vanWeeklyDates(vanDatesList, selectedDate):
     return myFinalObject
 
 def rotaQue(object, checkList):
-    print("hitting this route: ", object)
     newObj = None
 
     # check for instance of current date
@@ -1238,8 +1237,6 @@ def rotaQue(object, checkList):
             newObj = ScheduledDate.objects.create_date(None, object['date'], object['driver_id'].split('/')[4], object['location'], object['week_number'], object['manager_id'], object['manager_movement'])
         else:
             newObj = ScheduledDate.objects.create_date(None, object['date'], object['driver_id'].split('/')[4], object['location'], object['week_number'], object['manager_id'], None)
-
-    print("new obj: ", newObj)
         
     # ROUTE, date, driver_id, location, week_number, manager_id, manager_movement
 

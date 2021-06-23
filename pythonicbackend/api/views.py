@@ -285,7 +285,7 @@ class InvoiceViewSet(APIView):
 
 class DailyServiceViewSet(APIView):
     # function for all data
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
 
     def post(self, request): 
         body_unicode = request.body.decode('utf-8')
@@ -794,7 +794,7 @@ class UserDataRentalDates(APIView):
 
 class SubmitRota(APIView):
     # Authentication
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
     
     def post(self, request): 
         body_unicode = request.body.decode('utf-8')
@@ -813,3 +813,17 @@ class SubmitRota(APIView):
             return Response({'data': 'false'})
         else:
             return Response(scheduledSerializer.data)
+
+class RentalDriverDates(APIView):
+    # Authentication
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request): 
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        driverId = body['driver_id']
+        
+        dates = VehicleScheduledDate.objects.filter(Q(driver_id = driverId))
+        serializer = VehicleScheduledDateSerializer(dates, many=True, context={'request': request})
+
+        return Response({"data": serializer.data})

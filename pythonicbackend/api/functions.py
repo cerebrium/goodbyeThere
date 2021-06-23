@@ -984,6 +984,10 @@ def dailyService(driversList, datesList, deductions, support, selectedDate=None)
     myDeductionArray = []
     mySupportArray = []
 
+    print("am i in here")
+
+
+
     if selectedDate == None:
         currentDate = datetime.date.today()
 

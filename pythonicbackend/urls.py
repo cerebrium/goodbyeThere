@@ -66,4 +66,5 @@ urlpatterns = [
     path('rotaweeksort/', views.rotaWeekSortView.as_view(), name='get the rota locks by week'),
     path('singlerota/', views.SubmitRota.as_view(), name='check and submit to scheduled date class'),
     path('singledrivervehicle/', views.RentalDriverDates.as_view(), name='all vehicle dates associated with driver'),
+    path('validationmessage/', views.ValidationComments.as_view(), name='validation messages by week'),
 ]

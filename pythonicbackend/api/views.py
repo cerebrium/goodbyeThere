@@ -827,3 +827,17 @@ class RentalDriverDates(APIView):
         serializer = VehicleScheduledDateSerializer(dates, many=True, context={'request': request})
 
         return Response({"data": serializer.data})
+
+class ValidationComments(APIView):
+        # Authentication
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request): 
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        weekNumber = body['weekNumber']
+        
+        dates = ValidationMessage.objects.filter(Q(week_number = weekNumber))
+        serializer = ValidationMessageSerializer(dates, many=True, context={'request': request})
+
+        return Response({"data": serializer.data})

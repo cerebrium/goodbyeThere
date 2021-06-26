@@ -210,7 +210,8 @@ class ValidationMessageSerializer(serializers.HyperlinkedModelSerializer):
             'message',
             'name',
             'station',
-            'week_number'
+            'week_number',
+            'foreignKey'
         ]
 
 class DailyServiceLockSerializer(serializers.HyperlinkedModelSerializer):

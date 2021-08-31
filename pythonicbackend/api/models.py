@@ -59,6 +59,7 @@ class Driver(models.Model):
     complianceCheck = models.CharField(max_length = 30, null=True)
     vat = models.BooleanField(default=False)
     offBoard = models.CharField(max_length = 50, null = True)
+    location_history = ArrayField(models.CharField(max_length=100), default=list, blank=True)
 
     # head of linked list
     Compliance_Van = models.CharField(max_length = 50, null = True)
@@ -464,6 +465,7 @@ class ComplianceVan(models.Model):
     Driver_Id = models.ForeignKey(Driver, on_delete=models.CASCADE)
     vehicle_Id = models.CharField(null=True, max_length = 30)
     next = models.CharField(null=True, max_length = 50)
+
 
 
     

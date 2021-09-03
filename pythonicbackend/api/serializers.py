@@ -10,6 +10,7 @@ class managersSerializer(serializers.HyperlinkedModelSerializer):
             'email',
             'name',
             'DBS2',
+            'DBS3',
             'DSN1',
             'DEX2',
             'DBS2',

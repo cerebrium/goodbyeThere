@@ -14,11 +14,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name='driver',
-            name='location_history',
-            field=django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), blank=True, default=list, size=None),
-        ),
-        migrations.AddField(
             model_name='managers',
             name='DBS3',
             field=models.BooleanField(default=False),

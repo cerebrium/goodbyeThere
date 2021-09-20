@@ -53,7 +53,6 @@ def statistics(datesList):
 
 
     # get data
-    data = df
     # print('dataframe: ', data)
 
     # csv file manually.... cant have spaces in names or will cause errors elsewhere

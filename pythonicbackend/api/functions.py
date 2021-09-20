@@ -1,8 +1,6 @@
 ##### functions file #####
 ## make sure to import anything you plan to use
 import datetime
-import pandas as pd
-import numpy as np
 from collections import defaultdict
 from collections import Counter
 from .models import ScheduledDate
@@ -55,13 +53,10 @@ def statistics(datesList):
 
 
     # get data
-    df = pd.DataFrame(data=myDatesArray)    #turns the current data in the backend into panda dataframe 
     data = df
     # print('dataframe: ', data)
 
     # csv file manually.... cant have spaces in names or will cause errors elsewhere
-    data.dropna(subset=['route'], axis = 'rows', how ='all', inplace = True) 
-    data.fillna(0,inplace = True)
     #add week column
     #data["week"] = "18"
     #data.to_csv("data.csv", index=False)

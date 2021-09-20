@@ -120,24 +120,24 @@ WSGI_APPLICATION = 'pythonicbackend.wsgi.application'
 # }
 
 # Nikitch Local Database Configuration
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'crmbackend',
-        'USER': 'postgres',
-        'PASSWORD': 'Ginishka04121995',
-        'HOST': 'localhost',
-        'PORT': '5432'
-    }
-}
-
-# # Deployment Database Configuration
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'crmbackend',
+#         'USER': 'postgres',
+#         'PASSWORD': 'Ginishka04121995',
+#         'HOST': 'localhost',
+#         'PORT': '5432'
 #     }
 # }
+
+# # Deployment Database Configuration
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 REST_FRAMEWORK = {
         'DEFAULT_AUTHENTICATION_CLASSES': [

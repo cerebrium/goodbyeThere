@@ -17,6 +17,7 @@ class managersSerializer(serializers.HyperlinkedModelSerializer):
             'DXP1',
             'DRR1',
             'DCF1',
+            'DOX2',
             'creationDate'
         ]        
   
